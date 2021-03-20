@@ -1,0 +1,7 @@
+pycodestyle>=2.7.0
+pydocstyle
+pyflakes
+pylint>=2.6.0
+pytest
+pytest-cov
+coverage
