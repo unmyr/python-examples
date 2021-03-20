@@ -3,8 +3,8 @@
 .environment
 * Python 3.8.x (Ubuntu 18.04 LTS)
 
-* <<string/string.adoc#,String Examples>>
-* <<numpy/numpy.adoc#,Numpy Examples>>
+* <<src/string/string.adoc#,String Examples>>
+* <<src/numpy/numpy.adoc#,Numpy Examples>>
 
 === Install Python 3.8.x (Ubuntu 18.04)
 * https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/[How to Install Python 3.8 on Ubuntu 18.04 | Linuxize^] +
