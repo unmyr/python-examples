@@ -31,6 +31,7 @@ $
 ----
 
 . Install Python 3.8
++
 [source,shell-session]
 ----
 $ pyenv install 3.8.8

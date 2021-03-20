@@ -9,16 +9,21 @@ endif::[]
 .environment
 * Python 3.8.x (Ubuntu 18.04 LTS)
 
-* <<docs/install_pyenv.adoc#,Install PyEnv>>
-* <<docs/string.adoc#,String Examples>>
-* <<docs/numpy.adoc#,Numpy Examples>>
+//^
 
 === Install pip packages
+[source,bash]
 ----
 python -m pip install -r requirements.txt
 ----
 
+=== Examples
+* <<docs/install_pyenv.adoc#,Install PyEnv>>
+* <<docs/string.adoc#,String Examples>>
+* <<docs/numpy.adoc#,Numpy Examples>>
+
 === pycodestyle
+[source,bash]
 ----
 python -m pycodestyle foo.py
 ----
