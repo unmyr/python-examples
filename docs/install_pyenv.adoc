@@ -1,0 +1,65 @@
+:icons: font
+ifndef::leveloffset[]
+:toc: left
+:toclevels: 3
+endif::[]
+
+== Install pyenv
+
+=== Install Python 3.8.x (Ubuntu 18.04)
+* https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/[How to Install Python 3.8 on Ubuntu 18.04 | Linuxize^] +
+  python 3.8 ubuntu apt - Google Search
+
+. Update the packages list and install the packages necessary to build Python:
++
+[source,shell-session]
+----
+$ sudo apt update
+$ sudo apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
+----
+
+. List python versions
++
+[source,shell-session]
+----
+$ pyenv install --list | grep 3.8
+  ...
+  3.8.8
+  miniconda-3.8.3
+  ...
+$
+----
+
+. Install Python 3.8
+[source,shell-session]
+----
+$ pyenv install 3.8.8
+Downloading Python-3.8.8.tar.xz...
+-> https://www.python.org/ftp/python/3.8.8/Python-3.8.8.tar.xz
+Installing Python-3.8.8...
+Installed Python-3.8.8 to /home/guest/.pyenv/versions/3.8.8
+
+$ pyenv versions
+* system (set by /home/guest/.pyenv/version)
+  3.8.8
+$ pyenv global 3.8.8
+$ pyenv version
+3.8.8 (set by /home/guest/.pyenv/version)
+$
+----
+
+[source,shell-session]
+.uninstall version
+----
+$ pyenv install 3.8.8
+-> https://www.python.org/ftp/python/3.8.8/Python-3.8.8.tar.xz
+Installing Python-3.8.8...
+WARNING: The Python bz2 extension was not compiled. Missing the bzip2 lib?
+WARNING: The Python readline extension was not compiled. Missing the GNU readline lib?
+WARNING: The Python sqlite3 extension was not compiled. Missing the SQLite3 lib?
+Installed Python-3.8.8 to /home/guest/.pyenv/versions/3.8.8
+$ pyenv uninstall 3.8.8
+pyenv: remove /home/guest/.pyenv/versions/3.8.8? [y|N]y
+pyenv: 3.8.8 uninstalled
+$
+----
