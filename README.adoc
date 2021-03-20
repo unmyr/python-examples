@@ -11,14 +11,19 @@ endif::[]
 
 //^
 
-=== Install pip packages
+=== Install
+
+. Install Python 3.8.x +
+See. <<docs/install_pyenv.adoc#,Install PyEnv>>
+
+. Install pip packages
++
 [source,bash]
 ----
 python -m pip install -r requirements.txt
 ----
 
 === Examples
-* <<docs/install_pyenv.adoc#,Install PyEnv>>
 * <<docs/string.adoc#,String Examples>>
 * <<docs/numpy.adoc#,Numpy Examples>>
 
