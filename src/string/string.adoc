@@ -1,0 +1,32 @@
+== Python Strings
+
+=== Python Concatenate String and int
+
+[source,python]
+----
+>>> "No." + 30
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: can only concatenate str (not "int") to str
+>>>
+----
+
+[source,python]
+----
+>>> "No." + str(30)
+'No.30'
+>>> "%s%s" % ("No.", 30)
+'No.30'
+>>> "{}{}".format("No.", 30)
+'No.30'
+>>>
+----
+
+.Using f-strings (Python 3.6 or higher versions)
+----
+>>> s = 'No.'
+>>> n = 30
+>>> f'{s}{n}'
+'No.30'
+>>>
+----
