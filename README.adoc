@@ -22,9 +22,11 @@ python -m pip install -r requirements.txt
 ----
 
 === Examples
-* <<docs/README.adoc#,Array/Dict/etc>>
-* <<docs/string.adoc#,String Examples>>
-* <<docs/numpy.adoc#,Numpy Examples>>
+
+* <<docs/README.adoc#,Array / Dict / etc>>
+* <<docs/string.adoc#,String>>
+* <<docs/numpy.adoc#,Numpy>>
+* <<matplotlib.adoc#,Matplotlib>>
 
 === pycodestyle
 [source,bash]
