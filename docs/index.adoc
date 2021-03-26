@@ -21,3 +21,32 @@
 [3, 2, 1]
 >>>
 ----
+
+[source,python]
+----
+>>> 'apple' in ['apple', 'banana', 'peach']
+True
+>>> 'orange' in ['apple', 'banana', 'peach']
+False
+>>>
+----
+
+=== dict
+
+[source,python]
+----
+>>> 'apple' in {'apple': 150, 'banana': 110, 'peach':180}
+True
+>>> 'orange' in {'apple': 150, 'banana': 110, 'peach':180}
+False
+>>>
+----
+
+[source,python]
+----
+>>> 150 in {'apple': 150, 'banana': 110, 'peach':180}.values()
+True
+>>> 100 in {'apple': 150, 'banana': 110, 'peach':180}.values()
+False
+>>>
+----
