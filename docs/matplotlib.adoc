@@ -1,0 +1,98 @@
+:icons: font
+:toc: left
+:toclevels: 3
+
+== Matplotlib examples
+
+=== Streamplot
+
+[source,python]
+.matplotlib_plot_stream1.py
+----
+import numpy as np
+import matplotlib.pyplot as plt
+
+x, y = np.linspace(-3, 3, 100), np.linspace(-3, 3, 100)
+X, Y = np.meshgrid(x, y)
+U = -1 - X**2 + Y
+V = 1 + X - Y**2
+speed = np.sqrt(U*U + V*V)
+
+start = [[0, 0], [1, 2]]
+
+fig0, ax0 = plt.subplots()
+
+ax0.streamplot(
+    x, y, U, V, color=(.75, .90, .93)
+)
+ax0.streamplot(
+    x, y, U, V, start_points=start, color="crimson", linewidth=2
+)
+
+plt.show()
+----
+
+image::images/matplotlib_streamplot_1.png[]
+
+[source,python]
+.matplotlib_plot_stream2.py
+----
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Data
+x = np.linspace(-10, 10, 10)
+y = np.linspace(-10, 10, 10)
+X, Y = np.meshgrid(x, y)
+U = X*0 + 1
+V = X*0
+start_points = [[0, 0]]
+
+# Base streamline plot
+plt.figure()
+sp1 = plt.streamplot(x, y, U, V, color=[.5]*3)
+
+# Streamline plot with 'start_points' argument
+sp2 = plt.streamplot(x, y, U, V, start_points=start_points,
+                     color='r')
+plt.plot(*start_points[0], marker='o', label="Starting point")
+plt.plot([], [], color='r', label="Associated streamline")
+
+# Legend and limits
+plt.xlim(-10, 10)
+plt.ylim(-10, 10)
+plt.legend(numpoints=1)
+
+plt.show()
+----
+
+image::images/matplotlib_streamplot_2.png[]
+
+[source,python]
+.matplotlib_plot_stream3.py
+----
+import numpy as np
+import matplotlib.pyplot as plt
+
+X, Y = (np.linspace(-3, 3, 100), np.linspace(-3, 3, 100))
+
+U, V = np.mgrid[-3:3:100j, 0:0:100j]
+
+seed_points = np.array([[-2, 0, 1], [-2, 0, 1]])
+print(seed_points)
+
+fig0, ax0 = plt.subplots()
+stream_plot = ax0.streamplot(
+    X, Y, U, V, color=U, linewidth=2,
+    cmap=plt.cm.autumn, start_points=seed_points.T
+)
+fig0.colorbar(stream_plot.lines)
+
+ax0.plot(seed_points[0], seed_points[1], 'bo')
+
+ax0.axis((-3, 3, -3, 3))
+
+plt.show()
+----
+
+image::images/matplotlib_streamplot_3.png[]
