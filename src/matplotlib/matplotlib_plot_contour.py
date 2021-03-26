@@ -10,17 +10,21 @@ matplotlib.use('Agg')
 # pylint: disable=wrong-import-position
 import matplotlib.pyplot
 
+
 def func_d1(p_x):
     """Euclidean distance."""
     return numpy.sqrt(p_x[1:]*p_x[1:] + p_x[:-1]*p_x[:-1])
+
 
 def func_d2(p_x):
     """func z."""
     return numpy.absolute(p_x[1:]) * numpy.absolute(p_x[:-1])
 
+
 def func_d3(p_x):
     """func z."""
     return numpy.absolute(p_x[1:]) + numpy.absolute(p_x[:-1])
+
 
 def main():
     """main."""
@@ -36,17 +40,22 @@ def main():
     ax2 = fig.add_subplot(2, 1, 2)
 
     p_z = func_d1(
-        numpy.vstack([grid_x.ravel(), grid_y.ravel()])).reshape(len(x_seq), len(y_seq))
+        numpy.vstack([grid_x.ravel(), grid_y.ravel()])
+    ).reshape(len(x_seq), len(y_seq))
     ax1.set_aspect('equal')
     cs_plot = ax1.contour(grid_x, grid_y, p_z, levels)
-    cbar = fig.colorbar(cs_plot, cax=matplotlib.pyplot.axes([0.85, 0.1, 0.075, 0.8]))
+    cbar = fig.colorbar(
+        cs_plot,
+        cax=matplotlib.pyplot.axes([0.85, 0.1, 0.075, 0.8])
+    )
     cbar.ax.set_ylabel('verbosity coefficient')
     ax1.clabel(cs_plot, inline=1, fontsize=10)
     # ax1.title('f(x,y) = |x| + |y|')
     # matplotlib.pyplot.savefig('matplotlib_plot_contour_1.png')
 
     p_z = func_d2(
-        numpy.vstack([grid_x.ravel(), grid_y.ravel()])).reshape(len(x_seq), len(y_seq))
+        numpy.vstack([grid_x.ravel(), grid_y.ravel()])
+    ).reshape(len(x_seq), len(y_seq))
     ax2.set_aspect('equal')
     cs_plot = ax2.contour(grid_x, grid_y, p_z, levels)
     ax2.clabel(cs_plot, inline=1, fontsize=10)
@@ -58,7 +67,8 @@ def main():
     # pylint: disable=pointless-string-statement
     """
     z = func_d3(
-        numpy.vstack([grid_x.ravel(), grid_y.ravel()])).reshape(len(x_seq), len(y_seq))
+        numpy.vstack([grid_x.ravel(), grid_y.ravel()])
+    ).reshape(len(x_seq), len(y_seq))
     matplotlib.pyplot.gca().set_aspect('equal', adjustable='box')
     levels = [-math.sqrt(2), -1, -0.5, 0, 0.5, 1, math.sqrt(2)]
     cs_plot = matplotlib.pyplot.contour(grid_x, grid_y, z, levels)
@@ -68,6 +78,7 @@ def main():
     matplotlib.pyplot.title('f(x,y) = |x| + |y|')
     matplotlib.pyplot.savefig('matplotlib_plot_contour_3.png')
     """
+
 
 if __name__ == '__main__':
     main()
