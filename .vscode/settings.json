@@ -1,6 +1,7 @@
 {
   "cSpell.words": [
     "Hoge",
+    "PYTHONPATH",
     "arange",
     "blit",
     "clabel",
@@ -19,7 +20,9 @@
     "pylint",
     "pylintrc",
     "pyplot",
+    "pytest",
     "randn",
+    "testmod",
     "vstack",
     "xlim",
     "ylabel",
@@ -35,5 +38,7 @@
     "editor.detectIndentation": true,
     "editor.insertSpaces": true
   },
-  "python.linting.pylintEnabled": true
+  "python.linting.pylintEnabled": true,
+  "python.linting.pycodestyleEnabled": true,
+  "python.testing.pytestEnabled": false
 }
