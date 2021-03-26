@@ -4,6 +4,37 @@
 
 == Matplotlib examples
 
+=== plot 2D
+
+==== Plot of Sine
+
+[source,python]
+.matplotlib_plot_sin_show.py
+----
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-10.0, 10.0, 0.1)
+y = np.sin(x)
+plt.plot(x, y)
+plt.show()
+----
+
+[source,python]
+.matplotlib_plot_sin_save_png.py
+----
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+x = np.arange(-10.0, 10.0, 0.1)
+y = np.sin(x)
+plt.plot(x, y)
+plt.savefig('matplotlib_plot_sin.png')
+----
+
+image::images/matplotlib_plot_sin.png[]
+
 === Streamplot
 
 ==== Examples 1
