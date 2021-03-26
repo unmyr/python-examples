@@ -34,7 +34,7 @@ $ python -m pip install PyGraphviz
 * <<docs/README.adoc#,Array / Dict / etc>>
 * <<docs/string.adoc#,String>>
 * <<docs/numpy.adoc#,Numpy>>
-* <<matplotlib.adoc#,Matplotlib>>
+* <<docs/matplotlib.adoc#,Matplotlib>>
 
 === pycodestyle
 [source,bash]
