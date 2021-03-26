@@ -65,7 +65,7 @@ plt.plot(x, y)  # "o"は小さい円(circle marker)
 plt.savefig('matplotlib_plot_random_line_graph.png')
 ----
 
-image::images/matplotlib_plot_randam_line_graph.png[]
+image::images/matplotlib_plot_random_line_graph.png[]
 
 === Plot 3D
 
