@@ -3,8 +3,9 @@
 :toclevels: 3
 
 == Python Examples
-* <<docs/string.adoc#,String Examples>>
-* <<docs/numpy.adoc#,Numpy Examples>>
+* <<install_pyenv.adoc#,Install Pyenv>>
+* <<string.adoc#,String Examples>>
+* <<numpy.adoc#,Numpy Examples>>
 
 === Array
 [source,python]
