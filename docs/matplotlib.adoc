@@ -35,6 +35,38 @@ plt.savefig('matplotlib_plot_sin.png')
 
 image::images/matplotlib_plot_sin.png[]
 
+==== Random points
+
+[source,python]
+.matplotlib_plot_random_point_diagram.py
+----
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.random.randn(30)
+y = np.sin(x) + np.random.randn(30)
+plt.plot(x, y, "o")  # "o"は小さい円(circle marker)
+plt.savefig('matplotlib_plot_random_point_diagram.png')
+----
+
+image::images/matplotlib_plot_random_point_diagram.png[]
+
+==== Random lines
+
+[source,python]
+.matplotlib_plot_random_line_graph.py
+----
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.random.randn(30)
+y = np.sin(x) + np.random.randn(30)
+plt.plot(x, y)  # "o"は小さい円(circle marker)
+plt.savefig('matplotlib_plot_random_line_graph.png')
+----
+
+image::images/matplotlib_plot_randam_line_graph.png[]
+
 === Plot 3D
 
 ==== 3D wireframe plot
