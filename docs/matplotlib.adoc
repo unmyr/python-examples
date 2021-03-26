@@ -6,6 +6,7 @@
 
 === Streamplot
 
+==== Examples 1
 [source,python]
 .matplotlib_plot_stream1.py
 ----
@@ -33,6 +34,9 @@ plt.show()
 ----
 
 image::images/matplotlib_streamplot_1.png[]
+
+
+==== Examples 2
 
 [source,python]
 .matplotlib_plot_stream2.py
@@ -67,6 +71,9 @@ plt.show()
 ----
 
 image::images/matplotlib_streamplot_2.png[]
+
+
+==== Examples 3
 
 [source,python]
 .matplotlib_plot_stream3.py

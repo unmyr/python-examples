@@ -4,8 +4,11 @@
 
 == Python Examples
 * <<install_pyenv.adoc#,Install Pyenv>>
-* <<string.adoc#,String Examples>>
-* <<numpy.adoc#,Numpy Examples>>
+
+.Examples
+* <<string.adoc#,String>>
+* <<numpy.adoc#,Numpy>>
+* <<matplotlib.adoc#,Matplotlib>>
 
 === Array
 [source,python]
