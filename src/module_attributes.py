@@ -8,10 +8,10 @@ if __name__ == "__main__":
 
     # absolute-path: no empty
     # current directory: ''
-    script_dir_name  = os.path.dirname(__file__)
+    script_dir_name = os.path.dirname(__file__)
 
     # splitext[0] is include directory name
-    script_basename  = os.path.splitext(os.path.basename(__file__))[0]
+    script_basename = os.path.splitext(os.path.basename(__file__))[0]
     script_extension = os.path.splitext(os.path.basename(__file__))[1]
 
     print("script file name: '{}'".format(script_file_name))
