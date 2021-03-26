@@ -341,11 +341,8 @@ if __name__ == '__main__':
 ----
 ====
 
-++++
-<video poster="images/matplotlib_plot_animate_decay.png">
-  <source src="images/matplotlib_plot_animate_decay.webm" type="video/webm">
-</video>
-++++
+video::images/matplotlib_plot_animate_decay.webm[]
+
 
 === Plot NetworkX
 .Requirements
