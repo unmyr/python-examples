@@ -35,6 +35,56 @@ plt.savefig('matplotlib_plot_sin.png')
 
 image::images/matplotlib_plot_sin.png[]
 
+=== Plot 3D
+
+==== 3D wireframe plot
+[source,python]
+.matplotlib_plot3d_wireframe.py
+----
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.arange(-3, 3, 0.25)
+y = np.arange(-3, 3, 0.25)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(X) + np.cos(Y)
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(X, Y, Z)
+
+plt.show()
+----
+
+image::images/matplotlib_plot3d_wireframe.png[]
+
+==== Rastrigin function
+[source,python]
+.matplotlib_plot3d_rastrigin.py
+----
+from matplotlib import cm
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-5.12, 5.12, 100)
+y = np.linspace(-5.12, 5.12, 100)
+x, y = np.meshgrid(x, y)
+z = 20 + x**2 - 10 * np.cos(2 * np.pi * x) + y**2 - 10 * np.cos(2 * np.pi * y)
+
+figure = plt.figure()
+axe = figure.add_subplot(111, projection='3d')
+surface = axe.plot_surface(
+    x, y, z,
+    rstride=1, cstride=1,
+    cmap=cm.winter, linewidth=0, antialiased=False
+)
+
+# figure.savefig("matplotlib_plot3d_rastrigin.png")
+plt.show()
+----
+
+image::images/matplotlib_plot3d_rastrigin.png[]
+
 === Streamplot
 
 ==== Examples 1
