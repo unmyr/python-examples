@@ -7,8 +7,8 @@
 
 .Examples
 * <<string.adoc#,String>>
-* <<numpy.adoc#,Numpy>>
-* <<matplotlib.adoc#,Matplotlib>>
+* <<../numpy/README.adoc#,Numpy>>
+* <<../matplotlib/README.adoc#,Matplotlib>>
 
 === Array
 [source,python]

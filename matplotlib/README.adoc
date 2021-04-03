@@ -2,6 +2,9 @@
 :toc: left
 :toclevels: 3
 
+
+== Matplotlib examples
+
 === Install
 
 . Install pip packages
@@ -10,3 +13,5 @@
 ----
 $ python -m pip install -r requirements.txt
 ----
+
+include::matplotlib.adoc[]
