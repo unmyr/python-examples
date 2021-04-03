@@ -4,11 +4,11 @@
 import math
 
 if __name__ == "__main__":
-    VMIN = -5.1
-    VMAX = 10.1
-    print("VMIN: %f, VMAX: %f" % (VMIN, VMAX))
+    V_MIN = -5.1
+    V_MAX = 10.1
+    print("V_MIN: %f, V_MAX: %f" % (V_MIN, V_MAX))
 
-    exponent, remainder = divmod(math.log10(VMAX - VMIN), 1)
+    exponent, remainder = divmod(math.log10(V_MAX - V_MIN), 1)
     print("exponent %f, remainder: %f" % (exponent, remainder))
     if remainder < 0.5:
         exponent -= 1
@@ -16,9 +16,9 @@ if __name__ == "__main__":
 
     scale = 10 ** (-exponent)
     print("exponent %f, remainder: %f, scale: %f" % (
-      exponent, remainder, scale))
+        exponent, remainder, scale))
 
-    VMIN = math.floor(scale * VMIN) / scale
-    VMAX = math.ceil(scale * VMAX) / scale
+    V_MIN = math.floor(scale * V_MIN) / scale
+    V_MAX = math.ceil(scale * V_MAX) / scale
 
-    print("VMIN: %f, VMAX: %f" % (VMIN, VMAX))
+    print("V_MIN: %f, V_MAX: %f" % (V_MIN, V_MAX))
