@@ -1,0 +1,26 @@
+:icons: font
+:toc: left
+:toclevels: 3
+
+== Linter
+
+=== pycodestyle
+[source,bash]
+----
+python -m pycodestyle foo.py
+----
+
+==== continuation line under-indented for hanging indentpycodestyle(E121)
+[source,python]
+.bad
+----
+print("exponent %f, remainder: %f, scale: %f" % (
+  exponent, remainder, scale))
+----
+
+[source,python]
+.Good
+----
+print("exponent %f, remainder: %f, scale: %f" % (
+    exponent, remainder, scale))
+----

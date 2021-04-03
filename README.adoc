@@ -21,15 +21,12 @@ See. <<docs/install_pyenv.adoc#,Install PyEnv>>
 python -m pip install -r requirements.txt
 ----
 
+=== Linter
+* <<docs/linter.adoc#,Linter>>
+
 === Examples
 
 * <<docs/README.adoc#,Array / Dict / etc>>
 * <<docs/string.adoc#,String>>
 * <<numpy/README.adoc#,Numpy>>
 * <<matplotlib/README.adoc#,Matplotlib>>
-
-=== pycodestyle
-[source,bash]
-----
-python -m pycodestyle foo.py
-----

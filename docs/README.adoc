@@ -3,7 +3,12 @@
 :toclevels: 3
 
 == Python Examples
-* <<install_pyenv.adoc#,Install Pyenv>>
+.Install
+* <<install_pyenv.adoc#,Pyenv>>
+
+.Linter
+* <<linter.adoc#,Linter>> +
+  pycodestyle, pylint
 
 .Examples
 * <<string.adoc#,String>>

@@ -6,7 +6,11 @@ endif::[]
 
 == Python Strings
 
-=== Python Concatenate String and int
+=== Python String Format
+
+* https://mkaz.blog/code/python-string-format-cookbook/[Python String Format Cookbook – mkaz.blog^]
+
+==== Python Concatenate String and int
 
 [source,python]
 ----
@@ -28,11 +32,28 @@ TypeError: can only concatenate str (not "int") to str
 >>>
 ----
 
+[source,python]
 .Using f-strings (Python 3.6 or higher versions)
 ----
 >>> s = 'No.'
 >>> n = 30
 >>> f'{s}{n}'
 'No.30'
+>>>
+----
+
+==== Number Formatting
+
+[source,python]
+----
+>>> import math
+>>> "PI*100 = %g" % (math.pi * 100)
+'PI*100 = 314.159'
+>>> "PI*100 = %.3g" % (math.pi * 100)
+'PI*100 = 314'
+>>> "PI*100 = %.6g" % (math.pi * 100)
+'PI*100 = 314.159'
+>>> "PI*100 = %.20g" % (math.pi * 100)
+'PI*100 = 314.15926535897932581'
 >>>
 ----
