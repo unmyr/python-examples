@@ -10,16 +10,16 @@ if __name__ == "__main__":
     pat_nodedata = re.compile('^ *([0-9]+) +([0-9]+) +([0-9]+) *$')
 
     texts = (
-      "NAME : a280",
-      "COMMENT : drilling problem (Ludwig)",
-      "TYPE : TSP",
-      "DIMENSION: 280",
-      "EDGE_WEIGHT_TYPE : EUC_2D",
-      "NODE_COORD_SECTION",
-      "NODE_COORD_SECTION ",
-      "  1 288 149",
-      "280 280 133",
-      "EOF"
+        "NAME : a280",
+        "COMMENT : drilling problem (Ludwig)",
+        "TYPE : TSP",
+        "DIMENSION: 280",
+        "EDGE_WEIGHT_TYPE : EUC_2D",
+        "NODE_COORD_SECTION",
+        "NODE_COORD_SECTION ",
+        "  1 288 149",
+        "280 280 133",
+        "EOF"
     )
 
     for line in texts:
