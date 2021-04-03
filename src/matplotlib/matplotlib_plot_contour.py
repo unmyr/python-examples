@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=wrong-import-position
 """nop example."""
 from __future__ import print_function
 import math
@@ -7,8 +8,7 @@ import numpy
 import matplotlib.cm
 import matplotlib
 matplotlib.use('Agg')
-# pylint: disable=wrong-import-position
-import matplotlib.pyplot
+import matplotlib.pyplot  # noqa: E402
 
 
 def func_d1(p_x):
