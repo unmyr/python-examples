@@ -22,6 +22,7 @@
     "mgrid",
     "mplot",
     "networkx",
+    "noqa",
     "numpoints",
     "numpy",
     "pycodestyle",
