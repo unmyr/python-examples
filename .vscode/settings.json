@@ -72,5 +72,6 @@
   },
   "python.linting.pylintEnabled": true,
   "python.linting.pycodestyleEnabled": true,
+  "python.linting.pycodestyleArgs": ["--ignore=W503"],
   "python.testing.pytestEnabled": false
 }
