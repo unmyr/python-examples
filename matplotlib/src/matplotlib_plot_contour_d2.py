@@ -59,7 +59,7 @@ def main():
     ax.set_aspect('equal', adjustable='box')
     cs_plot = matplotlib.pyplot.contour(
         grid_x, grid_y, z, levels,
-        cmap=matplotlib.pyplot.cm.Dark2
+        cmap=matplotlib.pyplot.cm.Dark2  # pylint: disable=no-member
     )
     matplotlib.pyplot.clabel(cs_plot, inline=1, fontsize=10)
     color_bar = matplotlib.pyplot.colorbar(cs_plot)
