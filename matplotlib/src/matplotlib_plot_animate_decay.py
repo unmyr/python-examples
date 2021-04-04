@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+"""Plot a graph with animation."""
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -9,6 +11,7 @@ x_data, y_data = [], []
 
 
 def data_gen(t=0):
+    """Generate data."""
     cnt = 0
     while cnt < 1000:
         cnt += 1
@@ -17,6 +20,7 @@ def data_gen(t=0):
 
 
 def init():
+    """Initialize plot settings."""
     ax.set_ylim(-1.1, 1.1)
     ax.set_xlim(0, 10)
     del x_data[:]
@@ -26,7 +30,7 @@ def init():
 
 
 def update(data):
-    # update the data
+    """Update plot data."""
     t, y = data
     x_data.append(t)
     y_data.append(y)
