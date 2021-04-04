@@ -107,6 +107,9 @@
   },
   "python.linting.pylintEnabled": true,
   "python.linting.pycodestyleEnabled": true,
-  "python.linting.pycodestyleArgs": ["--ignore=W503"],
+  "python.linting.pycodestyleArgs": [
+    "--ignore=W503",
+    "--max-line-length=120"
+  ],
   "python.testing.pytestEnabled": false
 }
