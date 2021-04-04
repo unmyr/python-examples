@@ -13,7 +13,7 @@ def data_gen(t=0):
     while cnt < 1000:
         cnt += 1
         t += 0.1
-        yield t, np.sin(2*np.pi*t) * np.exp(-t/10.)
+        yield t, np.sin(2 * np.pi * t) * np.exp(-t / 10.)
 
 
 def init():
@@ -33,7 +33,7 @@ def update(data):
     x_min, x_max = ax.get_xlim()
 
     if t >= x_max:
-        ax.set_xlim(x_min, 2*x_max)
+        ax.set_xlim(x_min, 2 * x_max)
         ax.figure.canvas.draw()
     line.set_data(x_data, y_data)
 

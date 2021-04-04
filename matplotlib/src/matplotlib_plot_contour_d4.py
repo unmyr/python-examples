@@ -7,13 +7,13 @@ import matplotlib.cm
 import matplotlib
 matplotlib.use('Agg')
 # pylint: disable=wrong-import-position
-import matplotlib.pyplot
+import matplotlib.pyplot  # noqa: E402
 
 
 def func_d4(p_x):
     """Func d1 + d2."""
     return numpy.sqrt(
-        p_x[1:]*p_x[1:] + p_x[:-1]*p_x[:-1]
+        p_x[1:] * p_x[1:] + p_x[:-1] * p_x[:-1]
         + 2 * numpy.absolute(p_x[1:]) * numpy.absolute(p_x[:-1])
     )
 
@@ -37,7 +37,7 @@ def main():
     )
 
     circle_r0 = matplotlib.pyplot.Circle(
-        (0, 0), math.sqrt(2)/2, facecolor='none', edgecolor='#cccc44',
+        (0, 0), math.sqrt(2) / 2, facecolor='none', edgecolor='#cccc44',
         linewidth=1.0, linestyle='dashed'
     )
 
@@ -50,8 +50,8 @@ def main():
         cmap=matplotlib.pyplot.cm.Dark2
     )
     matplotlib.pyplot.clabel(cs_plot, inline=1, fontsize=10)
-    cbar = matplotlib.pyplot.colorbar(cs_plot)
-    cbar.ax.set_ylabel('verbosity coefficient')
+    color_bar = matplotlib.pyplot.colorbar(cs_plot)
+    color_bar.ax.set_ylabel('verbosity coefficient')
     matplotlib.pyplot.title('f(x,y) = sqrt(2*|x|*|y| + x*x + y*y)')
     ax.add_patch(circle_r0)
     ax.add_patch(circle_r1)

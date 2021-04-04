@@ -9,18 +9,18 @@ import matplotlib.transforms
 import matplotlib
 matplotlib.use('Agg')
 # pylint: disable=wrong-import-position
-import matplotlib.pyplot
+import matplotlib.pyplot  # noqa: E402
 
 
 def func_d1(p_x):
     """Euclidean distance."""
-    return numpy.sqrt(p_x[1:]*p_x[1:] + p_x[:-1]*p_x[:-1])
+    return numpy.sqrt(p_x[1:] * p_x[1:] + p_x[:-1] * p_x[:-1])
 
 
 def main():
     """main."""
     levels = [
-        0, 0.25, 0.5, 1/math.sqrt(2), 1, math.sqrt(2)
+        0, 0.25, 0.5, 1 / math.sqrt(2), 1, math.sqrt(2)
     ]
 
     delta = 0.025
@@ -37,13 +37,13 @@ def main():
     t_end = t + t_start
     w = math.sqrt(2)
     square_1 = matplotlib.pyplot.Rectangle(
-        (-w/2., -w/2.), w, w, facecolor='none', edgecolor='#6666ff',
+        (-w / 2., -w / 2.), w, w, facecolor='none', edgecolor='#6666ff',
         linewidth=1.0, linestyle='dashed', transform=t_end,
         label='|x|+|y|'
     )
     w = 2.
     square_2 = matplotlib.pyplot.Rectangle(
-        (-w/2., -w/2.), w, w, facecolor='none', edgecolor='#66ff66',
+        (-w / 2., -w / 2.), w, w, facecolor='none', edgecolor='#66ff66',
         linewidth=1.0, linestyle='dashed', transform=t_end,
         label='|x|+|y|'
     )
@@ -57,8 +57,8 @@ def main():
         cmap=matplotlib.pyplot.cm.Dark2
     )
     matplotlib.pyplot.clabel(cs_plot, inline=1, fontsize=10)
-    cbar = matplotlib.pyplot.colorbar(cs_plot)
-    cbar.ax.set_ylabel('verbosity coefficient')
+    color_bar = matplotlib.pyplot.colorbar(cs_plot)
+    color_bar.ax.set_ylabel('verbosity coefficient')
     matplotlib.pyplot.title('f(x,y) = sqrt(x*x + y*y)')
     ax.add_patch(square_1)
     ax.add_patch(square_2)
