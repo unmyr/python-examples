@@ -1,0 +1,22 @@
+:icons: font
+:toc: left
+:toclevels: 3
+
+
+== Plotly examples
+
+=== Install
+
+. Install pip packages
++
+.Ubuntu 18.04 LTS (pyenv)
+[source,bash]
+----
+$ python -m pip install -r requirements.txt
+----
++
+.Windows 10
+[source,bash]
+----
+$ python -m pip install --user -r requirements.txt
+----
