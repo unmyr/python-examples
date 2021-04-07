@@ -23,7 +23,7 @@ def main(engine):
 
 
 if __name__ == '__main__':
-    engine = sqlalchemy.create_engine(
+    engine_pg8000 = sqlalchemy.create_engine(
         sqlalchemy.engine.URL.create(
             'postgresql+pg8000',
             host=os.environ.get('PGHOST'),
@@ -33,6 +33,6 @@ if __name__ == '__main__':
             password=os.environ.get('PGPASSWORD')
         )
     )
-    main(engine)
+    main(engine_pg8000)
 
 # EOF
