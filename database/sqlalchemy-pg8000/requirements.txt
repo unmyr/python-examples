@@ -1,0 +1,5 @@
+scramp==1.3.0
+asn1crypto==1.4.0
+pg8000==1.19.1
+greenlet>=1.0.0
+sqlalchemy>=1.4.6
