@@ -1,0 +1,20 @@
+:icons: font
+:toc: left
+:toclevels: 3
+
+=== Install
+
+. Install python-dev nad libpq-dev
++
+.Ubuntu 18.04 LTS
+[source,console]
+----
+$ sudo apt install -y python-dev libpq-dev
+----
+
+. Install pip packages
++
+[source,bash]
+----
+$ python -m pip install -r requirements.txt
+----
