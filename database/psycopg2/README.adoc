@@ -4,7 +4,7 @@
 
 === Install
 
-. Install to plot networkx
+. Install python-dev nad libpq-dev
 +
 .Ubuntu 18.04 LTS
 [source,console]
