@@ -15,6 +15,24 @@
 * <<../numpy/README.adoc#,Numpy>>
 * <<../matplotlib/README.adoc#,Matplotlib>>
 
+=== import
+
+[source,python]
+----
+>>> from math import pi
+>>> pi
+3.141592653589793
+>>>
+----
+
+[source,python]
+----
+>>> from math import pi as math_pi
+>>> math_pi
+3.141592653589793
+>>>
+----
+
 === Array
 [source,python]
 ----
