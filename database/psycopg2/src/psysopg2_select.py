@@ -29,9 +29,9 @@ def main():
         print(traceback.format_exc())
         print(exc)
     finally:
-        if cur is None:
+        if cur is not None:
             cur.close()
-        if conn is None:
+        if conn is not None:
             conn.close()
 
 
