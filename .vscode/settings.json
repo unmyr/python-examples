@@ -39,6 +39,7 @@
     "execfile",
     "fontsize",
     "fstring",
+    "getpid",
     "getslice",
     "graphviz",
     "idiv",
