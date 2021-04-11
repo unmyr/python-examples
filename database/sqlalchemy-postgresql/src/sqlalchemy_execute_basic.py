@@ -47,13 +47,32 @@ def execute_query(engine):
     query_results = []
     logger.info('engine.connect()')
     with engine.connect() as connection:
-        logger.info('connection.execute()')
+        trans = connection.begin()
+        connection.execute(
+            text("DELETE FROM FruitsMenu")
+        )
+        connection.execute(
+            text("INSERT INTO FruitsMenu (name, price) VALUES (:name, :price)"),
+            [
+                {'name': 'Apple', 'price': 100},
+                {'name': 'Banana', 'price': 120},
+                {'name': 'Orange', 'price': 110}
+            ]
+        )
+        trans.commit()
+
         rows = connection.execute(
             text("SELECT * FROM FruitsMenu")
         )
         for row in rows:
-            query_results.append({'name': row['name'], 'price': row['price']})
-            # logger.info(f"name={row['name']} price={row['price']}")
+            query_results.append(
+                {
+                    'id': row['id'],
+                    'name': row['name'],
+                    'price': row['price'],
+                    'modtime': row['modtime'].isoformat()  # datetime.datetime
+                }
+            )
 
     return {
         'statusCode': 200,
