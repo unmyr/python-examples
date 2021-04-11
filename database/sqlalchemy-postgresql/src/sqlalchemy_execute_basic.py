@@ -56,8 +56,14 @@ def execute_query(engine):
             [
                 {'name': 'Apple', 'price': 100},
                 {'name': 'Banana', 'price': 120},
-                {'name': 'Orange', 'price': 110}
+                {'name': 'Orange', 'price': -1},
+                {'name': 'リンゴ', 'price': 180}
             ]
+        )
+
+        connection.execute(
+            text("UPDATE FruitsMenu SET price=:price WHERE name = :name"),
+            {'name': 'Orange', 'price': 110}
         )
         trans.commit()
 
