@@ -2,8 +2,9 @@
 :toc: left
 :toclevels: 3
 
-=== Install
+== Install
 
+=== Install psycopg2
 . Install python-dev nad libpq-dev
 +
 .Ubuntu 18.04 LTS
@@ -16,5 +17,14 @@ $ sudo apt install -y python-dev libpq-dev
 +
 [source,bash]
 ----
-$ python -m pip install -r requirements.txt
+$ python -m pip install -r requirements.psycopg2.txt
+----
+
+=== Install pg8000
+
+. Install pip packages
++
+[source,bash]
+----
+$ python -m pip install -r requirements.pg8000.txt
 ----
