@@ -107,6 +107,26 @@ def main(driver_name):
             'body': json.dumps(traceback.format_exc())
         }
 
+    except sqlalchemy.exc.InterfaceError as exc:
+        # pg8000.exceptions.InterfaceError
+        #  - Can't create a connection to host
+        logger.error(traceback.format_exc())
+        logger.error(exc)
+        result = {
+            'statusCode': 500,
+            'body': json.dumps(traceback.format_exc())
+        }
+
+    except sqlalchemy.exc.OperationalError as exc:
+        # psycopg2.OperationalError
+        #  - could not connect to server: Connection refused
+        logger.error(traceback.format_exc())
+        logger.error(exc)
+        result = {
+            'statusCode': 500,
+            'body': json.dumps(traceback.format_exc())
+        }
+
     return result
 
 
