@@ -49,10 +49,10 @@ def execute_query(engine):
     with engine.connect() as connection:
         trans = connection.begin()
         connection.execute(
-            text("DELETE FROM FruitsMenu")
+            text("DELETE FROM guest.fruits_menu")
         )
         connection.execute(
-            text("INSERT INTO FruitsMenu (name, price) VALUES (:name, :price)"),
+            text("INSERT INTO guest.fruits_menu (name, price) VALUES (:name, :price)"),
             [
                 {'name': 'Apple', 'price': 100},
                 {'name': 'Banana', 'price': 120},
@@ -62,13 +62,13 @@ def execute_query(engine):
         )
 
         connection.execute(
-            text("UPDATE FruitsMenu SET price=:price WHERE name = :name"),
+            text("UPDATE guest.fruits_menu SET price=:price WHERE name = :name"),
             {'name': 'Orange', 'price': 110}
         )
         trans.commit()
 
         rows = connection.execute(
-            text("SELECT * FROM FruitsMenu")
+            text("SELECT * FROM guest.fruits_menu")
         )
         for row in rows:
             query_results.append(

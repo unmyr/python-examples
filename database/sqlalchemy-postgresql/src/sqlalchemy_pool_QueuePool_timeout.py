@@ -49,12 +49,12 @@ def main(driver_name: str):
             t_0 = time.time()
             with engine.connect() as conn1, engine.connect() as conn2:
                 result = conn1.execute(
-                    sqlalchemy.text("SELECT * FROM FruitsMenu")
+                    sqlalchemy.text("SELECT * FROM guest.fruits_menu")
                 )
                 logger.info(result)
                 time.sleep(5)
                 result = conn2.execute(
-                    sqlalchemy.text("SELECT * FROM FruitsMenu")
+                    sqlalchemy.text("SELECT * FROM guest.fruits_menu")
                 )
                 logger.info(result)
             t_1 = time.time()

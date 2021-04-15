@@ -28,21 +28,26 @@ Base = declarative_base()
 
 class FruitsMenu(Base):
     """Fruits Menu."""
-    __tablename__ = 'fruitsmenu'
+    __tablename__ = 'fruits_menu'
 
-    schema = 'public'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)  # emits SERIAL
     name = Column(String(16), unique=True)
     price = Column(Integer)
-    modtime = Column(DateTime)
+    # Default value is the creation time, not automatically updated
+    modtime = Column(DateTime, server_default=sqlalchemy.sql.func.now())
+    __table_args__ = (
+        sqlalchemy.PrimaryKeyConstraint('id'),
+        {'schema': 'guest'}
+    )
 
-    def __init__(self, name, price, modtime):
+    def __init__(self, name, price):
         self.name = name
         self.price = price
-        self.modtime = modtime
 
     def __str__(self):
-        return 'id:{}, name:{}, price:{}, modtime:{}'.format(self.id, self.name, self.price, self.modtime)
+        return '{' + "id: {}, name: '{}', price: {}, modtime: '{}'".format(
+            self.id, self.name, self.price, self.modtime.isoformat()
+        ) + '}'
 
     def to_dict(self):
         """Generate non-primitive dict."""
@@ -68,6 +73,7 @@ def create_session(driver_name: str):
         pool_size=1,
         max_overflow=1
     )
+    Base.metadata.create_all(bind=engine, checkfirst=True)
 
     Session = sqlalchemy.orm.sessionmaker(engine)
     with engine.connect() as connection:
@@ -80,12 +86,24 @@ def execute_query(session):
     """Execute query."""
     logger.info('engine.connect()')
 
+    count = session.query(
+        FruitsMenu
+    ).count()
+    if count == 0:
+        session.add(FruitsMenu('Apple', 10))
+        session.add(FruitsMenu('Banana', 120))
+        session.add(FruitsMenu('Orange', 110))
+        session.commit()
+
     items = session.query(
         FruitsMenu
     ).filter(
-        FruitsMenu.name == 'Apple'
+        sqlalchemy.or_(
+            FruitsMenu.name == 'Apple',
+            FruitsMenu.name == 'Orange'
+        )
     ).all()
-    logger.info(items)
+    # logger.info(items)
 
     records = []
     for item in items:

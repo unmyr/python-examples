@@ -26,7 +26,7 @@ Base = declarative_base()
 
 
 class FruitsMenu(object):
-    """OR Mapper for FruitsMenu table."""
+    """OR Mapper for FRUITS_MENU table."""
 
 
 @contextmanager
@@ -67,17 +67,20 @@ def execute_query(session, metadata):
         sqlalchemy.Column('modtime', sqlalchemy.DateTime),
     )
     fruit_item_table = sqlalchemy.Table(
-        "fruitsmenu",
+        "fruits_menu",
         metadata,
         *columns,
-        schema='public'
+        schema='guest'
     )
     sqlalchemy.orm.mapper(FruitsMenu, fruit_item_table)
 
     items = session.query(
         FruitsMenu
     ).filter(
-        FruitsMenu.name == 'Apple'  # pylint: disable=no-member
+        sqlalchemy.or_(
+            FruitsMenu.name == 'Apple',  # pylint: disable=no-member
+            FruitsMenu.name == 'Orange'  # pylint: disable=no-member
+        )
     ).all()
     logger.info(f"Total: {len(items)} items.")
 

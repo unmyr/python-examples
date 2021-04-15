@@ -12,7 +12,7 @@ def main(engine):
     try:
         with engine.connect() as connection:
             result = connection.execute(
-                text("SELECT * FROM FruitsMenu")
+                text("SELECT * FROM guest.fruits_menu")
             )
             for row in result:
                 print(f"name={row['name']} price={row['price']}", )
