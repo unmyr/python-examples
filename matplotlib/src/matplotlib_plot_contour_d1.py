@@ -67,7 +67,9 @@ def main():
         [
             r'A square with side length $\sqrt{2}$',
             'A square with side length 2'
-        ]
+        ],
+        loc='upper center',
+        bbox_to_anchor=(0.5, -0.1)
     )
     matplotlib.pyplot.savefig('matplotlib_plot_contour_d1.png')
     # matplotlib.pyplot.show()

@@ -56,7 +56,9 @@ def main():
         [circle_r0, circle_r1],
         [
             r'circle $r=\frac{1}{\sqrt{2}}$', r'circle $r=1.0$'
-        ]
+        ],
+        loc='upper center',
+        bbox_to_anchor=(0.5, -0.1)
     )
     matplotlib.pyplot.savefig('matplotlib_plot_contour_d3.png')
     # matplotlib.pyplot.show()

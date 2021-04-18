@@ -74,7 +74,9 @@ def main():
             r'circle $r=\frac{1}{\sqrt{2}}$',
             r'A square with side length $\sqrt{2}$',
             'circle r=1.0'
-        ]
+        ],
+        loc='upper center',
+        bbox_to_anchor=(0.5, -0.1)
     )
     matplotlib.pyplot.savefig('matplotlib_plot_contour_d2.png')
     # matplotlib.pyplot.show()
