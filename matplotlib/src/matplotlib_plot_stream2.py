@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 x = np.linspace(-10, 10, 10)
 y = np.linspace(-10, 10, 10)
 X, Y = np.meshgrid(x, y)
-U = X*0 + 1
-V = X*0
+U = X * 0 + 1
+V = X * 0
 start_points = [[0, 0]]
 
 # Base streamline plot
 plt.figure()
-sp1 = plt.streamplot(x, y, U, V, color=[.5]*3)
+sp1 = plt.streamplot(x, y, U, V, color=[.5] * 3)
 
 # Streamline plot with 'start_points' argument
 sp2 = plt.streamplot(x, y, U, V, start_points=start_points,

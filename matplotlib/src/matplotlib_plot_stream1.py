@@ -6,7 +6,7 @@ x, y = np.linspace(-3, 3, 100), np.linspace(-3, 3, 100)
 X, Y = np.meshgrid(x, y)
 U = -1 - X**2 + Y
 V = 1 + X - Y**2
-speed = np.sqrt(U*U + V*V)
+speed = np.sqrt(U * U + V * V)
 
 start = [[0, 0], [1, 2]]
 
