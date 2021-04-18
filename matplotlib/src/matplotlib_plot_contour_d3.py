@@ -49,12 +49,15 @@ def main():
     matplotlib.pyplot.clabel(cs_plot, inline=1, fontsize=10)
     color_bar = matplotlib.pyplot.colorbar(cs_plot)
     color_bar.ax.set_ylabel('verbosity coefficient')
-    matplotlib.pyplot.title('f(x,y) = |x| + |y|')
+    matplotlib.pyplot.title(r'$f(x,y) = \|x\| + \|y\|$')
     ax.add_patch(circle_r0)
     ax.add_patch(circle_r1)
     ax.legend(
         [circle_r0, circle_r1],
-        ['circle r=1/sqrt(2)', 'circle r=1.0'])
+        [
+            r'circle $r=\frac{1}{\sqrt{2}}$', r'circle $r=1.0$'
+        ]
+    )
     matplotlib.pyplot.savefig('matplotlib_plot_contour_d3.png')
     # matplotlib.pyplot.show()
 

@@ -59,12 +59,16 @@ def main():
     matplotlib.pyplot.clabel(cs_plot, inline=1, fontsize=10)
     color_bar = matplotlib.pyplot.colorbar(cs_plot)
     color_bar.ax.set_ylabel('verbosity coefficient')
-    matplotlib.pyplot.title('f(x,y) = sqrt(x*x + y*y)')
+    matplotlib.pyplot.title(r'$f(x,y) = \sqrt{x^2 + y^2}$')
     ax.add_patch(square_1)
     ax.add_patch(square_2)
     ax.legend(
         [square_1, square_2],
-        ['A square with side length √2', 'A square with side length 2'])
+        [
+            r'A square with side length $\sqrt{2}$',
+            'A square with side length 2'
+        ]
+    )
     matplotlib.pyplot.savefig('matplotlib_plot_contour_d1.png')
     # matplotlib.pyplot.show()
 
