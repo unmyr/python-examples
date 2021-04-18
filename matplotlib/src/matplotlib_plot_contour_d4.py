@@ -47,7 +47,7 @@ def main():
     ax.set_aspect('equal', adjustable='box')
     cs_plot = matplotlib.pyplot.contour(
         grid_x, grid_y, z, levels,
-        cmap=matplotlib.pyplot.cm.Dark2  # pylint: disable=no-member
+        cmap='Dark2'
     )
     matplotlib.pyplot.clabel(cs_plot, inline=1, fontsize=10)
     color_bar = matplotlib.pyplot.colorbar(cs_plot)
@@ -59,6 +59,7 @@ def main():
         [circle_r0, circle_r1],
         ['circle r=1/sqrt(2)', 'circle r=1.0'])
     matplotlib.pyplot.savefig('matplotlib_plot_contour_d4.png')
+    # matplotlib.pyplot.show()
 
 
 if __name__ == '__main__':

@@ -21,7 +21,7 @@ print(seed_points)
 fig0, ax0 = plt.subplots()
 stream_plot = ax0.streamplot(
     X, Y, U, V, color=U, linewidth=2,
-    cmap=plt.cm.autumn, start_points=seed_points.T
+    cmap='autumn', start_points=seed_points.T
 )
 fig0.colorbar(stream_plot.lines)
 

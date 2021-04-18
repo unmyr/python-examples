@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Plot rastrigin function."""
-from matplotlib import cm
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -15,7 +14,7 @@ axe = figure.add_subplot(111, projection='3d')
 surface = axe.plot_surface(
     x, y, z,
     rstride=1, cstride=1,
-    cmap=cm.winter, linewidth=0, antialiased=False
+    cmap='winter', linewidth=0, antialiased=False
 )
 
 # figure.savefig("matplotlib_plot3d_rastrigin.png")
