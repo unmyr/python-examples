@@ -24,10 +24,8 @@ def main():
         )
 
         cur = conn.cursor()
-        cur.execute("""SELECT * from fruits_menu""")
+        cur.execute("""SELECT * FROM fruits_menu""")
         rows = cur.fetchall()
-
-        print("\nShow records:\n")
         for row in rows:
             print(row)
 

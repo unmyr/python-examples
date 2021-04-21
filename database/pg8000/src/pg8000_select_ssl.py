@@ -34,7 +34,6 @@ def main():
         cur.execute("""SELECT * FROM fruits_menu""")
         rows = cur.fetchall()
 
-        print("\nShow records:\n")
         for row in rows:
             print(row)
 
