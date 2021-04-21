@@ -22,18 +22,23 @@ def main():
             user=pg_user,
             password=pg_password
         )
+
         cur = conn.cursor()
         cur.execute("""SELECT * from fruits_menu""")
         rows = cur.fetchall()
+
         print("\nShow records:\n")
         for row in rows:
-            print("   ", row[0])
+            print(row)
+
     except pg8000.dbapi.ProgrammingError as exc:
         print(traceback.format_exc())
         print(exc)
+
     except pg8000.dbapi.DatabaseError as exc:
         print(traceback.format_exc())
         print(exc)
+
     finally:
         if cur is not None:
             cur.close()
