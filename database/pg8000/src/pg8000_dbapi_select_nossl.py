@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Example of pg8000."""
+"""Example of pg8000.dbapi."""
 import os
 import traceback
 
-import pg8000
+import pg8000.dbapi
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
     conn = None
     cur = None
     try:
-        conn = pg8000.connect(
+        conn = pg8000.dbapi.connect(
             host=pg_host,
             database=pg_database,
             user=pg_user,
