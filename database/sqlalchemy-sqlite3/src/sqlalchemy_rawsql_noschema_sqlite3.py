@@ -11,12 +11,14 @@ def main(engine):
     """Run main."""
     try:
         with engine.connect() as connection:
-            # cur = connection.cursor()
-            connection.execute("CREATE TABLE fruits_menu ("
-                               "id SERIAL PRIMARY KEY,"
-                               "name VARCHAR(16) UNIQUE,"
-                               "price INTEGER,"
-                               "modtime timestamp DEFAULT current_timestamp)")
+            connection.execute(
+                "CREATE TABLE fruits_menu ("
+                "  id SERIAL PRIMARY KEY,"
+                "  name VARCHAR(16) UNIQUE,"
+                "  price INTEGER,"
+                "  modtime timestamp DEFAULT current_timestamp"
+                ")"
+            )
 
             inspector = sqlalchemy.inspect(engine)
             print(f"table_name={inspector.get_table_names()}")
@@ -45,7 +47,14 @@ def main(engine):
                 ),
                 fruit_item_list
             )
-            result = connection.execute(text("SELECT * FROM fruits_menu"))
+            result = connection.execute(
+                text(
+                    "SELECT * FROM fruits_menu "
+                    "WHERE fruits_menu.name = :name1 OR fruits_menu.name = :name2"
+                ),
+                name1='Apple',
+                name2='Orange'
+            )
             for row in result:
                 print(f"name={row['name']} price={row['price']}", )
 
@@ -62,7 +71,7 @@ if __name__ == '__main__':
         database=os.environ.get(':memory:'),
         username=os.environ.get(''),
         password=os.environ.get('')),
-        echo=True
+        echo=False
     )
     main(engine_sqlite3)
 

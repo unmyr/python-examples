@@ -19,7 +19,9 @@ def main(engine):
     """Run main."""
     try:
         engine.execute(
-            sqlalchemy.text("ATTACH DATABASE ':memory:' AS 'guest'"))
+            sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
+            schema='guest'
+        )
         metadata = sqlalchemy.MetaData(bind=engine)
         columns = (
             sqlalchemy.Column('id', sqlalchemy.Integer, primary_key=True),

@@ -94,7 +94,7 @@ if __name__ == '__main__':
         database=os.environ.get(':memory:'),
         username=os.environ.get(''),
         password=os.environ.get('')),
-        echo=True
+        echo=False
     )
     main(engine_sqlite3)
 
