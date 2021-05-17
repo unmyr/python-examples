@@ -82,6 +82,7 @@
     "pylintrc",
     "pyplot",
     "pytest",
+    "qmark",
     "randn",
     "rastrigin",
     "rdiv",
