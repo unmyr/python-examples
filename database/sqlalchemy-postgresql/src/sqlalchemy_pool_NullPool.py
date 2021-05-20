@@ -41,6 +41,10 @@ if __name__ == '__main__':
     if sys.argv[1] in ['postgresql+pg8000', 'postgresql+psycopg2']:
         main(sys.argv[1])
     else:
-        print("usage: {sys.argv[0]} " + '{postgresql+pg8000|postgresql+psycopg2}', sys.stderr)
+        print(
+            f"usage: {sys.argv[0]} "
+            '{postgresql+pg8000|postgresql+psycopg2}',
+            file=sys.stderr
+        )
 
 # EOF

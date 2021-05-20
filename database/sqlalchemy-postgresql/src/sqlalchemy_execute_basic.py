@@ -11,7 +11,6 @@ import traceback
 import sqlalchemy
 from sqlalchemy import text
 
-
 logger = getLogger(__name__)
 stream_handler = StreamHandler()
 stream_handler.setLevel(DEBUG)
@@ -48,11 +47,11 @@ def execute_query(engine):
     logger.info('engine.connect()')
     with engine.connect() as connection:
         trans = connection.begin()
+        connection.execute(text("DELETE FROM guest.fruits_menu"))
         connection.execute(
-            text("DELETE FROM guest.fruits_menu")
-        )
-        connection.execute(
-            text("INSERT INTO guest.fruits_menu (name, price) VALUES (:name, :price)"),
+            text(
+                "INSERT INTO guest.fruits_menu (name, price) VALUES (:name, :price)"
+            ),
             [
                 {'name': 'Apple', 'price': 100},
                 {'name': 'Banana', 'price': 120},
@@ -67,31 +66,21 @@ def execute_query(engine):
         )
         trans.commit()
 
-        rows = connection.execute(
-            text("SELECT * FROM guest.fruits_menu")
-        )
+        rows = connection.execute(text("SELECT * FROM guest.fruits_menu"))
         for row in rows:
-            query_results.append(
-                {
-                    'id': row['id'],
-                    'name': row['name'],
-                    'price': row['price'],
-                    'modtime': row['modtime'].isoformat()  # datetime.datetime
-                }
-            )
+            query_results.append({
+                'id': row['id'],
+                'name': row['name'],
+                'price': row['price'],
+                'modtime': row['modtime'].isoformat()  # datetime.datetime
+            })
 
-    return {
-        'statusCode': 200,
-        'body': json.dumps(query_results)
-    }
+    return {'statusCode': 200, 'body': json.dumps(query_results)}
 
 
 def main(driver_name):
     """Run main."""
-    result = {
-        'statusCode': 500,
-        'body': 'Internal Server Error.'
-    }
+    result = {'statusCode': 500, 'body': 'Internal Server Error.'}
     try:
         with create_engine(driver_name) as engine:
             t_0 = time.time()
@@ -99,25 +88,10 @@ def main(driver_name):
             t_1 = time.time()
             logger.info(f'dt = {(t_1 - t_0):.3f}s')
 
-    except sqlalchemy.exc.ProgrammingError as exc:
-        logger.error(traceback.format_exc())
-        logger.error(exc)
-        result = {
-            'statusCode': 500,
-            'body': json.dumps(traceback.format_exc())
-        }
-
-    except sqlalchemy.exc.InterfaceError as exc:
+    except (sqlalchemy.exc.ProgrammingError, sqlalchemy.exc.InterfaceError,
+            sqlalchemy.exc.OperationalError) as exc:
         # pg8000.exceptions.InterfaceError
         #  - Can't create a connection to host
-        logger.error(traceback.format_exc())
-        logger.error(exc)
-        result = {
-            'statusCode': 500,
-            'body': json.dumps(traceback.format_exc())
-        }
-
-    except sqlalchemy.exc.OperationalError as exc:
         # psycopg2.OperationalError
         #  - could not connect to server: Connection refused
         logger.error(traceback.format_exc())
@@ -134,6 +108,10 @@ if __name__ == '__main__':
     if sys.argv[1] in ['postgresql+pg8000', 'postgresql+psycopg2']:
         main(sys.argv[1])
     else:
-        print("usage: {sys.argv[0]} " + '{postgresql+pg8000|postgresql+psycopg2}', sys.stderr)
+        print(
+            f"usage: {sys.argv[0]} "
+            '{postgresql+pg8000|postgresql+psycopg2}',
+            file=sys.stderr
+        )
 
 # EOF
