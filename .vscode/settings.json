@@ -70,6 +70,7 @@
     "overgeneral",
     "paren",
     "parseable",
+    "pgdb",
     "plotly",
     "psycopg",
     "pycodestyle",
