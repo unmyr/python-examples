@@ -68,13 +68,15 @@ def main(engine):
 
 
 if __name__ == '__main__':
-    engine_sqlite3 = sqlalchemy.create_engine(sqlalchemy.engine.URL.create(
-        'sqlite',
-        host=os.environ.get(''),
-        port=os.environ.get(''),
-        database=os.environ.get(':memory:'),
-        username=os.environ.get(''),
-        password=os.environ.get('')),
+    engine_sqlite3 = sqlalchemy.create_engine(
+        sqlalchemy.engine.URL.create(
+            'sqlite',
+            host='',
+            port=None,
+            database=os.environ.get(':memory:'),
+            username='',
+            password=''
+        ),
         echo=False
     )
     main(engine_sqlite3)
