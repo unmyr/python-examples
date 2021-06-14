@@ -9,13 +9,15 @@ endif::[]
 === Install Python 3.8.x (Ubuntu 18.04)
 * https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/[How to Install Python 3.8 on Ubuntu 18.04 | Linuxize^] +
   python 3.8 ubuntu apt - Google Search
+* https://github.com/pyenv/pyenv/wiki#suggested-build-environment[Home · pyenv/pyenv Wiki^]
 
 . Update the packages list and install the packages necessary to build Python:
 +
 [source,shell-session]
 ----
-$ sudo apt update
-$ sudo apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
+$ sudo apt update; sudo apt install make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 ----
 
 . List python versions
@@ -63,4 +65,9 @@ $ pyenv uninstall 3.8.8
 pyenv: remove /home/guest/.pyenv/versions/3.8.8? [y|N]y
 pyenv: 3.8.8 uninstalled
 $
+----
+
+[source,shell-session]
+----
+python -m pip install setuptools wheel
 ----
