@@ -25,9 +25,11 @@ def main():
         print("\nShow records:\n")
         for row in rows:
             print("   ", row[0])
+
     except psycopg2.DatabaseError as exc:
         print(traceback.format_exc())
         print(exc)
+
     finally:
         if cur is not None:
             cur.close()
