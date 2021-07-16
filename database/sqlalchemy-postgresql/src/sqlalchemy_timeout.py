@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Example of statement timeout."""
-from logging import DEBUG, Formatter, getLogger, StreamHandler
+import logging
 import os
 import sys
 import time
@@ -22,7 +22,7 @@ class BraceMessage:
 
 
 __ = BraceMessage
-logger = getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def select_all(
@@ -35,7 +35,7 @@ def select_all(
                 sqlalchemy.text("SELECT pg_sleep(3)")
             )
 
-        values = []
+        values: list = []
         for row in result:
             ary = [None] * len(row)
             for i, cell in enumerate(row):
@@ -51,19 +51,20 @@ def select_all(
 
 def main(driver_name: str) -> typing.NoReturn:
     """Run main."""
-    stream_handler = StreamHandler()
-    stream_handler.setLevel(DEBUG)
-    stream_formatter = Formatter(
+    stream_handler: logging.StreamHandler = logging.StreamHandler()
+    stream_handler.setLevel(logging.DEBUG)
+    stream_formatter = logging.Formatter(
         '[%(asctime)s] %(funcName)s - %(levelname)s - %(message)s'
     )
     stream_handler.setFormatter(stream_formatter)
-    logger.setLevel(DEBUG)
+    logger.setLevel(logging.DEBUG)
     logger.addHandler(stream_handler)
     logger.propagate = False
 
     application_name = os.path.basename(__file__)
     engine: typing.Optional[sqlalchemy.engine.base.Engine] = None
-    wait_sec = 4
+    wait_sec: int = 4
+    t_0: float = time.time()
     try:
         database_url = sqlalchemy.engine.URL.create(
             driver_name,
@@ -90,22 +91,34 @@ def main(driver_name: str) -> typing.NoReturn:
                     'timeout': wait_sec
                 }
             )
-        t_0 = time.time()
+        t_0: float = time.time()
         val = select_all(engine)
         logger.info(__(f'val={val}'))
-        t_1 = time.time()
+        t_1: float = time.time()
         logger.info(__(f'dt={t_1 - t_0:.3}'))
 
     except (sqlalchemy.exc.ProgrammingError, sqlalchemy.exc.InterfaceError,
             sqlalchemy.exc.OperationalError) as exc:
+        # pylint: disable=line-too-long
         # psycopg2
-        # sqlalchemy.exc.OperationalError:
-        # (psycopg2.errors.QueryCanceled) canceling statement due to statement timeout
+        #
+        # * Connection timed out
+        #   sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) timeout expired
+        # * too many connections
+        #   sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) FATAL:  too many connections for database "fruits"
+        # * statement timeout
+        #   sqlalchemy.exc.OperationalError: (psycopg2.errors.QueryCanceled) canceling statement due to statement timeout
         #
         # pg8000
-        # sqlalchemy.exc.InterfaceError:
-        # (pg8000.exceptions.InterfaceError) network error on read
+        # * Connection timed out
+        #   sqlalchemy.exc.InterfaceError: (pg8000.exceptions.InterfaceError) network error on read
+        # * too many connections
+        #   sqlalchemy.exc.ProgrammingError: (pg8000.dbapi.ProgrammingError) {'S': 'FATAL', 'V': 'FATAL', 'C': '53300', 'M': 'too many connections for database "fruits"', 'F': 'postinit.c', 'L': '364', 'R': 'CheckMyDatabase'}
+        # * statement timeout
+        #   sqlalchemy.exc.InterfaceError: (pg8000.exceptions.InterfaceError) network error on read
         #
+        t_1: float = time.time()
+        logger.info(__(f'dt={t_1 - t_0:.3}'))
         logger.info(__(f'{type(exc)}'))
         logger.exception(exc)
 
