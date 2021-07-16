@@ -67,9 +67,6 @@ def execute_select(
         logger.debug(__(f'CALL: {cnt}: conn.execute'))
         result = conn.execute(
             sqlalchemy.text(
-                # "SELECT pid,datname,usename,application_name,state"
-                # " FROM pg_stat_activity"
-                # " WHERE application_name = :application_name;"
                 f"SELECT pg_sleep(2), {cnt}"
             ),
             {'application_name': application_name}
