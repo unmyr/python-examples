@@ -1,29 +1,30 @@
 # -*- coding: utf-8 -*-
 """Example of execute SELECT."""
 from contextlib import contextmanager
-from logging import getLogger, StreamHandler, DEBUG, Formatter
 import json
+import logging
 import os
 import sys
 import time
 import traceback
+import typing
 
 import sqlalchemy
 from sqlalchemy import text
 
-logger = getLogger(__name__)
-stream_handler = StreamHandler()
-stream_handler.setLevel(DEBUG)
-logger.setLevel(DEBUG)
+logger: logging.Logger = logging.getLogger(__name__)
+stream_handler: logging.StreamHandler = logging.StreamHandler()
+stream_handler.setLevel(logging.DEBUG)
+logger.setLevel(logging.DEBUG)
 logger.addHandler(stream_handler)
 logger.propagate = False
 stream_handler.setFormatter(
-    Formatter('[%(asctime)s] %(levelname)s: %(message)s')
+    logging.Formatter('[%(asctime)s] %(levelname)s: %(message)s')
 )
 
 
 @contextmanager
-def create_engine(driver_name: str):
+def create_engine(driver_name: str) -> typing.NoReturn:
     """Create engine."""
     engine = sqlalchemy.create_engine(
         sqlalchemy.engine.URL.create(

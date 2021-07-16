@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Example of parallel execution."""
 from concurrent.futures import ThreadPoolExecutor
-from logging import DEBUG, Formatter, getLogger, StreamHandler
 import concurrent.futures
+import logging
 import os
 import sys
 import time
@@ -23,7 +23,7 @@ class BraceMessage:
 
 
 __ = BraceMessage
-logger = getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
 class EngineHelper:
@@ -88,8 +88,8 @@ def call_engine_helper(
     poolclass: typing.Union[sqlalchemy.pool.QueuePool, sqlalchemy.pool.StaticPool]
 ) -> typing.NoReturn:
     """Call engine helper"""
-    total_tasks = 30
-    parallel = 5
+    total_tasks: int = 30
+    parallel: int = 5
     pool: ThreadPoolExecutor = ThreadPoolExecutor(parallel)
     try:
         futures: typing.List[concurrent.futures.Future] = []
@@ -112,24 +112,24 @@ def call_engine_helper(
 
 def main(driver_name: str, pool_name: str) -> typing.NoReturn:
     """Run main."""
-    stream_handler = StreamHandler()
-    stream_handler.setLevel(DEBUG)
-    stream_formatter = Formatter(
+    stream_handler: logging.StreamHandler = logging.StreamHandler()
+    stream_handler.setLevel(logging.DEBUG)
+    stream_formatter: logging.Formatter = logging.Formatter(
         '[%(asctime)s] %(funcName)s - %(levelname)s - %(message)s'
     )
     stream_handler.setFormatter(stream_formatter)
-    logger.setLevel(DEBUG)
+    logger.setLevel(logging.DEBUG)
     logger.addHandler(stream_handler)
     logger.propagate = False
 
     application_name = os.path.basename(__file__)
 
-    t_0 = time.time()
+    t_0: float = time.time()
     if pool_name == 'StaticPool':
         call_engine_helper(driver_name, application_name, sqlalchemy.pool.StaticPool)
     elif pool_name == 'QueuePool':
         call_engine_helper(driver_name, application_name, sqlalchemy.pool.QueuePool)
-    t_1 = time.time()
+    t_1: float = time.time()
     logger.info(__(f'dt={t_1 - t_0:.3}'))
 
 

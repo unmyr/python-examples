@@ -4,14 +4,15 @@ from contextlib import contextmanager
 import os
 import sys
 import time
+import typing
 
 import sqlalchemy
 
 
 @contextmanager
-def create_engine(driver_name: str):
+def create_engine(driver_name: str) -> typing.NoReturn:
     """Create engine."""
-    engine = sqlalchemy.create_engine(
+    engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
         sqlalchemy.engine.URL.create(
             driver_name,
             host=os.environ.get('PGHOST'),
@@ -27,14 +28,14 @@ def create_engine(driver_name: str):
     engine.dispose()
 
 
-def main(driver_name: str):
+def main(driver_name: str) -> typing.NoReturn:
     """Run main."""
     with create_engine(driver_name) as engine:
-        t_0 = time.time()
+        t_0: float = time.time()
         for _ in range(1000):
             with engine.connect():
                 pass
-        t_1 = time.time()
+        t_1: float = time.time()
         print(f'dt = {(t_1 - t_0):.3f}s')
 
 

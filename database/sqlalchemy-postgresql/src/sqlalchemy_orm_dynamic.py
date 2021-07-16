@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
 """Example of execute SELECT."""
 from contextlib import contextmanager
-from logging import getLogger, StreamHandler, DEBUG, Formatter
 import json
+import logging
 import os
 import sys
 import time
 import traceback
+import typing
 
 from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy
 
 
-logger = getLogger(__name__)
-stream_handler = StreamHandler()
-stream_handler.setLevel(DEBUG)
-logger.setLevel(DEBUG)
+logger: logging.Logger = logging.getLogger(__name__)
+stream_handler: logging.StreamHandler = logging.StreamHandler()
+stream_handler.setLevel(logging.DEBUG)
+logger.setLevel(logging.DEBUG)
 logger.addHandler(stream_handler)
 logger.propagate = False
 stream_handler.setFormatter(
-    Formatter('[%(asctime)s] %(levelname)s: %(message)s')
+    logging.Formatter('[%(asctime)s] %(levelname)s: %(message)s')
 )
 
 Base = declarative_base()
@@ -30,9 +31,9 @@ class FruitsMenu(object):
 
 
 @contextmanager
-def create_session(driver_name: str):
+def create_session(driver_name: str) -> typing.NoReturn:
     """Create engine."""
-    engine = sqlalchemy.create_engine(
+    engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
         sqlalchemy.engine.URL.create(
             driver_name,
             host=os.environ.get('PGHOST'),
@@ -56,7 +57,7 @@ def create_session(driver_name: str):
     engine.dispose()
 
 
-def execute_query(session, metadata):
+def execute_query(session, metadata) -> dict:
     """Execute query."""
     # meta.create_all()
 
@@ -101,7 +102,7 @@ def execute_query(session, metadata):
     }
 
 
-def main(driver_name):
+def main(driver_name: str) -> dict:
     """Run main."""
     result = {
         'statusCode': 500,
@@ -109,9 +110,9 @@ def main(driver_name):
     }
     try:
         with create_session(driver_name) as (session, metadata):
-            t_0 = time.time()
+            t_0: float = time.time()
             logger.info(execute_query(session, metadata))
-            t_1 = time.time()
+            t_1: float = time.time()
             logger.info(f'dt = {(t_1 - t_0):.3f}s')
 
     except sqlalchemy.exc.ProgrammingError as exc:
