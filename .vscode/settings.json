@@ -136,7 +136,7 @@
   "python.linting.pylintEnabled": true,
   "python.linting.pycodestyleEnabled": true,
   "python.linting.pycodestyleArgs": [
-    "--ignore=W503",
+    "--ignore=E501,W503",
     "--max-line-length=120"
   ],
   "python.testing.pytestEnabled": false
