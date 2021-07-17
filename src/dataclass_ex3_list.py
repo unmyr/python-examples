@@ -22,3 +22,13 @@ if __name__ == '__main__':
     print(f"o1={o1.list_field} o2={o2.list_field}")
     assert o1.list_field == [1, 2]
     assert o2.list_field == [3]
+
+    my_list = [3, 4]
+    o3 = ListDataClass(my_list)
+    o4 = ListDataClass(my_list)
+    o3.add(5)
+    o4.add(6)
+    print(f"o3={o3.list_field} o4={o4.list_field}")
+    assert o3.list_field == [3, 4, 5, 6]
+    assert o4.list_field == [3, 4, 5, 6]
+    assert o3.list_field == o4.list_field
