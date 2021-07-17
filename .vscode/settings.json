@@ -79,6 +79,7 @@
     "pyenv",
     "pyflakes",
     "pygraphviz",
+    "pygresql",
     "pygtk",
     "pylab",
     "pylint",
