@@ -32,7 +32,7 @@ def setup_sqlite_table(engine: sqlalchemy.engine.base.Engine):
                 )
             )
 
-            fruit_item_list = [
+            fruit_item_list: typing.List[dict] = [
                 {
                     'name': 'Apple',
                     'price': 100
