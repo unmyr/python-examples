@@ -26,12 +26,11 @@ class TestCalc(unittest.TestCase):
         assert new_num1 == chk_num1
 
         org_date1 = datetime.date(2017, 11, 12)
-        chk_date1 = datetime.date(2017, 11, 12)
+        chk_date1 = None
         new_date1 = recursive(
-            org_date1,
-            value_func=lambda v: v.lower() if isinstance(v, str) else v
+            org_date1
         )
-        # self.assertEquals(new_date1, chk_date1)
+        self.assertEqual(new_date1, chk_date1)
 
     def test_dict_rename_keys(self):
         """Test dict."""
@@ -45,13 +44,21 @@ class TestCalc(unittest.TestCase):
 
     def test_dict_rename_values(self):
         """Test dict."""
-        org_dict1 = {"Outer": {"Inner": "Value"}}
-        chk_dict1 = {"Outer": {"Inner": "value"}}
+        org_dict1 = {"Outer": {"Inner": "Value", 'Date': datetime.date(2017, 11, 12)}}
+        chk_dict1 = {"Outer": {"Inner": "value", 'Date': None}}
         new_dict1 = recursive(
             org_dict1,
             value_func=lambda v: v.lower() if isinstance(v, str) else v
         )
         self.assertDictEqual(new_dict1, chk_dict1)
+
+        org_dict2 = {"Outer": {"Inner": datetime.date(2017, 11, 12)}}
+        chk_dict2 = {"Outer": {"Inner": None}}
+        new_dict2 = recursive(
+            org_dict2,
+            value_func=lambda v: v.lower() if isinstance(v, str) else v
+        )
+        self.assertDictEqual(new_dict2, chk_dict2)
 
     def test_list_rename_values(self):
         """Test dict."""
