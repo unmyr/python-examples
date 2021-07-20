@@ -20,6 +20,7 @@
     "blit",
     "builtins",
     "bzip",
+    "chromedriver",
     "circo",
     "clabel",
     "classmethod",
@@ -47,6 +48,7 @@
     "indentpycodestyle",
     "inlinevar",
     "isdst",
+    "isnan",
     "itertools",
     "leveloffset",
     "libpq",
@@ -113,6 +115,7 @@
     "unichr",
     "urllib",
     "vstack",
+    "vuejs",
     "wday",
     "webm",
     "wireframe",
@@ -140,5 +143,14 @@
     "--ignore=E501,W503",
     "--max-line-length=120"
   ],
-  "python.testing.pytestEnabled": false
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": true,
+  "python.testing.unittestArgs": [
+    "-v",
+    "-s",
+    "./tests",
+    "-p",
+    "test_*.py"
+  ],
+  "python.testing.nosetestsEnabled": false
 }
