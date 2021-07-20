@@ -26,9 +26,9 @@ class TestCalc(unittest.TestCase):
         assert new_num1 == chk_num1
 
         org_date1 = datetime.date(2017, 11, 12)
-        chk_date1 = None
+        chk_date1 = datetime.date(2017, 11, 12)
         new_date1 = recursive(
-            org_date1
+            org_date1, 0
         )
         self.assertEqual(new_date1, chk_date1)
 
