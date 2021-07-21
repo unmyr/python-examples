@@ -60,23 +60,23 @@ class TestCalc(unittest.TestCase):
         )
         self.assertDictEqual(new_dict2, chk_dict2)
 
-    def test_list_rename_values(self):
+    def test_list_iter_func(self):
         """Test dict."""
-        org_list1 = ['Item1', 'Item2', 'Item3', 3]
-        chk_list1 = ['item1', 'item2', 'item3', 3]
+        org_list1 = ['Item1', 'Item2', 'Item3']
+        chk_list1 = ['Item1', 'Item2', 'Item3', 3]
         new_list1 = recursive(
             org_list1,
-            value_func=lambda v: v.lower() if isinstance(v, str) else v
+            iter_func=lambda x: x + [len(x)]
         )
         self.assertListEqual(new_list1, chk_list1)
 
     def test_list_dict_rename_keys(self):
         """Test list of dict."""
         org_list1 = [{'None': 'None'}, {'bool': 'False'}, {'int': '0'}, {'str': ''}]
-        chk_list1 = [{'none': 'None'}, {'bool': 'False'}, {'int': '0'}, {'str': ''}]
+        chk_list1 = [{'None': 'None'}, {'bool': 'False'}, {'int': '0'}, {'str': ''}]
         new_list1 = recursive(
             org_list1,
-            dict_func=lambda x: {key.lower(): value for key, value in x.items()}
+            value_func=str
         )
         self.assertListEqual(new_list1, chk_list1)
 

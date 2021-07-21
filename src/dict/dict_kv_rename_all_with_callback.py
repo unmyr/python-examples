@@ -49,16 +49,26 @@ def recursive(
 
 def main():
     """Run main."""
-    d_1 = {"Outer": {"Inner": "Value"}}
-    d_2 = ['Item1', 'Item2', 'Item3', 3]
-    d_3 = [{'None': 'None'}, {'bool': 'False'}, {'int': '0'}, {'str': ''}]
-    for d in [d_1, d_2, d_3]:
-        val = recursive(
-            d,
-            dict_func=lambda x: {key.lower(): value for key, value in x.items()}
-        )
-        print(f' in={d}')
-        print(f'out:{val}')
+    org_dict1 = {"Outer": {"Inner": "Value"}}
+    new_dict1 = recursive(
+        org_dict1,
+        dict_func=lambda x: {key.lower(): value for key, value in x.items()}
+    )
+    print(f' in={org_dict1}\nout:{new_dict1}\n')
+
+    org_list1 = ['Item1', 'Item2', 'Item3']
+    new_list1 = recursive(
+        org_list1,
+        iter_func=lambda x: x + [len(x)]
+    )
+    print(f' in={org_list1}\nout:{new_list1}\n')
+
+    org_list2 = [{'None': 'None'}, {'bool': 'False'}, {'int': '0'}, {'str': ''}]
+    new_list2 = recursive(
+        org_list2,
+        value_func=str
+    )
+    print(f' in={org_list2}\nout:{new_list2}\n')
 
 
 if __name__ == '__main__':
