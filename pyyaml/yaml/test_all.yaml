@@ -1,0 +1,48 @@
+# Date and Time
+DateTime:
+  Time:
+    time: 20:03:47
+  Timestamps:
+    canonical: 2001-12-15T02:59:43.999999Z
+    Date: 2012-10-17
+    dt spaced 1: 2012-10-17 00:00:00
+    dt spaced 2: 2012-10-17 23:59:00
+    dt spaced 3: 2012-10-17 23:59:00 -1
+    dt iso8601 1: 2012-10-17t23:59:00+09:00
+    dt iso8601 2: 2012-10-17T23:59:00-01:00
+Variables:
+  ArrayStr:
+  - Foo
+  - Bar
+  - Hello
+    World
+  - |
+    Hello
+    World
+  Integers:
+    canonical: 12345
+    decimal: +12345
+    octal: 02472256     # 685230
+    hexadecimal: 0xC    # 12
+    base 60: 190:20:30  # 685230
+  Floats:
+    pi: 3.14159265358979323846264338327950
+    fixed: 685_230.15
+    canonical: 6.8523015e+5
+    exponential: 685.230_15e+03
+    Not a number: .NaN
+    Inf: .inf
+    NegativeInf: -.inf
+  Booleans:
+  - true
+  - false
+  Null: null
+  Sequence of Sequences:
+  - [Apple, 200]
+  - [Banana, 100]
+Resources:
+  SNSTopic:
+    Type: AWS::SNS::Topic
+    Condition: CreateResources
+    Properties:
+      TopicName: hoge-topic
