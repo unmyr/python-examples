@@ -95,6 +95,7 @@
     "readline",
     "reenable",
     "regexes",
+    "repr",
     "rgxs",
     "rstride",
     "savefig",
