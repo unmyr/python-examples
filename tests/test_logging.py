@@ -3,7 +3,7 @@ import unittest
 import logging
 
 
-class TestCalc(unittest.TestCase):
+class TestLogging(unittest.TestCase):
     """Test logging module."""
 
     def test_handler_set_level_none(self):
