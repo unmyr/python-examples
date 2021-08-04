@@ -7,7 +7,7 @@ class TestLogging(unittest.TestCase):
     """Test logging module."""
 
     def test_handler_set_level_none(self):
-        """Test dict."""
+        """Test the handler instance."""
         with self.assertRaises(TypeError) as context:
             logger = logging.getLogger(__name__)
             handler = logging.StreamHandler()
@@ -24,7 +24,7 @@ class TestLogging(unittest.TestCase):
         )
 
     def test_logger_set_level_none(self):
-        """Test dict."""
+        """Test the logger instance."""
         with self.assertRaises(TypeError) as context:
             logger = logging.getLogger(__name__)
             handler = logging.StreamHandler()
