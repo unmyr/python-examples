@@ -1,7 +1,5 @@
 """Sample of try-except."""
 import traceback
-# import os
-# import stat
 
 
 def main():

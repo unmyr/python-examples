@@ -3,6 +3,7 @@
 import io
 import os
 import traceback
+import typing
 from logging import getLogger, StreamHandler, DEBUG, Formatter
 from contextlib import contextmanager
 
@@ -19,11 +20,12 @@ logger.propagate = False
 
 
 def get_fd_num() -> int:
+    """Get file descripter."""
     return len(os.listdir(f"/proc/{os.getpid()}/fd"))
 
 
 @contextmanager
-def my_writer(file_name: str, open_mode: str = 'w'):
+def my_writer(file_name: str, open_mode: str = 'w') -> typing.Generator[typing.IO, None, None]:
     """Simple file reader/writer"""
     logger.info(f'{file_name}: __enter__: num-fds={get_fd_num()}')
     with open(file_name, open_mode) as file_handle:
