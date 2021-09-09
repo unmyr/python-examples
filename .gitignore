@@ -1,3 +1,7 @@
+# misc
+perf.csv
+log_to_file_rotate*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
