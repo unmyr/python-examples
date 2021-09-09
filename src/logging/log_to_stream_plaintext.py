@@ -1,17 +1,20 @@
 """Example of logger."""
-from logging import getLogger, StreamHandler, DEBUG
+import logging
 import sys
 import traceback
 
 try:
-    logger = getLogger(__name__)
-    handler = StreamHandler()
-    handler.setLevel(DEBUG)
-    logger.setLevel(DEBUG)
+    logger = logging.getLogger(__name__)
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.INFO)
+    logger.setLevel(logging.INFO)
     logger.addHandler(handler)
     logger.propagate = False
 
-    logger.debug("hello world!")
+    logger.debug("DEBUG: hello world!")
+    logger.info("INFO: hello world!")
+    logger.error("ERROR: hello world!")
+    logger.fatal("FATAL: hello world!")
 
 except TypeError as exc:
     print(f"{exc.args}", file=sys.stderr)
