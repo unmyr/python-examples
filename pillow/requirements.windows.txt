@@ -1,0 +1,2 @@
+Pillow>=8.1.2
+win32-setctime>=1.0.3
