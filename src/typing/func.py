@@ -57,6 +57,19 @@ class User:
         return self.age
 
 
+def get_timestamps() -> typing.Tuple[User, typing.List]:
+    """Get current datetime."""
+    perf_list = []
+    t_0 = datetime.datetime.now()
+    t_1 = datetime.datetime.now()
+    t_2 = datetime.datetime.now()
+    perf_list.append(round((t_1 - t_0).total_seconds(), 3))
+    perf_list.append(round((t_2 - t_1).total_seconds(), 3))
+    perf_list.insert(0, round((t_2 - t_0).total_seconds(), 3))
+    perf_list.append([1, 2])
+    return User('Bob', 28), perf_list
+
+
 def main() -> None:
     """Run main."""
     user: User
@@ -87,6 +100,10 @@ def main() -> None:
     number_List: typing.Iterable = append_int([1, 2, 3], 4)
     for elem in number_List:
         print(elem)
+
+    result: typing.List
+    user, result = get_timestamps()
+    print(f"{user} {result}")
 
 
 if __name__ == '__main__':
