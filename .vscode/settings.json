@@ -55,6 +55,7 @@
     "mutators",
     "mymodule",
     "mypackage",
+    "mypy",
     "ncalls",
     "ncol",
     "ndim",

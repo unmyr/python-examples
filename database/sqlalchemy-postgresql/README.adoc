@@ -28,3 +28,23 @@ $ python -m pip install -r requirements.psycopg2.txt
 ----
 $ python -m pip install -r requirements.pg8000.txt
 ----
+
+=== Install for mypy
+
+* https://docs.sqlalchemy.org/en/14/orm/extensions/mypy.html[Mypy  / Pep-484 Support for ORM Mappings — SQLAlchemy 1.4 Documentation^]
+
+. Install plugins
++
+[source,console]
+----
+python -m pip install sqlalchemy[mypy]
+----
+
+. Configuring mypy to use Plugins
++
+[source,ini]
+.setup.cfg
+----
+[mypy]
+plugins = sqlalchemy.ext.mypy.plugin
+----
