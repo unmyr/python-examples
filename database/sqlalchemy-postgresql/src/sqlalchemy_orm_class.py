@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""Example of execute SELECT."""
+"""Example of ORM."""
 from contextlib import contextmanager
 import json
 import logging
@@ -45,12 +44,12 @@ class FruitsMenu(Base):
         self.name = name
         self.price = price
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '{' + "id: {}, name: '{}', price: {}, modtime: '{}'".format(
             self.id, self.name, self.price, self.modtime.isoformat()
         ) + '}'
 
-    def to_dict(self):
+    def to_dict(self) -> typing.Dict:
         """Generate non-primitive dict."""
         return {
             'name': self.name,
@@ -60,13 +59,13 @@ class FruitsMenu(Base):
 
 
 @contextmanager
-def create_session(driver_name: str) -> typing.NoReturn:
+def create_session(driver_name):
     """Create engine."""
     engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
         sqlalchemy.engine.URL.create(
             driver_name,
             host=os.environ.get('PGHOST'),
-            port=os.environ.get('PGPORT'),
+            port=typing.cast(int, os.environ.get('PGPORT')),
             database=os.environ.get('PGDATABASE'),
             username=os.environ.get('PGUSER'),
             password=os.environ.get('PGPASSWORD')
@@ -78,12 +77,15 @@ def create_session(driver_name: str) -> typing.NoReturn:
 
     Session = sqlalchemy.orm.sessionmaker(engine)
     with engine.connect() as connection:
+        session: sqlalchemy.orm.session.Session
         with Session(bind=connection) as session:
             yield session
     engine.dispose()
 
 
-def execute_query(session):
+def execute_query(
+    session: sqlalchemy.orm.session.Session
+) -> typing.Dict:
     """Execute query."""
     logger.info('engine.connect()')
 
@@ -117,13 +119,14 @@ def execute_query(session):
     }
 
 
-def main(driver_name):
+def main(driver_name: str) -> typing.Dict:
     """Run main."""
     result = {
         'statusCode': 500,
         'body': 'Internal Server Error.'
     }
     try:
+        session: sqlalchemy.orm.session.Session
         with create_session(driver_name) as session:
             t_0 = time.time()
             logger.info(execute_query(session))
