@@ -33,7 +33,7 @@ class FruitsMenu(Base):
     name = Column(String(16), unique=True)
     price = Column(Integer)
     # Default value is the creation time, not automatically updated
-    Column(DateTime, server_default=sqlalchemy.sql.func.now())
+    modtime = Column(DateTime, server_default=sqlalchemy.sql.func.now())
     __table_args__ = (
         sqlalchemy.PrimaryKeyConstraint('id'),
         {'schema': 'guest'}
@@ -44,16 +44,15 @@ class FruitsMenu(Base):
         self.price = price
 
     def __str__(self) -> str:
-        return '{' + "id: {}, name: '{}', price: {}, modtime: '{}'".format(
-            self.id, self.name, self.price, self.modtime.isoformat()
+        return '{' + "id: {}, name: '{}', price: {}".format(
+            self.id, self.name, self.price
         ) + '}'
 
     def to_dict(self) -> typing.Dict:
         """Generate non-primitive dict."""
         return {
             'name': self.name,
-            'price': self.price,
-            'modtime': self.modtime.isoformat()
+            'price': self.price
         }
 
 

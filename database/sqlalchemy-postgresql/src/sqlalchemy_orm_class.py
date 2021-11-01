@@ -45,17 +45,30 @@ class FruitsMenu(Base):
         self.price = price
 
     def __str__(self) -> str:
-        return '{' + "id: {}, name: '{}', price: {}, modtime: '{}'".format(
-            self.id, self.name, self.price, self.modtime.isoformat()
-        ) + '}'
+        if self.modtime:
+            return '{' + "id: {}, name: '{}', price: {}, modtime: '{}'".format(
+                self.id, self.name, self.price, self.modtime.isoformat()
+            ) + '}'
+        else:
+            return '{' + "id: {}, name: '{}', price: {}, modtime: {}".format(
+                self.id, self.name, self.price, self.modtime
+            ) + '}'
 
     def to_dict(self) -> typing.Dict:
         """Generate non-primitive dict."""
-        return {
-            'name': self.name,
-            'price': self.price,
-            'modtime': self.modtime.isoformat()
-        }
+        if self.modtime:
+            result_dict = {
+                'name': self.name,
+                'price': self.price,
+                'modtime': self.modtime.isoformat()
+            }
+        else:
+            result_dict = {
+                'name': self.name,
+                'price': self.price,
+                'modtime': None
+            }
+        return result_dict
 
 
 @contextmanager
