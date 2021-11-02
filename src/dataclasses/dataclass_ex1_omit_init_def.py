@@ -1,6 +1,5 @@
 """Example of dataclass."""
 import dataclasses
-import typing
 
 
 @dataclasses.dataclass
@@ -9,7 +8,7 @@ class User:
     name: str
     age: int = 0
 
-    def aging(self) -> typing.NoReturn:
+    def aging(self) -> None:
         """Aging."""
         self.age += 1
 
