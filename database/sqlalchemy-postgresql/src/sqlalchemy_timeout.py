@@ -12,7 +12,7 @@ import sqlalchemy
 
 class BraceMessage:
     """Brace message"""
-    def __init__(self, fmt, *args, **kwargs) -> typing.NoReturn:
+    def __init__(self, fmt, *args, **kwargs) -> None:
         self.fmt = fmt
         self.args = args
         self.kwargs = kwargs
@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 def select_all(
     engine: sqlalchemy.engine.base.Engine
-) -> typing.List[typing.Tuple]:
+) -> typing.Optional[typing.List[typing.Tuple]]:
     """Run main."""
     try:
         with engine.connect() as connection:
@@ -48,8 +48,19 @@ def select_all(
         print(traceback.format_exc())
         print(exc)
 
+    return None
 
-def main(driver_name: str) -> typing.NoReturn:
+
+def optional_int(
+    num_str: typing.Optional[str]
+) -> typing.Optional[int]:
+    """Optional[str] to Optional[int]."""
+    if num_str is None:
+        return None
+    return int(num_str)
+
+
+def main(driver_name: str) -> None:
     """Run main."""
     stream_handler: logging.StreamHandler = logging.StreamHandler()
     stream_handler.setLevel(logging.DEBUG)
@@ -64,12 +75,12 @@ def main(driver_name: str) -> typing.NoReturn:
     application_name = os.path.basename(__file__)
     engine: typing.Optional[sqlalchemy.engine.base.Engine] = None
     wait_sec: int = 4
-    t_0: float = time.time()
+    t_0: float
     try:
         database_url = sqlalchemy.engine.URL.create(
             driver_name,
             host=os.environ.get('PGHOST'),
-            port=os.environ.get('PGPORT'),
+            port=optional_int(os.environ.get('PGPORT')),
             database=os.environ.get('PGDATABASE'),
             username=os.environ.get('PGUSER'),
             password=os.environ.get('PGPASSWORD')
@@ -91,10 +102,10 @@ def main(driver_name: str) -> typing.NoReturn:
                     'timeout': wait_sec
                 }
             )
-        t_0: float = time.time()
+        t_0 = time.time()
         val = select_all(engine)
         logger.info(__(f'val={val}'))
-        t_1: float = time.time()
+        t_1 = time.time()
         logger.info(__(f'dt={t_1 - t_0:.3}'))
 
     except (sqlalchemy.exc.ProgrammingError, sqlalchemy.exc.InterfaceError,
@@ -117,7 +128,7 @@ def main(driver_name: str) -> typing.NoReturn:
         # * statement timeout
         #   sqlalchemy.exc.InterfaceError: (pg8000.exceptions.InterfaceError) network error on read
         #
-        t_1: float = time.time()
+        t_1 = time.time()
         logger.info(__(f'dt={t_1 - t_0:.3}'))
         logger.info(__(f'{type(exc)}'))
         logger.exception(exc)

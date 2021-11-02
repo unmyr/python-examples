@@ -13,7 +13,7 @@ import sqlalchemy
 
 class BraceMessage:
     """Brace message"""
-    def __init__(self, fmt, *args, **kwargs) -> typing.NoReturn:
+    def __init__(self, fmt, *args, **kwargs) -> None:
         self.fmt = fmt
         self.args = args
         self.kwargs = kwargs
@@ -26,17 +26,26 @@ __ = BraceMessage
 logger: logging.Logger = logging.getLogger(__name__)
 
 
+def optional_int(
+    num_str: typing.Optional[str]
+) -> typing.Optional[int]:
+    """Optional[str] to Optional[int]."""
+    if num_str is None:
+        return None
+    return int(num_str)
+
+
 class EngineHelper:
     """Engine helper."""
     def __init__(
         self, driver_name: str,
         application_name: str,
         poolclass=sqlalchemy.pool.QueuePool
-    ) -> typing.NoReturn:
+    ) -> None:
         database_url = sqlalchemy.engine.URL.create(
             driver_name,
             host=os.environ.get('PGHOST'),
-            port=os.environ.get('PGPORT'),
+            port=optional_int(os.environ.get('PGPORT')),
             database=os.environ.get('PGDATABASE'),
             username=os.environ.get('PGUSER'),
             password=os.environ.get('PGPASSWORD')
@@ -51,7 +60,7 @@ class EngineHelper:
         )
         logger.debug(__(f'DONE: create_engine: {type(self.engine)}'))
 
-    def __del__(self) -> typing.NoReturn:
+    def __del__(self) -> None:
         logger.debug('CALL: engine.dispose()')
         self.engine.dispose()
         logger.debug('DONE: engine.dispose()')
@@ -85,8 +94,9 @@ def execute_select(
 def call_engine_helper(
     driver_name: str,
     application_name: str,
-    poolclass: typing.Union[sqlalchemy.pool.QueuePool, sqlalchemy.pool.StaticPool]
-) -> typing.NoReturn:
+    poolclass: typing.Union[typing.Type[sqlalchemy.pool.QueuePool],
+                            typing.Type[sqlalchemy.pool.StaticPool]]
+) -> None:
     """Call engine helper"""
     total_tasks: int = 30
     parallel: int = 5
@@ -110,7 +120,7 @@ def call_engine_helper(
         logger.info(__('DONE: pool.shutdown()'))
 
 
-def main(driver_name: str, pool_name: str) -> typing.NoReturn:
+def main(driver_name: str, pool_name: str) -> None:
     """Run main."""
     stream_handler: logging.StreamHandler = logging.StreamHandler()
     stream_handler.setLevel(logging.DEBUG)
@@ -125,10 +135,14 @@ def main(driver_name: str, pool_name: str) -> typing.NoReturn:
     application_name = os.path.basename(__file__)
 
     t_0: float = time.time()
+    poolclass: typing.Union[typing.Type[sqlalchemy.pool.QueuePool],
+                            typing.Type[sqlalchemy.pool.StaticPool]]
     if pool_name == 'StaticPool':
-        call_engine_helper(driver_name, application_name, sqlalchemy.pool.StaticPool)
+        poolclass = sqlalchemy.pool.StaticPool
     elif pool_name == 'QueuePool':
-        call_engine_helper(driver_name, application_name, sqlalchemy.pool.QueuePool)
+        poolclass = sqlalchemy.pool.QueuePool
+
+    call_engine_helper(driver_name, application_name, poolclass)
     t_1: float = time.time()
     logger.info(__(f'dt={t_1 - t_0:.3}'))
 

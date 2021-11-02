@@ -12,7 +12,7 @@ import sqlalchemy
 
 class BraceMessage:
     """Brace message"""
-    def __init__(self, fmt, *args, **kwargs) -> typing.NoReturn:
+    def __init__(self, fmt, *args, **kwargs) -> None:
         self.fmt = fmt
         self.args = args
         self.kwargs = kwargs
@@ -27,7 +27,7 @@ logger: logging.Logger = getLogger(__name__)
 
 def select_all(
     engine: sqlalchemy.engine.base.Engine
-) -> typing.List[typing.Tuple]:
+) -> typing.Optional[typing.List[typing.Tuple]]:
     """Run main."""
     try:
         with engine.connect() as connection:
@@ -52,8 +52,19 @@ def select_all(
         print(traceback.format_exc())
         print(exc)
 
+    return None
 
-def main(driver_name: str) -> typing.NoReturn:
+
+def optional_int(
+    num_str: typing.Optional[str]
+) -> typing.Optional[int]:
+    """Optional[str] to Optional[int]."""
+    if num_str is None:
+        return None
+    return int(num_str)
+
+
+def main(driver_name: str) -> None:
     """Run main."""
     stream_handler: logging.StreamHandler = StreamHandler()
     stream_handler.setLevel(logging.INFO)
@@ -69,16 +80,16 @@ def main(driver_name: str) -> typing.NoReturn:
     engine: typing.Optional[sqlalchemy.engine.base.Engine] = None
     wait_sec: int = 4
     try:
-        database_url: str = sqlalchemy.engine.URL.create(
+        database_url = sqlalchemy.engine.URL.create(
             driver_name,
             host=os.environ.get('PGHOST'),
-            port=os.environ.get('PGPORT'),
+            port=optional_int(os.environ.get('PGPORT')),
             database=os.environ.get('PGDATABASE'),
             username=os.environ.get('PGUSER'),
             password=os.environ.get('PGPASSWORD')
         )
 
-        connect_args: typing.Optional[dict] = None
+        connect_args: dict
         if driver_name == 'postgresql+psycopg2':
             connect_args = {
                 'application_name': application_name,

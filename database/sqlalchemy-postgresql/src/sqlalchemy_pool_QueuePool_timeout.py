@@ -16,7 +16,7 @@ class BraceMessage:
         self, fmt: str,
         *args: typing.Tuple,
         **kwargs: dict
-    ) -> typing.NoReturn:
+    ) -> None:
         self.fmt = fmt
         self.args = args
         self.kwargs = kwargs
@@ -37,15 +37,26 @@ stream_handler.setFormatter(
 )
 
 
+def optional_int(
+    num_str: typing.Optional[str]
+) -> typing.Optional[int]:
+    """Optional[str] to Optional[int]."""
+    if num_str is None:
+        return None
+    return int(num_str)
+
+
 @contextmanager
-def create_engine(driver_name: str) -> typing.NoReturn:
+def create_engine(
+    driver_name: str
+) -> typing.Generator[sqlalchemy.engine.base.Engine, None, None]:
     """Create engine."""
-    database_url: typing.Optional[str] = None
+    database_url: sqlalchemy.engine.URL
     if driver_name.startswith('postgresql+'):
         database_url = sqlalchemy.engine.URL.create(
             driver_name,
             host=os.environ.get('PGHOST'),
-            port=os.environ.get('PGPORT'),
+            port=optional_int(os.environ.get('PGPORT')),
             database=os.environ.get('PGDATABASE'),
             username=os.environ.get('PGUSER'),
             password=os.environ.get('PGPASSWORD')
@@ -60,7 +71,7 @@ def create_engine(driver_name: str) -> typing.NoReturn:
             password=''
         )
 
-    engine: typing.Optional[sqlalchemy.engine.base.Engine] = None
+    engine: sqlalchemy.engine.base.Engine
     if driver_name.startswith('postgresql+'):
         engine = sqlalchemy.create_engine(
             database_url,
@@ -134,7 +145,7 @@ def setup_sqlite_table(engine: sqlalchemy.engine.base.Engine):
         logger.exception(exc)
 
 
-def main(driver_name: str) -> typing.NoReturn:
+def main(driver_name: str) -> None:
     """Run main."""
     try:
         logger.info(__(f'create_engine({driver_name})'))

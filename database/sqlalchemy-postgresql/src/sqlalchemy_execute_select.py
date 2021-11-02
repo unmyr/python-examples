@@ -4,11 +4,15 @@ import os
 import sys
 import traceback
 import typing
+import cProfile
+import pstats
 
 import sqlalchemy
 
+pr = cProfile.Profile(builtins=False)
 
-def setup_sqlite_table(engine: sqlalchemy.engine.base.Engine):
+
+def setup_sqlite_table(engine: sqlalchemy.engine.base.Engine) -> None:
     """Setup sqlite table."""
     try:
         with engine.connect() as connection:
@@ -81,15 +85,27 @@ def select_all(engine: sqlalchemy.engine.base.Engine) -> typing.List[typing.Tupl
         print(traceback.format_exc())
         print(exc)
 
+    return []
 
-def main(driver_name: str) -> typing.NoReturn:
+
+def optional_int(
+    num_str: typing.Optional[str]
+) -> typing.Optional[int]:
+    """Optional[str] to Optional[int]."""
+    if num_str is None:
+        return None
+    return int(num_str)
+
+
+def main(driver_name: str) -> None:
     """Run main."""
-    database_url: typing.Optional[str] = None
+    pr.enable()
+    database_url: sqlalchemy.engine.URL
     if driver_name.startswith('postgresql+'):
         database_url = sqlalchemy.engine.URL.create(
             driver_name,
             host=os.environ.get('PGHOST'),
-            port=os.environ.get('PGPORT'),
+            port=optional_int(os.environ.get('PGPORT')),
             database=os.environ.get('PGDATABASE'),
             username=os.environ.get('PGUSER'),
             password=os.environ.get('PGPASSWORD')
@@ -120,7 +136,8 @@ def main(driver_name: str) -> typing.NoReturn:
 
     engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
         database_url,
-        connect_args=connect_args
+        connect_args=connect_args,
+        echo=True
     )
     try:
         if driver_name == 'sqlite':
@@ -128,6 +145,15 @@ def main(driver_name: str) -> typing.NoReturn:
         select_all(engine)
     finally:
         engine.dispose()
+
+    pr.disable()
+
+    stats = pstats.Stats(pr)
+    stats.sort_stats('tottime')
+    # stats.sort_stats('cumulative')
+    # stats.sort_stats('ncalls')
+    # stats.sort_stats('pcalls')
+    stats.print_stats(100)
 
 
 if __name__ == '__main__':

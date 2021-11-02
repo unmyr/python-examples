@@ -30,14 +30,25 @@ class FruitsMenu(object):
     """OR Mapper for FRUITS_MENU table."""
 
 
+def optional_int(
+    num_str: typing.Optional[str]
+) -> typing.Optional[int]:
+    """Optional[str] to Optional[int]."""
+    if num_str is None:
+        return None
+    return int(num_str)
+
+
 @contextmanager
-def create_session(driver_name: str) -> typing.NoReturn:
+def create_session(
+    driver_name: str
+) -> typing.Generator[typing.Tuple[sqlalchemy.orm.Session, sqlalchemy.schema.MetaData], None, None]:
     """Create engine."""
     engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
         sqlalchemy.engine.URL.create(
             driver_name,
             host=os.environ.get('PGHOST'),
-            port=os.environ.get('PGPORT'),
+            port=optional_int(os.environ.get('PGPORT')),
             database=os.environ.get('PGDATABASE'),
             username=os.environ.get('PGUSER'),
             password=os.environ.get('PGPASSWORD')
