@@ -1,7 +1,6 @@
 """Convert yaml to json."""
 import json
 import sys
-import typing
 
 import yaml
 
@@ -11,7 +10,7 @@ class NoDatesSafeLoader(yaml.SafeLoader):
     https://stackoverflow.com/questions/34667108/ignore-dates-and-times-while-parsing-yaml
     """
     @classmethod
-    def remove_implicit_resolver(cls, tag_to_remove: str) -> typing.NoReturn:
+    def remove_implicit_resolver(cls, tag_to_remove: str) -> None:
         """
         Remove implicit resolvers for a particular tag
 

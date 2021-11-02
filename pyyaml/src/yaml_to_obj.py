@@ -13,7 +13,7 @@ def yaml_to_obj(
     return yaml.safe_load(file_handler_or_str)
 
 
-def main(yaml_filename: str) -> typing.NoReturn:
+def main(yaml_filename: str) -> None:
     """Run main."""
     pp = pprint.PrettyPrinter(indent=2)
     with open(yaml_filename, 'rb') as f:
