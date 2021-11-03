@@ -14,7 +14,7 @@ def fib(number: int) -> int:
     return fib(number - 2) + fib(number - 1)
 
 
-def main(num: int) -> None:
+def main(num: int) -> int:
     """Run main."""
     pr: cProfile.Profile
     pr = cProfile.Profile()

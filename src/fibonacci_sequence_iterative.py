@@ -3,9 +3,10 @@
 from sys import argv
 import cProfile
 import pstats
+import typing
 
 
-def fib(number: int) -> int:
+def fib(number: int) -> typing.Optional[int]:
     """Calculate the fibonacci sequence."""
     if number < 0:
         return None
@@ -17,7 +18,7 @@ def fib(number: int) -> int:
     return a_n1
 
 
-def main(num: int) -> None:
+def main(num: int) -> typing.Optional[int]:
     """Run main."""
     pr: cProfile.Profile
     pr = cProfile.Profile()
