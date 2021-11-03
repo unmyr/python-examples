@@ -57,8 +57,10 @@ class User:
         return self.age
 
 
-def get_timestamps() -> typing.Tuple[User, typing.List]:
+def get_timestamps(
+) -> typing.Tuple[User, typing.List[typing.Union[float, typing.List[int]]]]:
     """Get current datetime."""
+    perf_list: typing.List[typing.Union[float, typing.List[int]]]
     perf_list = []
     t_0 = datetime.datetime.now()
     t_1 = datetime.datetime.now()
