@@ -14,7 +14,7 @@ try:
     logger.debug("DEBUG: hello world!")
     logger.info("INFO: hello world!")
     logger.error("ERROR: hello world!")
-    logger.fatal("FATAL: hello world!")
+    logger.critical("FATAL: hello world!")
 
 except TypeError as exc:
     print(f"{exc.args}", file=sys.stderr)
