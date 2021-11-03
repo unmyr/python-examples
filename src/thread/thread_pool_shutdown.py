@@ -5,13 +5,14 @@ import concurrent.futures
 import functools
 import time
 import typing
+import mypy_extensions
 
 pool: typing.Optional[ThreadPoolExecutor] = None
 
 
 class BraceMessage:
     """Brace message"""
-    def __init__(self, fmt, *args, **kwargs) -> typing.NoReturn:
+    def __init__(self, fmt, *args, **kwargs) -> None:
         self.fmt = fmt
         self.args = args
         self.kwargs = kwargs
@@ -32,7 +33,11 @@ def delay_hello(msg: str, waitSec: int) -> str:
     return f"Hello {msg}"
 
 
-def my_decorator(func: callable) -> callable:
+def my_decorator(
+    func: typing.Callable[..., typing.Any]
+) -> typing.Callable[
+    [mypy_extensions.VarArg(typing.Any),
+     mypy_extensions.KwArg(typing.Any)], typing.Any]:
     """My decorator."""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -78,7 +83,7 @@ def run(timeout) -> bool:
     return True
 
 
-def main() -> typing.NoReturn:
+def main() -> None:
     """Run main."""
     stream_handler = StreamHandler()
     stream_handler.setLevel(DEBUG)

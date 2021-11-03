@@ -8,7 +8,7 @@ import typing
 
 class BraceMessage:
     """Brace message"""
-    def __init__(self, fmt, *args, **kwargs) -> typing.NoReturn:
+    def __init__(self, fmt, *args, **kwargs) -> None:
         self.fmt = fmt
         self.args = args
         self.kwargs = kwargs
@@ -56,7 +56,7 @@ def run(timeout: int) -> bool:
     return True
 
 
-def main() -> typing.NoReturn:
+def main() -> None:
     """Run main."""
     stream_handler = StreamHandler()
     stream_handler.setLevel(DEBUG)
