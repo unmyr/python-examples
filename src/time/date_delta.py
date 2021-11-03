@@ -4,6 +4,7 @@ import datetime
 
 def main() -> None:
     """Run main."""
+    yesterday: datetime.date
     yesterday = datetime.date.today() - datetime.timedelta(days=1)
     delta_date: datetime.timedelta
     delta_date = datetime.date.today() - yesterday
