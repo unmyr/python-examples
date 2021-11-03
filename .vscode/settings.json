@@ -1,4 +1,29 @@
 {
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.detectIndentation": true,
+    "editor.insertSpaces": true
+  },
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.detectIndentation": true,
+    "editor.insertSpaces": true
+  },
+  "python.linting.pylintEnabled": true,
+  "python.linting.pycodestyleEnabled": true,
+  "python.linting.pycodestyleArgs": [
+    "--ignore=E501,W503",
+    "--max-line-length=120"
+  ],
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": true,
+  "python.testing.unittestArgs": [
+    "-v",
+    "-s",
+    "./tests",
+    "-p",
+    "test_*.py"
+  ],
   "cSpell.words": [
     "abstractproperty",
     "agraph",
@@ -131,31 +156,5 @@
     "yday",
     "ylabel",
     "ylim"
-  ],
-  "[json]": {
-    "editor.tabSize": 2,
-    "editor.detectIndentation": true,
-    "editor.insertSpaces": true
-  },
-  "[python]": {
-    "editor.tabSize": 4,
-    "editor.detectIndentation": true,
-    "editor.insertSpaces": true
-  },
-  "python.linting.pylintEnabled": true,
-  "python.linting.pycodestyleEnabled": true,
-  "python.linting.pycodestyleArgs": [
-    "--ignore=E501,W503",
-    "--max-line-length=120"
-  ],
-  "python.testing.pytestEnabled": false,
-  "python.testing.unittestEnabled": true,
-  "python.testing.unittestArgs": [
-    "-v",
-    "-s",
-    "./tests",
-    "-p",
-    "test_*.py"
-  ],
-  "python.testing.nosetestsEnabled": false
+  ]
 }
