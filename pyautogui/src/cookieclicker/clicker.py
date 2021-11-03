@@ -27,7 +27,7 @@ DEFAULT_CHECK_GOLDEN_INTERVAL = 0.5
 WAIT_SEARCH_COOKIE = 3  # WAIT_SEARCH_COOKIE * wait_time (sec)
 
 
-def distance(t1: typing.Tuple, points: list[typing.Tuple]) -> float:
+def distance(t1: typing.Tuple, points: typing.List[typing.Tuple]) -> float:
     """Get color distance."""
     distances = []
     for p in points:
@@ -58,7 +58,7 @@ class ClickThread(threading.Thread):
         self.width = self.region_x2 - self.region_x1
         self.height = self.region_y2 - self.region_y1
 
-    def check_cookie(self):
+    def check_cookie(self) -> typing.Tuple[int, int]:
         """Check cookie."""
         # im = im.crop((self.region_x1, self.region_y1, self.region_x2, self.region_y2))
         region = (self.region[0], self.region[1], self.width, self.height)
@@ -96,7 +96,7 @@ class ClickThread(threading.Thread):
 
         return (cx, cy)
 
-    def run(self):
+    def run(self) -> None:
         cnt = 0
         error = 0
         click_big_cookie = True
@@ -180,11 +180,11 @@ class ClickThread(threading.Thread):
             time.sleep(0.02)
             cnt += 1
 
-    def finish(self):
+    def finish(self) -> None:
         self.is_running = False
 
 
-def clicker(click_pos_x, click_pos_y, region):
+def clicker(click_pos_x, click_pos_y, region) -> None:
     t = ClickThread(click_pos_x, click_pos_y, region)
     # t.setDaemon(True)
     t.start()
