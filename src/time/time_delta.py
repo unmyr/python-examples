@@ -1,24 +1,46 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """Calculate the time delta."""
+import datetime
 import time
-from datetime import datetime
 
 
-def main():
-    """Run main."""
+def sleep_with_time(sec: float) -> float:
+    """Example of time.time()"""
+    t_0: float
+    t_1: float
+
     t_0 = time.time()
-    time.sleep(0.8)
+    time.sleep(sec)
     t_1 = time.time()
-    print(type(t_1 - t_0))
-    print("dt = %f" % (t_1 - t_0))
 
-    t_0 = datetime.now()
-    time.sleep(0.8)
-    t_1 = datetime.now()
-    print(type(t_1))
-    d_t = (t_0 - t_1).seconds
-    print("dt = %d" % d_t)
+    time_delta: float
+    time_delta = t_1 - t_0
+
+    return time_delta
+
+
+def sleep_with_datetime(sec: float) -> float:
+    """Example of datetime.datetime.now()"""
+    t_0: 'datetime.datetime'
+    t_1: 'datetime.datetime'
+
+    t_0 = datetime.datetime.now()
+    time.sleep(sec)
+    t_1 = datetime.datetime.now()
+
+    time_delta: datetime.timedelta
+    time_delta = t_1 - t_0
+
+    assert isinstance(t_0, datetime.datetime)
+    assert isinstance(t_1, datetime.datetime)
+    assert isinstance(time_delta, datetime.timedelta)
+
+    return time_delta.total_seconds()
+
+
+def main() -> None:
+    """Run main."""
+    print("dt = %f" % (sleep_with_time(0.8)))
+    print("dt = %f" % (sleep_with_datetime(0.8)))
 
 
 if __name__ == "__main__":
