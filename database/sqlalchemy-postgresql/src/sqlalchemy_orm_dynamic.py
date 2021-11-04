@@ -86,12 +86,13 @@ def execute_query(session, metadata) -> dict:
     )
     sqlalchemy.orm.mapper(FruitsMenu, fruit_item_table)
 
+    # pylint: disable=no-member
     items = session.query(
         FruitsMenu
     ).filter(
         sqlalchemy.or_(
-            FruitsMenu.name == 'Apple',  # pylint: disable=no-member
-            FruitsMenu.name == 'Orange'  # pylint: disable=no-member
+            FruitsMenu.name == 'Apple',  # type: ignore
+            FruitsMenu.name == 'Orange'  # type: ignore
         )
     ).all()
     logger.info(f"Total: {len(items)} items.")
