@@ -58,9 +58,15 @@ class FruitsMenu(Base):
         }
 
 
+class PerfInfo(typing.NamedTuple):
+    """Performance information."""
+    delta: float
+    label: str
+
+
 def execute_query(
     session: sqlalchemy.orm.session.Session
-) -> typing.Tuple[typing.Dict, typing.Optional[typing.List]]:
+) -> typing.Tuple[typing.Dict, typing.Optional[typing.Iterable[PerfInfo]]]:
     """Execute query."""
     t_0 = time.time()
     count = session.query(
@@ -102,13 +108,13 @@ def execute_query(
     }
     t_4 = time.time()
 
-    perf_list = [
-        round(t_4 - t_0, 3),
-        round(t_1 - t_0, 3),
-        round(t_2 - t_1, 3),
-        round(t_3 - t_2, 3),
-        round(t_4 - t_3, 3)
-    ]
+    perf_list = (
+        PerfInfo(round(t_4 - t_0, 3), 'Total'),
+        PerfInfo(round(t_1 - t_0, 3), 'SELECT COUNT(id);'),
+        PerfInfo(round(t_2 - t_1, 3), 'Insert records if the table is empty.'),
+        PerfInfo(round(t_3 - t_2, 3), "SELECT id, name, price FROM fruit_menu WHERE name='Apple' OR name = 'ORANGE'"),
+        PerfInfo(round(t_4 - t_3, 3), 'set response.'),
+    )
     return result, perf_list
 
 
@@ -141,31 +147,40 @@ def main(driver_name: str) -> typing.Dict:
         Session = sqlalchemy.orm.sessionmaker(engine)
 
         t_3 = time.time()
-        perf_list_query: typing.Optional[typing.List]
+        perf_list_query: typing.Optional[typing.Iterable[PerfInfo]]
         with engine.connect() as connection:
+            t_4 = time.time()
             session: sqlalchemy.orm.session.Session
             with Session(bind=connection) as session:
-                t_4 = time.time()
-                print(type(session))
-                result, perf_list_query = execute_query(session)
                 t_5 = time.time()
+                result, perf_list_query = execute_query(session)
+                t_6 = time.time()
                 logger.info(result)
 
-        t_6 = time.time()
-        engine.dispose()
         t_7 = time.time()
+        engine.dispose()
+        t_8 = time.time()
 
-        perf_list_main = [
-            round(t_7 - t_0, 3),
-            round(t_1 - t_0, 3),
-            round(t_2 - t_1, 3),
-            round(t_3 - t_2, 3),
-            round(t_4 - t_3, 3),
-            round(t_5 - t_4, 3),
-            round(t_6 - t_5, 3),
-            round(t_7 - t_6, 3)
-        ]
-        logger.info(f'main={perf_list_main}, execute_query={perf_list_query}')
+        perf_list_main = (
+            PerfInfo(round(t_8 - t_0, 3), 'Total'),
+            PerfInfo(round(t_1 - t_0, 3), 'create_engine'),
+            PerfInfo(round(t_2 - t_1, 3), 'Base.metadata.create_all'),
+            PerfInfo(round(t_3 - t_2, 3), 'sessionmaker(engine)'),
+            PerfInfo(round(t_4 - t_3, 3), 'engine.connect()'),
+            PerfInfo(round(t_5 - t_4, 3), 'Session(bind=connection)'),
+            PerfInfo(round(t_6 - t_5, 3), 'execute_query(session)'),
+            PerfInfo(round(t_7 - t_6, 3), 'logger.info(result)'),
+            PerfInfo(round(t_8 - t_7, 3), 'engine.dispose()')
+        )
+        item: PerfInfo
+        print("\n*** subtotal of main ***")
+        for item in perf_list_main:
+            print(f"{item.delta:.3f}s {item.label}")
+
+        if perf_list_query:
+            print("\n*** subtotal of execute_query ***")
+            for item in perf_list_query:
+                print(f"{item.delta:.3f}s {item.label}")
 
     except sqlalchemy.exc.ProgrammingError as exc:
         logger.error(traceback.format_exc())
