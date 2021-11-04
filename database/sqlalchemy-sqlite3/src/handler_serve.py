@@ -1,5 +1,6 @@
 """Example of sqlite3 with SQLAlchemy."""
 from logging import getLogger, StreamHandler, DEBUG, Formatter
+import datetime
 import os
 import traceback
 import typing
@@ -39,15 +40,23 @@ class FruitsMenu(Base):
         self.price = price
 
     def __str__(self) -> str:
+        modtime_value = None
+        if isinstance(self.modtime, datetime.datetime):
+            modtime_value = self.modtime.isoformat()
+
         return '{' + "id: {}, name: '{}', price: {}, modtime: '{}'".format(
-            self.id, self.name, self.price, self.modtime.isoformat()) + '}'
+            self.id, self.name, self.price, modtime_value) + '}'
 
     def to_dict(self) -> typing.Dict:
         """Generate non-primitive dict."""
+        modtime_value = None
+        if isinstance(self.modtime, datetime.datetime):
+            modtime_value = self.modtime.isoformat()
+
         return {
             'name': self.name,
             'price': self.price,
-            'modtime': self.modtime.isoformat()
+            'modtime': modtime_value
         }
 
 
