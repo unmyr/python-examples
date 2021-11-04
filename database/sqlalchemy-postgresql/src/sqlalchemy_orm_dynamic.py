@@ -9,9 +9,8 @@ import time
 import traceback
 import typing
 
-from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy
-
+import sqlalchemy.orm
 
 logger: logging.Logger = logging.getLogger(__name__)
 stream_handler: logging.StreamHandler = logging.StreamHandler()
@@ -22,12 +21,6 @@ logger.propagate = False
 stream_handler.setFormatter(
     logging.Formatter('[%(asctime)s] %(levelname)s: %(message)s')
 )
-
-Base = declarative_base()
-
-
-class FruitsMenu(object):
-    """OR Mapper for FRUITS_MENU table."""
 
 
 def optional_int(
@@ -44,6 +37,7 @@ def create_session(
     driver_name: str
 ) -> typing.Generator[typing.Tuple[sqlalchemy.orm.Session, sqlalchemy.schema.MetaData], None, None]:
     """Create engine."""
+    t_0: float = time.time()
     engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
         sqlalchemy.engine.URL.create(
             driver_name,
@@ -56,22 +50,40 @@ def create_session(
         pool_size=1,
         max_overflow=1
     )
+    t_1: float = time.time()
     metadata = sqlalchemy.MetaData(engine)
 
     Session = sqlalchemy.orm.sessionmaker(engine)
+    t_2: float = time.time()
     with engine.connect() as connection:
+        t_3: float = time.time()
         logger.info('engine.connect()')
+        t_4: float = time.time()
         with Session(bind=connection) as session:
+            t_5: float = time.time()
             yield session, metadata
         logger.info('engine.close()')
     logger.info('engine.dispose()')
+    t_6: float = time.time()
     engine.dispose()
+    t_7: float = time.time()
+
+    # pylint: disable=logging-too-many-args
+    logger.info(
+        (
+            'perf: '
+            'create_engine(): %.3fs, '
+            'MetaData()+sessionmaker(): %.3fs, '
+            'engine.connect(): %.3fs, '
+            'Session(bind=connection): %.3fs, '
+            'engine.dispose: %.3fs'
+        ),
+        t_1 - t_0, t_2 - t_1, t_3 - t_2, t_5 - t_4, t_7 - t_6
+    )
 
 
 def execute_query(session, metadata) -> dict:
     """Execute query."""
-    # meta.create_all()
-
     columns = (
         sqlalchemy.Column('id', sqlalchemy.Integer, primary_key=True),
         sqlalchemy.Column('name', sqlalchemy.String(length=16), unique=True),
@@ -84,6 +96,10 @@ def execute_query(session, metadata) -> dict:
         *columns,
         schema='guest'
     )
+
+    class FruitsMenu(object):
+        """OR Mapper for FRUITS_MENU table."""
+
     sqlalchemy.orm.mapper(FruitsMenu, fruit_item_table)
 
     # pylint: disable=no-member
