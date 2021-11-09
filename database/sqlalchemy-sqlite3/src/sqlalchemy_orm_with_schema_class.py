@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """Example of sqlite3 with SQLAlchemy."""
 from logging import getLogger, StreamHandler, DEBUG, Formatter
-import os
 import traceback
 
 from sqlalchemy import Column, Integer, String, DateTime
@@ -87,15 +85,17 @@ def main(engine):
 
 
 if __name__ == '__main__':
+    db_uri = sqlalchemy.engine.URL.create(
+        drivername='sqlite',
+        host='',
+        port=None,
+        database=':memory:',
+        username='',
+        password=''
+    )
+    print(db_uri)
     engine_sqlite3 = sqlalchemy.create_engine(
-        sqlalchemy.engine.URL.create(
-            'sqlite',
-            host='',
-            port=None,
-            database=os.environ.get(':memory:'),
-            username='',
-            password=''
-        ),
+        db_uri,
         echo=False
     )
     main(engine_sqlite3)

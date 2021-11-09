@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 """Example of sqlite3 with SQLAlchemy."""
-import os
 import traceback
 
 from sqlalchemy import text
@@ -70,10 +68,10 @@ def main(engine):
 if __name__ == '__main__':
     engine_sqlite3 = sqlalchemy.create_engine(
         sqlalchemy.engine.URL.create(
-            'sqlite',
+            drivername='sqlite',
             host='',
             port=None,
-            database=os.environ.get(':memory:'),
+            database=':memory:',
             username='',
             password=''
         ),

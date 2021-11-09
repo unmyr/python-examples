@@ -1,7 +1,6 @@
 """Example of sqlite3 with SQLAlchemy."""
 from logging import getLogger, StreamHandler, DEBUG, Formatter
 import datetime
-import os
 import traceback
 import typing
 
@@ -70,10 +69,10 @@ def handler() -> typing.Dict:
             logger.info('Call create_engine().')
             engine = sqlalchemy.create_engine(
                 sqlalchemy.engine.URL.create(
-                    'sqlite',
+                    drivername='sqlite',
                     host='',
                     port=None,
-                    database=os.environ.get(':memory:'),
+                    database=':memory:',
                     username='',
                     password=''
                 ),
