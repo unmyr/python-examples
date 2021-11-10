@@ -18,3 +18,5 @@ logger.debug(
     "{:1.2f}".format(math.pi),
     {'key1': True, 'key2': datetime.datetime.now()}
 )
+
+logger.removeHandler(handler)

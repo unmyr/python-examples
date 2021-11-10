@@ -18,3 +18,6 @@ logger.debug("hello world 1")
 logger.debug("hello world 2")
 logger.debug("hello world 3")
 logger.debug("hello world 4")
+
+logger.removeHandler(stream_handler)
+logger.removeHandler(rotate_handler)

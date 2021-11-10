@@ -41,3 +41,5 @@ dict_not_serializable = {
     'tuple': ('Hello', 'world')
 }
 logger.info(json.dumps(dict_not_serializable, default=dict_to_serialize, indent=2))
+
+logger.removeHandler(handler)

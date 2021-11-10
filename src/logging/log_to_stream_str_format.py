@@ -30,3 +30,4 @@ logger.debug(
         1, math.pi, {'key1': True, 'key2': datetime.datetime.now()}
     )
 )
+logger.removeHandler(handler)

@@ -16,6 +16,8 @@ try:
     logger.error("ERROR: hello world!")
     logger.critical("FATAL: hello world!")
 
+    logger.removeHandler(handler)
+
 except TypeError as exc:
     print(f"{exc.args}", file=sys.stderr)
     for attr_name in dir(exc):
