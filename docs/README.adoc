@@ -15,6 +15,29 @@
 * <<../numpy/README.adoc#,Numpy>>
 * <<../matplotlib/README.adoc#,Matplotlib>>
 
+
+=== I/O
+
+==== stderr
+
+[source,python]
+.Python2
+----
+>>> import sys
+>>> print >> sys.stderr, 'Error!'
+Error!
+>>>
+----
+
+[source,python]
+.Python3
+----
+>>> import sys
+>>> print("Error!", file=sys.stderr)
+Error!
+>>>
+----
+
 === Lambda
 
 [source,python]
