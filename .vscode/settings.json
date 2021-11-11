@@ -41,6 +41,7 @@
     "cmap",
     "colorbar",
     "concat",
+    "cond",
     "contextlib",
     "contextmanager",
     "COORD",
