@@ -62,9 +62,11 @@ time.struct_time(tm_year=2021, tm_mon=7, tm_mday=14, tm_hour=16, tm_min=17, tm_s
 >>> 
 ----
 
+[source,python]
 ----
 >>> datetime.datetime.now(datetime.timezone.utc).astimezone().isoformat()
 '2021-11-13T15:02:11.846121+09:00'
+>>> 
 ----
 
 === import
