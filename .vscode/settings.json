@@ -29,6 +29,7 @@
     "agraph",
     "arange",
     "asdict",
+    "astimezone",
     "astype",
     "basestring",
     "blit",
