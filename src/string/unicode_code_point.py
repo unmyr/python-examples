@@ -34,6 +34,10 @@ def main() -> None:
     print(f"{ff_char}({len(ff_bytes_sg)}) = U+{code_point:X}, &#{code_point:d};")
     assert code_point == 120125
 
+    ff_bytes_sg = ff_char.encode('utf-32be')
+    code_point = struct.unpack('>I', ff_bytes_sg)[0]
+    assert code_point == 120125
+
 
 if __name__ == '__main__':
     main()
