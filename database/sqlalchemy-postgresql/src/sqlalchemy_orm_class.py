@@ -3,6 +3,7 @@ from contextlib import contextmanager
 import json
 import logging
 import os
+import random
 import sys
 import time
 import traceback
@@ -84,7 +85,8 @@ def create_session(driver_name):
             password=os.environ.get('PGPASSWORD')
         ),
         pool_size=1,
-        max_overflow=1
+        max_overflow=1,
+        echo=True
     )
     Base.metadata.create_all(bind=engine, checkfirst=True)
 
@@ -119,7 +121,20 @@ def execute_query(
             FruitsMenu.name == 'Orange'
         )
     ).all()
-    # logger.info(items)
+
+    update_count = session.query(
+        FruitsMenu
+    ).filter(
+        sqlalchemy.or_(
+            FruitsMenu.name == 'Apple'
+        )
+    ).update({
+        FruitsMenu.price: random.randrange(100, 200)
+    })
+    session.commit()
+    print(update_count)
+
+    items = session.query(FruitsMenu).all()
 
     records = []
     for item in items:
