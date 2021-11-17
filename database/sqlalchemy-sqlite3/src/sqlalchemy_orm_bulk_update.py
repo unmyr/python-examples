@@ -125,10 +125,9 @@ def sqlalchemy_orm_bulk_save_objects_update(
                 i += 1
 
             if len(customers) > 0:
-                session.bulk_save_objects(customers)
+                session.bulk_save_objects(customers, update_changed_only=False)
                 session.commit()
                 customers[:] = []
-            session.commit()
             t_1 = time.time()
 
     Base.metadata.drop_all(engine)
