@@ -1,7 +1,9 @@
 """Example of sqlite3 with SQLAlchemy."""
 import os
+import sys
 import time
 import traceback
+import typing
 
 from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy
@@ -109,35 +111,53 @@ def insert_sqlalchemy_orm_add(
             t_1 = time.time()
             dt = t_1 - t_0
 
+    Base.metadata.drop_all(engine)
+
     return dt
 
 
-def main() -> None:
+def main(driver_name: str) -> None:
     """Run main."""
-    db_name = 'customers.sqlite3'
-    db_uri = sqlalchemy.engine.URL.create(
-        drivername='sqlite',
-        host='',
-        port=None,
-        database=':memory:',
-        username='',
-        password=''
-    )
-
-    if os.path.exists(db_name):
-        os.remove(db_name)
+    config = {}
+    if driver_name == 'sqlite':
+        db_name = 'customers.sqlite3'
+        db_uri = sqlalchemy.engine.URL.create(
+            drivername=driver_name,
+            host='',
+            port=None,
+            database=':memory:',
+            username='',
+            password=''
+        )
+        if os.path.exists(db_name):
+            os.remove(db_name)
+    else:
+        db_uri = sqlalchemy.engine.URL.create(
+            driver_name,
+            host=os.environ.get('PGHOST'),
+            port=typing.cast(int, os.environ.get('PGPORT')),
+            database=os.environ.get('PGDATABASE'),
+            username=os.environ.get('PGUSER'),
+            password=os.environ.get('PGPASSWORD')
+        )
+        config = dict(
+            pool_size=1,
+            max_overflow=1
+        )
 
     count = 10000
     try:
-        engine = sqlalchemy.create_engine(
+        engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
             db_uri,
+            **config,
             echo=False
         )
 
-        engine.execute(
-            sqlalchemy.text(f"ATTACH DATABASE '{db_name}' AS :schema"),
-            schema='guest'
-        )
+        if driver_name == 'sqlite':
+            engine.execute(
+                sqlalchemy.text(f"ATTACH DATABASE '{db_name}' AS :schema"),
+                schema='guest'
+            )
 
         print("[ SQLAlchemy Core ]")
         dt = insert_sqlalchemy_orm_core(engine, count)
@@ -160,11 +180,22 @@ def main() -> None:
         print(exc)
 
     finally:
-        if os.path.exists(db_name):
+        if driver_name == 'sqlite' and os.path.exists(db_name):
             os.remove(db_name)
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) == 1:
+        main('sqlite')
+    elif len(sys.argv) == 2 and sys.argv[1] in [
+            'sqlite', 'postgresql+pg8000', 'postgresql+psycopg2'
+    ]:
+        main(sys.argv[1])
+    else:
+        print(
+            f"usage: {sys.argv[0]} "
+            '{sqlite|postgresql+pg8000|postgresql+psycopg2}',
+            file=sys.stderr
+        )
 
 # EOF
