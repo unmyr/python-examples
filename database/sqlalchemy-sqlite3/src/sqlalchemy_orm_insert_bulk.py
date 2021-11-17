@@ -15,10 +15,12 @@ class Customers(Base):
     __tablename__ = 'customers'
     cid = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     name = sqlalchemy.Column(sqlalchemy.String(255))
+    empty = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True)
     __table_args__ = ({'schema': 'guest'})
 
-    def __init__(self, name):
+    def __init__(self, name, empty=None):
         self.name = name
+        self.empty = empty
 
 
 def insert_sqlalchemy_orm_core(
@@ -31,7 +33,7 @@ def insert_sqlalchemy_orm_core(
     t_0 = time.time()
     engine.execute(
         Customers.__table__.insert(),
-        [dict(name=f'NAME {i:010d}') for i in range(count)]
+        [dict(name=f'NAME {i:010d}', empty=None) for i in range(count)]
     )
     t_1 = time.time()
     dt = t_1 - t_0
@@ -54,7 +56,7 @@ def insert_sqlalchemy_orm_bulk_insert_mappings(
             t_0 = time.time()
             session.bulk_insert_mappings(
                 Customers,
-                [{'name': f'NAME {i:010d}'} for i in range(count)]
+                [{'name': f'NAME {i:010d}', 'empty': None} for i in range(count)]
             )
             session.commit()
             t_1 = time.time()
