@@ -25,7 +25,7 @@ def insert_sqlalchemy_orm_core(
     engine: sqlalchemy.engine.base.Engine,
     count: int
 ) -> float:
-    """SQLAlcemy Core."""
+    """SQLAlchemy Core."""
     Base.metadata.create_all(bind=engine, checkfirst=True)
 
     t_0 = time.time()
