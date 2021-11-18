@@ -1,6 +1,9 @@
-"""Example of sqlite3 with SQLAlchemy."""
+"""Example of sqlalchemy.null."""
 import datetime
+import os
+import sys
 import traceback
+import typing
 
 from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy
@@ -24,13 +27,48 @@ class DateTable(Base):
         self.entry_date = entry_date
 
 
-def main(engine) -> None:
+def main(driver_name: str) -> None:
     """Run main."""
-    try:
-        engine.execute(
-            sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
-            schema='guest'
+    config = {}
+    if driver_name == 'sqlite':
+        db_name = 'date_table.sqlite3'
+        db_uri = sqlalchemy.engine.URL.create(
+            drivername=driver_name,
+            host='',
+            port=None,
+            database=':memory:',
+            username='',
+            password=''
         )
+        if os.path.exists(db_name):
+            os.remove(db_name)
+    else:
+        db_uri = sqlalchemy.engine.URL.create(
+            driver_name,
+            host=os.environ.get('PGHOST'),
+            port=typing.cast(int, os.environ.get('PGPORT')),
+            database=os.environ.get('PGDATABASE'),
+            username=os.environ.get('PGUSER'),
+            password=os.environ.get('PGPASSWORD')
+        )
+        config = dict(
+            pool_size=1,
+            max_overflow=1
+        )
+
+    try:
+        engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
+            db_uri,
+            **config,
+            echo=False
+        )
+
+        if driver_name == 'sqlite':
+            engine.execute(
+                sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
+                schema='guest'
+            )
+
         Base.metadata.create_all(bind=engine, checkfirst=True)
 
         Session = sqlalchemy.orm.sessionmaker(engine)
@@ -62,24 +100,29 @@ def main(engine) -> None:
                         'entry_date': item.entry_date
                     })
 
+        Base.metadata.drop_all(engine)
+
     except sqlalchemy.exc.ProgrammingError as exc:
         print(traceback.format_exc())
         print(exc)
 
+    finally:
+        if driver_name == 'sqlite' and os.path.exists(db_name):
+            os.remove(db_name)
+
 
 if __name__ == '__main__':
-    db_uri = sqlalchemy.engine.URL.create(
-        drivername='sqlite',
-        host='',
-        port=None,
-        database=':memory:',
-        username='',
-        password=''
-    )
-    engine_sqlite3 = sqlalchemy.create_engine(
-        db_uri,
-        echo=False
-    )
-    main(engine_sqlite3)
+    if len(sys.argv) == 1:
+        main('sqlite')
+    elif len(sys.argv) == 2 and sys.argv[1] in [
+            'sqlite', 'postgresql+pg8000', 'postgresql+psycopg2'
+    ]:
+        main(sys.argv[1])
+    else:
+        print(
+            f"usage: {sys.argv[0]} "
+            '{sqlite|postgresql+pg8000|postgresql+psycopg2}',
+            file=sys.stderr
+        )
 
 # EOF

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Example of execute SELECT."""
 from contextlib import contextmanager
+import datetime
 import json
 import logging
 import os
@@ -11,6 +12,7 @@ import typing
 
 import sqlalchemy
 from sqlalchemy import text
+from sqlalchemy.ext.declarative import declarative_base
 
 logger: logging.Logger = logging.getLogger(__name__)
 stream_handler: logging.StreamHandler = logging.StreamHandler()
@@ -21,6 +23,28 @@ logger.propagate = False
 stream_handler.setFormatter(
     logging.Formatter('[%(asctime)s] %(levelname)s: %(message)s')
 )
+
+Base = declarative_base()
+
+
+class FruitsMenu(Base):
+    """Fruits Menu."""
+    __tablename__ = 'fruits_menu'
+
+    id = sqlalchemy.Column(
+        sqlalchemy.Integer, primary_key=True
+    )  # emits SERIAL
+    name = sqlalchemy.Column(sqlalchemy.String(16), unique=True)
+    price = sqlalchemy.Column(sqlalchemy.Integer)
+    # Default value is the creation time, not automatically updated
+    modtime = sqlalchemy.Column(
+        sqlalchemy.DateTime,
+        server_default=sqlalchemy.sql.func.now()
+    )
+    __table_args__ = (
+        sqlalchemy.PrimaryKeyConstraint('id'),
+        {'schema': 'guest'}
+    )
 
 
 def optional_int(
@@ -37,23 +61,60 @@ def create_engine(
     driver_name: str
 ) -> typing.Generator[sqlalchemy.engine.base.Engine, None, None]:
     """Create engine."""
-    engine = sqlalchemy.create_engine(
-        sqlalchemy.engine.URL.create(
-            driver_name,
+    config: typing.Dict
+    if driver_name == 'sqlite':
+        db_name = 'fruits_menu.sqlite3'
+        if os.path.exists(db_name):
+            os.remove(db_name)
+        db_uri = sqlalchemy.engine.URL.create(
+            drivername=driver_name,
+            host='',
+            port=None,
+            database=':memory:',
+            username='',
+            password=''
+        )
+        config = dict()
+    else:
+        db_uri = sqlalchemy.engine.URL.create(
+            drivername=driver_name,
             host=os.environ.get('PGHOST'),
-            port=optional_int(os.environ.get('PGPORT')),
+            port=typing.cast(int, os.environ.get('PGPORT')),
             database=os.environ.get('PGDATABASE'),
             username=os.environ.get('PGUSER'),
             password=os.environ.get('PGPASSWORD')
-        ),
-        pool_size=1,
-        max_overflow=1
+        )
+        config = dict(
+            pool_size=1,
+            max_overflow=1
+        )
+
+    engine = sqlalchemy.create_engine(
+        db_uri,
+        **config,
+        echo=False
     )
+    if driver_name == 'sqlite':
+        engine.execute(
+            sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
+            schema='guest'
+        )
+
+    Base.metadata.create_all(bind=engine, checkfirst=True)
+
     yield engine
+
+    Base.metadata.drop_all(engine)
     engine.dispose()
 
+    if driver_name == 'sqlite' and os.path.exists(db_name):
+        os.remove(db_name)
 
-def execute_query(engine) -> typing.Dict:
+
+def execute_query(
+    driver_name: str,
+    engine: sqlalchemy.engine.base.Engine
+) -> typing.Dict:
     """Execute query."""
     query_results = []
     logger.info('engine.connect()')
@@ -80,23 +141,34 @@ def execute_query(engine) -> typing.Dict:
 
         rows = connection.execute(text("SELECT * FROM guest.fruits_menu"))
         for row in rows:
+            if driver_name.startswith('postgresql+'):
+                # postgresql
+                assert isinstance(row['modtime'], datetime.datetime)
+                modtime_str = row['modtime'].isoformat(timespec='seconds')
+            else:
+                # sqlite
+                assert isinstance(row['modtime'], str)
+                modtime_str = datetime.datetime.strptime(
+                    row['modtime'], '%Y-%m-%d %H:%M:%S'
+                ).isoformat(timespec='seconds')
+            print(f"row={row}")
             query_results.append({
                 'id': row['id'],
                 'name': row['name'],
                 'price': row['price'],
-                'modtime': row['modtime'].isoformat()  # datetime.datetime
+                'modtime': modtime_str
             })
 
     return {'statusCode': 200, 'body': json.dumps(query_results)}
 
 
-def main(driver_name):
+def main(driver_name: str) -> typing.Dict:
     """Run main."""
     result = {'statusCode': 500, 'body': 'Internal Server Error.'}
     try:
         with create_engine(driver_name) as engine:
             t_0 = time.time()
-            logger.info(execute_query(engine))
+            logger.info(execute_query(driver_name, engine))
             t_1 = time.time()
             logger.info(f'dt = {(t_1 - t_0):.3f}s')
 
@@ -117,12 +189,16 @@ def main(driver_name):
 
 
 if __name__ == '__main__':
-    if sys.argv[1] in ['postgresql+pg8000', 'postgresql+psycopg2']:
+    if len(sys.argv) == 1:
+        main('sqlite')
+    elif len(sys.argv) == 2 and sys.argv[1] in [
+            'sqlite', 'postgresql+pg8000', 'postgresql+psycopg2'
+    ]:
         main(sys.argv[1])
     else:
         print(
             f"usage: {sys.argv[0]} "
-            '{postgresql+pg8000|postgresql+psycopg2}',
+            '{sqlite|postgresql+pg8000|postgresql+psycopg2}',
             file=sys.stderr
         )
 
