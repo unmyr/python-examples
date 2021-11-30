@@ -45,6 +45,87 @@ class TestDateTime(unittest.TestCase):
 
         self.assertEqual((today - yesterday).days, 1)
 
+    def test_string_dt_native_fromisoformat(self):
+        """Test fromisoformat()."""
+        dt_obj_with_us = datetime.datetime(2021, 11, 13, 11, 49, 20, 673681)
+        assert datetime.datetime.fromisoformat('2021-11-13 11:49:20.673681') == dt_obj_with_us
+        assert datetime.datetime.fromisoformat('2021-11-13T11:49:20.673681') == dt_obj_with_us
+
+        dt_obj_with_ms = datetime.datetime(2021, 11, 13, 11, 49, 20, 673000)
+        assert datetime.datetime.fromisoformat('2021-11-13 11:49:20.673') == dt_obj_with_ms
+        assert datetime.datetime.fromisoformat('2021-11-13T11:49:20.673') == dt_obj_with_ms
+
+        dt_obj_with_sec = datetime.datetime(2021, 11, 13, 11, 49, 20)
+        assert datetime.datetime.fromisoformat('2021-11-13 11:49:20') == dt_obj_with_sec
+        assert datetime.datetime.fromisoformat('2021-11-13 11:49:20.000') == dt_obj_with_sec
+        assert datetime.datetime.fromisoformat('2021-11-13 11:49:20.000000') == dt_obj_with_sec
+
+        dt_obj_with_min = datetime.datetime(2021, 11, 13, 11, 49)
+        assert datetime.datetime.fromisoformat('2021-11-13 11:49') == dt_obj_with_min
+        assert datetime.datetime.fromisoformat('2021-11-13T11:49') == dt_obj_with_min
+        assert datetime.datetime.fromisoformat('2021-11-13T11:49:00') == dt_obj_with_min
+
+        dt_obj_with_hour = datetime.datetime(2021, 11, 13, 11, 0)
+        assert datetime.datetime.fromisoformat('2021-11-13 11') == dt_obj_with_hour
+        assert datetime.datetime.fromisoformat('2021-11-13T11') == dt_obj_with_hour
+
+        dt_obj_with_date = datetime.datetime(2021, 11, 13, 0, 0)
+        assert datetime.datetime.fromisoformat('2021-11-13') == dt_obj_with_date
+
+    def test_string_dt_aware_utc_fromisoformat(self):
+        """Test fromisoformat()."""
+        dt_obj_with_us = datetime.datetime(
+            2021, 11, 13, 11, 49, 20, 673681, tzinfo=datetime.timezone.utc
+        )
+        dt_iso8601_str = '2021-11-13 11:49:20.673681+00:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_us
+        dt_iso8601_str = '2021-11-13 11:49:20.673681+0000'
+        with self.assertRaises(ValueError) as context:
+            assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_us
+        self.assertEqual(f"Invalid isoformat string: '{dt_iso8601_str}'",
+                         str(context.exception))
+
+        dt_obj_with_ms = datetime.datetime(
+            2021, 11, 13, 11, 49, 20, 673000, tzinfo=datetime.timezone.utc
+        )
+        dt_iso8601_str = '2021-11-13 11:49:20.673-00:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_ms
+        dt_iso8601_str = '2021-11-13 11:49:20.673000-00:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_ms
+
+        dt_obj_with_sec = datetime.datetime(
+            2021, 11, 13, 11, 49, 20, tzinfo=datetime.timezone.utc
+        )
+        dt_iso8601_str = '2021-11-13 11:49:20+00:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_sec
+        dt_iso8601_str = '2021-11-13 11:49:20.000000-00:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_sec
+
+        dt_obj_with_min = datetime.datetime(
+            2021, 11, 13, 11, 49, tzinfo=datetime.timezone.utc
+        )
+        dt_iso8601_str = '2021-11-13 11:49+00:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_min
+        dt_iso8601_str = '2021-11-13 11:49:00.000000+00:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_min
+
+        dt_obj_with_hour = datetime.datetime(
+            2021, 11, 13, 11, 0, tzinfo=datetime.timezone.utc
+        )
+        dt_iso8601_str = '2021-11-13 11+00:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_hour
+        dt_iso8601_str = '2021-11-13 11:00:00.000000+00:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_hour
+
+    def test_string_dt_aware_jst_fromisoformat(self):
+        """Test fromisoformat()."""
+        dt_obj_with_us = datetime.datetime(
+            2021, 11, 13, 11, 49, 20, 673681,
+            tzinfo=datetime.timezone(datetime.timedelta(hours=9))
+        )
+        dt_iso8601_str = '2021-11-13 11:49:20.673681+09:00'
+        assert datetime.datetime.fromisoformat(dt_iso8601_str) == dt_obj_with_us
+
     def test_string_dt_native_isoformat(self):
         """Test isoformat(): +09:00 format. (Python 3.6 or later)"""
         dt_obj_with_microseconds = datetime.datetime(2021, 11, 13, 11, 49, 20, 673681)
