@@ -2,7 +2,7 @@
 
 
 class PropertyExample(object):
-    """Example."""
+    """Add property to a class dynamically."""
     def __init__(self, initial_value):
         attr_name = 'my_int_attr'
         field_name = f"__{attr_name}"
@@ -26,6 +26,11 @@ def main() -> None:
     print(obj.my_int_attr)
     obj.my_int_attr = 2  # pylint: disable=attribute-defined-outside-init
     print(obj.my_int_attr)
+
+    PropertyExample.next_one = property(
+        lambda self: self.my_int_attr + 1
+    )
+    print(obj.next_one)
 
 
 if __name__ == '__main__':
