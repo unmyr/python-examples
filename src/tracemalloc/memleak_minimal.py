@@ -6,7 +6,7 @@ def main():
     """Run main."""
     tracemalloc.start()
 
-    snapshot1 = tracemalloc.take_snapshot()
+    snapshot1: tracemalloc.Snapshot = tracemalloc.take_snapshot()
 
     my_array = [None] * 1024  # pylint: disable=unused-variable
     # del my_array
