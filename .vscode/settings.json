@@ -144,6 +144,7 @@
     "tkinter",
     "Traceback",
     "TYPECHECK",
+    "tzname",
     "unichr",
     "urllib",
     "vstack",

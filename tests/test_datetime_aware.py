@@ -194,3 +194,10 @@ class TestDateTime(unittest.TestCase):
         assert datetime_native_jst == datetime.datetime(
             2021, 11, 13, 11, 49, 20, 673681
         )
+
+    def test_timezone_tzname(self):
+        """Get tzname()."""
+        assert datetime.datetime.now(datetime.timezone.utc).tzname() == 'UTC'
+        assert datetime.datetime.now(
+            datetime.timezone(datetime.timedelta(hours=9), 'JST')
+        ).tzname() == 'JST'
