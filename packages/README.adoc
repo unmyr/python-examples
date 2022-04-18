@@ -1,0 +1,53 @@
+:icons: font
+:toc: left
+:toclevels: 3
+
+== Build examples
+
+* https://packaging.python.org/en/latest/tutorials/packaging-projects/[Packaging Python Projects — Python Packaging User Guide^]
+
+=== Build using setup.cfg
+
+. Make sure you have the latest version of PyPA's build installed:
++
+[source,console]
+----
+python3 -m pip install --upgrade build
+----
+
+. Now run this command from the same directory where pyproject.toml is located:
++
+[source,console]
+----
+python3 -m build
+----
+
+. Test package
++
+[source,python]
+----
+>>> from example_package import calc
+>>> calc.add_one(2)
+3
+>>>
+----
+
+
+=== Build using setup.py
+
+. Build package
++
+[source,console]
+----
+python3 setup.py sdist bdist_wheel
+----
+
+. Test package
++
+[source,python]
+----
+>>> from example_package import calc
+>>> calc.add_one(2)
+3
+>>>
+----
