@@ -5,6 +5,11 @@ TARGETS=\
 $(TARGET_BDIST) \
 $(TARGET_SDIST)
 
+SOURCES=\
+setup.cfg \
+src/example_package/__init__.py \
+src/example_package/calc.py
+
 .PHONY: build
 
 build: $(TARGETS)
@@ -12,7 +17,7 @@ build: $(TARGETS)
 upgrade:
 	python3 -m pip install --upgrade build
 
-$(TARGET_BDIST): setup.cfg
+$(TARGET_BDIST): $(SOURCES)
 	python3 -m build
 
 install: $(TARGET_BDIST)
@@ -32,4 +37,4 @@ test_local:
 	PYTHONPATH=src python -m unittest discover -s src tests/
 
 clean:
-	rm -f $(TARGETS)
+	rm -fR dist/ build/ src/*.egg-info

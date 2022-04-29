@@ -5,14 +5,19 @@ TARGETS=\
 $(TARGET_BDIST) \
 $(TARGET_SDIST)
 
+SOURCES=\
+example_package/__init__.py \
+example_package/calc.py \
+setup.py
+
 .PHONY: build bdist sdist
 
 build: $(TARGETS)
 
-$(TARGET_BDIST):
+$(TARGET_BDIST): $(SOURCES)
 	python3 setup.py sdist bdist_wheel
 
-$(TARGET_SDIST):
+$(TARGET_SDIST): $(SOURCES)
 	python3 setup.py sdist
 
 bdist: $(TARGET_BDIST)
@@ -41,4 +46,4 @@ uninstall:
 	python3 -m pip uninstall -y $(PACKAGE_NAME)
 
 clean:
-	rm -fR dist/ build/ src/*.egg-info
+	rm -fR dist/ build/ *.egg-info

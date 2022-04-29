@@ -5,15 +5,20 @@ TARGETS=\
 $(TARGET_BDIST) \
 $(TARGET_SDIST)
 
+SOURCES=\
+setup.py \
+src/example_package/__init__.py \
+src/example_package/calc.py
+
 .PHONY: build build_sdist build_bdist install_bdist install_sdist
 
-build:
+build: $(SOURCES)
 	python3 setup.py sdist bdist_wheel
 
-$(TARGET_BDIST): setup.py
+$(TARGET_BDIST): $(SOURCES)
 	python3 setup.py bdist_wheel
 
-$(TARGET_SDIST): setup.py
+$(TARGET_SDIST): $(SOURCES)
 	python3 setup.py sdist
 
 build_sdist: $(TARGET_SDIST)
