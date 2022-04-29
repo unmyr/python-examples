@@ -12,14 +12,24 @@ build: $(TARGETS)
 upgrade:
 	python3 -m pip install --upgrade build
 
-$(TARGET_BDIST):
+$(TARGET_BDIST): setup.cfg
 	python3 -m build
 
 install: $(TARGET_BDIST)
-	python3 -m pip install $<
+	python3 -m pip install --find-links dist $(PACKAGE_NAME)
 
 uninstall:
 	python3 -m pip uninstall -y $(PACKAGE_NAME)
+
+show:
+	python3 -m pip show example-package-py3
+	python3 -m pip show -f example-package-py3
+
+test_installed:
+	python -m unittest discover -s src tests/
+
+test_local:
+	PYTHONPATH=src python -m unittest discover -s src tests/
 
 clean:
 	rm -f $(TARGETS)

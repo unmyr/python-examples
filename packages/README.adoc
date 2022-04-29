@@ -5,6 +5,7 @@
 == Build examples
 
 * https://packaging.python.org/en/latest/tutorials/packaging-projects/[Packaging Python Projects — Python Packaging User Guide^]
+* https://pypi.org/classifiers/[Classifiers · PyPI^]
 
 === Build using setup.cfg
 
@@ -20,6 +21,42 @@ python3 -m pip install --upgrade build
 [source,console]
 ----
 python3 -m build
+----
+
+. Install a package
++
+[source,console]
+----
+$ python3 -m pip install dist/example_package_py3-0.0.1-py3-none-any.whl
+----
+
+. Show package
++
+[source,console]
+----
+$ python3 -m pip show -f example-package-py3
+Name: example-package-py3
+Version: 0.0.1
+Summary: A small example package
+Home-page: None
+Author: author
+Author-email: author@example.com
+License: MIT
+Location: /home/guest/.pyenv/versions/3.8.8/lib/python3.8/site-packages
+Requires:
+Required-by:
+Files:
+  example_package/__init__.py
+  example_package/__pycache__/__init__.cpython-38.pyc
+  example_package/__pycache__/calc.cpython-38.pyc
+  example_package/calc.py
+  example_package_py3-0.0.1.dist-info/INSTALLER
+  example_package_py3-0.0.1.dist-info/LICENSE
+  example_package_py3-0.0.1.dist-info/METADATA
+  example_package_py3-0.0.1.dist-info/RECORD
+  example_package_py3-0.0.1.dist-info/REQUESTED
+  example_package_py3-0.0.1.dist-info/WHEEL
+  example_package_py3-0.0.1.dist-info/top_level.txt
 ----
 
 . Test package
@@ -40,6 +77,42 @@ python3 -m build
 [source,console]
 ----
 python3 setup.py sdist bdist_wheel
+----
+
+. Install a package
++
+[source,console]
+----
+$ python3 -m pip install dist/example_package_py3-0.0.1-py3-none-any.whl
+----
+
+. Show package
++
+[source,console]
+----
+$ python3 -m pip show -f example-package-py3
+Name: example-package-py3
+Version: 0.0.1
+Summary: A small example package
+Home-page: https://example.com/
+Author: Example Author
+Author-email: author@example.com
+License: MIT
+Location: /home/guest/.pyenv/versions/3.8.8/lib/python3.8/site-packages
+Requires:
+Required-by:
+Files:
+  example_package/__init__.py
+  example_package/__pycache__/__init__.cpython-38.pyc
+  example_package/__pycache__/calc.cpython-38.pyc
+  example_package/calc.py
+  example_package_py3-0.0.1.dist-info/INSTALLER
+  example_package_py3-0.0.1.dist-info/LICENSE
+  example_package_py3-0.0.1.dist-info/METADATA
+  example_package_py3-0.0.1.dist-info/RECORD
+  example_package_py3-0.0.1.dist-info/REQUESTED
+  example_package_py3-0.0.1.dist-info/WHEEL
+  example_package_py3-0.0.1.dist-info/top_level.txt
 ----
 
 . Test package
