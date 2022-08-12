@@ -1,7 +1,7 @@
 ifndef::leveloffset[]
 <<index.adoc#,Python>> {vbar}
 <<install_pyenv.adoc#,Pyenv>> {vbar}
-<<linter.adoc#,String>> {vbar}
-<<string.adoc#,Math>> {vbar}
+<<linter.adoc#,Linter>> {vbar}
+<<string.adoc#,String>> {vbar}
 <<matplotlib/index.adoc#,Matplotlib>> +
 endif::[]
