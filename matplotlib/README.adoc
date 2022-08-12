@@ -14,4 +14,4 @@ endif::[]
 $ python -m pip install -r requirements.txt
 ----
 
-include::matplotlib.adoc[]
+<<../docs/matplotlib/index.adoc#,Matplotlib examples>>
