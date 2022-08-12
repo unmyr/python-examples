@@ -1,0 +1,6 @@
+ifndef::leveloffset[]
+<<index.adoc#,Python>> {vbar}
+<<install_pyenv.adoc#,Pyenv>> {vbar}
+<<linter.adoc#,String>> {vbar}
+<<string.adoc#,Math>> +
+endif::[]

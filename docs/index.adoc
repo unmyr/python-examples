@@ -1,20 +1,11 @@
-:icons: font
+ifndef::leveloffset[]
 :toc: left
 :toclevels: 3
 
+include::header.adoc[]
+endif::[]
+
 == Python Examples
-.Install
-* <<install_pyenv.adoc#,Pyenv>>
-
-.Linter
-* <<linter.adoc#,Linter>> +
-  pycodestyle, pylint
-
-.Examples
-* <<string.adoc#,String>>
-* <<../numpy/README.adoc#,Numpy>>
-* <<../matplotlib/README.adoc#,Matplotlib>>
-
 
 === I/O
 
@@ -148,3 +139,9 @@ False
 '1, True, 2021-07-21'
 >>> 
 ----
+
+// Numpy
+include::../numpy/README.adoc[leveloffset=+1]
+
+// Matplotlib
+include::../matplotlib/README.adoc[leveloffset=+1]
