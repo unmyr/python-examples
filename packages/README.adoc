@@ -42,7 +42,7 @@ Home-page: None
 Author: author
 Author-email: author@example.com
 License: MIT
-Location: /home/guest/.pyenv/versions/3.8.8/lib/python3.8/site-packages
+Location: $HOME/.pyenv/versions/3.8.8/lib/python3.8/site-packages
 Requires:
 Required-by:
 Files:
@@ -98,7 +98,7 @@ Home-page: https://example.com/
 Author: Example Author
 Author-email: author@example.com
 License: MIT
-Location: /home/guest/.pyenv/versions/3.8.8/lib/python3.8/site-packages
+Location: $HOME/.pyenv/versions/3.8.8/lib/python3.8/site-packages
 Requires:
 Required-by:
 Files:

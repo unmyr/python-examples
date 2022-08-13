@@ -1,20 +1,15 @@
-:icons: font
+ifndef::leveloffset[]
 :toc: left
 :toclevels: 3
+endif::[]
+
+ifndef::imagesdir[]
+:imagesdir: images
+endif::[]
+
+include::header.adoc[]
 
 == Python Examples
-.Install
-* <<install_pyenv.adoc#,Pyenv>>
-
-.Linter
-* <<linter.adoc#,Linter>> +
-  pycodestyle, pylint
-
-.Examples
-* <<string.adoc#,String>>
-* <<../numpy/README.adoc#,Numpy>>
-* <<../matplotlib/README.adoc#,Matplotlib>>
-
 
 === I/O
 
@@ -87,12 +82,14 @@ time.struct_time(tm_year=2021, tm_mon=7, tm_mday=14, tm_hour=16, tm_min=17, tm_s
 >>>
 ----
 
-=== Array
+=== List
+
 [source,python]
 ----
 >>> [1, 2, 3]
 [1, 2, 3]
->>>
+>>> type([1, 2, 3])
+<class 'list'>
 ----
 
 [source,python]
@@ -110,6 +107,26 @@ True
 >>> 'orange' in ['apple', 'banana', 'peach']
 False
 >>>
+----
+
+==== List comprehension
+
+[source,python]
+.List comprehension and multiple variables
+----
+>> [(x, y) for x in [1, 2, 3] for y in ["a", "b"]]
+[(1, 'a'), (1, 'b'), (2, 'a'), (2, 'b'), (3, 'a'), (3, 'b')]
+----
+
+=== Array
+
+[source,python]
+----
+>>> import array
+>>> array.array("i", [3, 6, 9, 12])
+array('i', [3, 6, 9, 12])
+>>> type(array.array("i", [3, 6, 9, 12]))
+<class 'array.array'>
 ----
 
 === dict
@@ -148,3 +165,6 @@ False
 '1, True, 2021-07-21'
 >>> 
 ----
+
+// Numpy
+include::../numpy/README.adoc[leveloffset=+1]

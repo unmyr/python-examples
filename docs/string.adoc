@@ -1,49 +1,22 @@
-:icons: font
 ifndef::leveloffset[]
 :toc: left
 :toclevels: 3
 endif::[]
 
+include::header.adoc[]
+
 == Python Strings
 
-=== Python String Format
+=== String formatting
 
+.References
 * https://mkaz.blog/code/python-string-format-cookbook/[Python String Format Cookbook – mkaz.blog^]
+* https://www.scaler.com/topics/python/string-formatting-in-python/[String Formatting in Python - Scaler Topics^]
 
-==== Python Concatenate String and int
+==== “Old Style” String Formatting (% Operator)
 
-[source,python]
-----
->>> "No." + 30
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: can only concatenate str (not "int") to str
->>>
-----
-
-[source,python]
-----
->>> "No." + str(30)
-'No.30'
->>> "%s%s" % ("No.", 30)
-'No.30'
->>> "{}{}".format("No.", 30)
-'No.30'
->>>
-----
-
-[source,python]
-.Using f-strings (Python 3.6 or higher versions)
-----
->>> s = 'No.'
->>> n = 30
->>> f'{s}{n}'
-'No.30'
->>>
-----
-
-==== Number Formatting
-
+* Number formatting
++
 [source,python]
 ----
 >>> import math
@@ -56,6 +29,90 @@ TypeError: can only concatenate str (not "int") to str
 >>> "PI*100 = %.20g" % (math.pi * 100)
 'PI*100 = 314.15926535897932581'
 >>>
+----
+
+* Concatenate String and int
++
+[source,python]
+----
+>>> "%s%d" % ("No.", 30)
+'No.30'
+>>>
+----
+
+==== “New Style” String Formatting (str.format)
+
+* Right aligned String with length 3
++
+[source,python]
+----
+>>> "{:>3s}".format("a")
+'  a'
+----
+
+* Right aligned Number with length 3
++
+[source,python]
+----
+>>> "{:3d}".format(1)
+'  1'
+----
+
+* Concatenate String and int
++
+[source,python]
+----
+>>> "{}{}".format("No.", 30)
+'No.30'
+----
+
+==== String Interpolation / f-Strings (Python 3.6+)
+
+* Concatenate String and int
++
+[source,python]
+.Using f-strings (Python 3.6 or higher versions)
+----
+>>> s = 'No.'
+>>> n = 30
+>>> f'{s}{n}'
+'No.30'
+----
+
+==== Template Strings (Standard Library)
+
+=== Concatenate String and List
+
+* Concatenate String and int
++
+[source,python]
+----
+>>> "No." + str(30)
+'No.30'
+>>>
+----
+
+* Concatenate vector of strings into single string
++
+[source,python]
+----
+assert "".join(["abc", "123", "cdf"]) == 'abc123cdf'
+----
+
+* Join strings with a delimiter
++
+[source,python]
+----
+assert ", ".join(["John", "Due"]) == 'John, Due'
+----
+
+=== Encode/Decode
+
+* Bytes to string
++
+[source,python]
+----
+assert b"Hello world.".decode('utf-8') == "Hello world."
 ----
 
 === JSON
