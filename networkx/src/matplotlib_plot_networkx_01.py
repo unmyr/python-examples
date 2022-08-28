@@ -10,7 +10,7 @@ def show(nx_g):
     node_alpha = 0.4
     pos = graphviz_layout(nx_g, prog="circo")
     networkx.draw_networkx_nodes(
-        nx_g, pos, node_color="pink", alpha=node_alpha+0.5
+        nx_g, pos, node_color="pink", alpha=node_alpha + 0.5
     )
     networkx.draw_networkx_edges(
         nx_g, pos, edge_color="blue", alpha=node_alpha, arrows=False
