@@ -1,0 +1,8 @@
+== Example of Flask
+
+=== Install
+
+[source,shell]
+----
+python -m pip install -r requirements.txt
+----
