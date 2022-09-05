@@ -108,7 +108,7 @@ assert ", ".join(["John", "Due"]) == 'John, Due'
 
 === Generate random characters
 
-The `random.choices` is available since Python 3.6 or later.
+The `random.choices` and `secrets` is available since Python 3.6 or later.
 
 * Generate a password
 +
@@ -129,6 +129,11 @@ python -c "import random, string; print('\n'.join([''.join(random.choices(list(s
 [source,shell]
 ----
 python -c "import random, string; print('\n'.join(sorted([''.join(random.choices(list(string.ascii_letters + string.digits + '%^*(-_=+)'), k=12)) for i in range(1,10)])))"
+----
++
+[source,shell]
+----
+python -c "import secrets, string; chars = string.ascii_letters + string.digits + '%^*(-_=+)'; [print(p) for p in sorted([''.join(secrets.choice(chars) for i in range(12)) for j in range(10)])]"
 ----
 
 
