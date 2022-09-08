@@ -101,7 +101,7 @@ def setup_sqlite_table(engine: sqlalchemy.engine.base.Engine):
                 sqlalchemy.text(
                     "ATTACH DATABASE ':memory:' AS :schema"
                 ),
-                schema='guest'
+                {'schema': 'guest'}
             )
 
             # SQLite3 serial type wasn't incremented

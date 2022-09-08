@@ -3,7 +3,7 @@ from logging import getLogger, StreamHandler, DEBUG, Formatter
 import traceback
 
 from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 import sqlalchemy
 
 logger = getLogger(__name__)
@@ -51,10 +51,11 @@ class FruitsMenu(Base):
 def main(engine):
     """Run main."""
     try:
-        engine.execute(
-            sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
-            schema='guest'
-        )
+        with engine.begin() as conn:
+            conn.execute(
+                sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
+                {'schema': 'guest'}
+            )
         Base.metadata.create_all(bind=engine, checkfirst=True)
 
         inspector = sqlalchemy.inspect(engine)

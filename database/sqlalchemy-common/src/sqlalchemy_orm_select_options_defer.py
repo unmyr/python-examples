@@ -8,7 +8,7 @@ import traceback
 import typing
 
 from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 import sqlalchemy
 
 
@@ -187,7 +187,7 @@ def main(driver_name: str) -> typing.Dict:
             with engine.connect() as conn:
                 conn.execute(
                     sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
-                    schema='guest'
+                    {'schema': 'guest'}
                 )
 
         t_1 = time.time()

@@ -12,7 +12,7 @@ import typing
 
 import sqlalchemy
 from sqlalchemy import text
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 logger: logging.Logger = logging.getLogger(__name__)
 stream_handler: logging.StreamHandler = logging.StreamHandler()
@@ -95,10 +95,11 @@ def create_engine(
         echo=False
     )
     if driver_name == 'sqlite':
-        engine.execute(
-            sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
-            schema='guest'
-        )
+        with engine.begin() as conn:
+            conn.execute(
+                sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
+                {'schema': 'guest'}
+            )
 
     Base.metadata.create_all(bind=engine, checkfirst=True)
 

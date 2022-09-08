@@ -5,7 +5,7 @@ import sys
 import traceback
 import typing
 
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 import sqlalchemy
 
 
@@ -64,10 +64,11 @@ def main(driver_name: str) -> None:
         )
 
         if driver_name == 'sqlite':
-            engine.execute(
-                sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
-                schema='guest'
-            )
+            with engine.begin() as conn:
+                conn.execute(
+                    sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
+                    {'schema': 'guest'}
+                )
 
         Base.metadata.create_all(bind=engine, checkfirst=True)
 

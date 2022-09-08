@@ -9,7 +9,7 @@ import time
 import typing
 
 from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 import sqlalchemy
 import sqlalchemy.orm
 

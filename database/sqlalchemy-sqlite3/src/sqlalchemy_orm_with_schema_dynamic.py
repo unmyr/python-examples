@@ -2,7 +2,7 @@
 import traceback
 
 from sqlalchemy import text
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 import sqlalchemy
 
 Base = declarative_base()
@@ -16,10 +16,11 @@ class FruitsMenu(object):
 def main(engine):
     """Run main."""
     try:
-        engine.execute(
-            sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
-            schema='guest'
-        )
+        with engine.begin() as connection:
+            connection.execute(
+                sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
+                {'schema': 'guest'}
+            )
         metadata = sqlalchemy.MetaData(bind=engine)
         columns = (
             sqlalchemy.Column('id', sqlalchemy.Integer, primary_key=True),
@@ -55,7 +56,7 @@ def main(engine):
                 'price': 180
             }
         ]
-        with engine.connect() as connection:
+        with engine.begin() as connection:
             connection.execute(
                 text(
                     "INSERT INTO guest.fruits_menu (name, price) VALUES (:name, :price)"

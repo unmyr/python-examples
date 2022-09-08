@@ -5,7 +5,7 @@ import time
 import traceback
 import typing
 
-from sqlalchemy.ext.declarative import declarative_base  # pylint: disable=unused-import
+from sqlalchemy.orm import declarative_base  # pylint: disable=unused-import
 import sqlalchemy
 
 
@@ -33,10 +33,11 @@ def insert_records(
 ) -> float:
     """Insert records"""
     t_0 = time.time()
-    engine.execute(
-        Customers.__table__.insert(),
-        [dict(name=f'NAME {i:010d}', status=0, email=None) for i in range(count)]
-    )
+    with engine.begin() as connection:
+        connection.execute(
+            Customers.__table__.insert(),
+            [dict(name=f'NAME {i:010d}', status=0, email=None) for i in range(count)]
+        )
     t_1 = time.time()
     return t_1 - t_0
 
@@ -51,9 +52,10 @@ def update_same_value_sqlalchemy_orm_core(
     dt_ins = insert_records(engine, count)
 
     t_0 = time.time()
-    engine.execute(
-        Customers.__table__.update().values(status=1234)
-    )
+    with engine.begin() as connection:
+        connection.execute(
+            Customers.__table__.update().values(status=1234)
+        )
     t_1 = time.time()
 
     Base.metadata.drop_all(engine)
@@ -224,10 +226,11 @@ def main(driver_name: str) -> None:
         )
 
         if driver_name == 'sqlite':
-            engine.execute(
-                sqlalchemy.text(f"ATTACH DATABASE '{db_name}' AS :schema"),
-                schema='guest'
-            )
+            with engine.begin() as connection:
+                connection.execute(
+                    sqlalchemy.text(f"ATTACH DATABASE '{db_name}' AS :schema"),
+                    {'schema': 'guest'}
+                )
 
         count = 10000
         print("--- Update same value ---")

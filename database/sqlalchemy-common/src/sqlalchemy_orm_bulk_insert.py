@@ -5,7 +5,7 @@ import time
 import traceback
 import typing
 
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 import sqlalchemy
 
 
@@ -33,10 +33,11 @@ def insert_sqlalchemy_orm_core(
     Base.metadata.create_all(bind=engine, checkfirst=True)
 
     t_0 = time.time()
-    engine.execute(
-        Customers.__table__.insert(),
-        [dict(name=f'NAME {i:010d}', empty=None) for i in range(count)]
-    )
+    with engine.begin() as conn:
+        conn.execute(
+            Customers.__table__.insert(),
+            [dict(name=f'NAME {i:010d}', empty=None) for i in range(count)]
+        )
     t_1 = time.time()
     dt = t_1 - t_0
 
@@ -154,10 +155,11 @@ def main(driver_name: str) -> None:
         )
 
         if driver_name == 'sqlite':
-            engine.execute(
-                sqlalchemy.text(f"ATTACH DATABASE '{db_name}' AS :schema"),
-                schema='guest'
-            )
+            with engine.begin() as conn:
+                conn.execute(
+                    sqlalchemy.text(f"ATTACH DATABASE '{db_name}' AS :schema"),
+                    {'schema': 'guest'}
+                )
 
         print("[ SQLAlchemy Core ]")
         dt = insert_sqlalchemy_orm_core(engine, count)

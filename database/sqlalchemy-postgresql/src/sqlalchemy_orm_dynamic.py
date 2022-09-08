@@ -94,7 +94,7 @@ def execute_query(session, metadata) -> dict:
         "fruits_menu",
         metadata,
         *columns,
-        schema='guest'
+        {'schema': 'guest'}
     )
 
     class FruitsMenu(object):

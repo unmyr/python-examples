@@ -56,7 +56,7 @@ def create_engine(
         with engine.connect() as conn:
             conn.execute(
                 sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
-                schema='guest'
+                {'schema': 'guest'}
             )
     yield engine
     engine.dispose()

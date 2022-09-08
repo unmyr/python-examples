@@ -8,18 +8,20 @@ import sqlalchemy
 def main(engine):
     """Run main."""
     try:
-        with engine.connect() as connection:
+        with engine.begin() as connection:
             connection.execute(
-                "ATTACH DATABASE ':memory:' AS :schema",
-                schema='guest'
+                text("ATTACH DATABASE ':memory:' AS :schema"),
+                {'schema': 'guest'}
             )
             connection.execute(
-                "CREATE TABLE guest.fruits_menu ("
-                "  id SERIAL PRIMARY KEY,"
-                "  name VARCHAR(16) UNIQUE,"
-                "  price INTEGER,"
-                "  mod_time timestamp DEFAULT current_timestamp"
-                ")"
+                text(
+                    "CREATE TABLE guest.fruits_menu ("
+                    "  id SERIAL PRIMARY KEY,"
+                    "  name VARCHAR(16) UNIQUE,"
+                    "  price INTEGER,"
+                    "  mod_time timestamp DEFAULT current_timestamp"
+                    ")"
+                )
             )
 
             inspector = sqlalchemy.inspect(engine)
@@ -54,8 +56,7 @@ def main(engine):
                     "SELECT * FROM guest.fruits_menu "
                     "WHERE guest.fruits_menu.name = :name1 OR guest.fruits_menu.name = :name2"
                 ),
-                name1='Apple',
-                name2='Orange'
+                {'name1': 'Apple', 'name2': 'Orange'}
             )
             for row in result:
                 print(f"name={row['name']} price={row['price']}", )
