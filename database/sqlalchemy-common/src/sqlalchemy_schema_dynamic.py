@@ -11,6 +11,19 @@ import sqlalchemy
 import sqlalchemy.orm
 
 
+class BraceMessage:
+    """Brace message"""
+    def __init__(self, fmt, *args, **kwargs) -> None:
+        self.fmt = fmt
+        self.args = args
+        self.kwargs = kwargs
+
+    def __str__(self) -> str:
+        return self.fmt.format(*self.args, **self.kwargs)
+
+
+__ = BraceMessage
+
 logger: logging.Logger = logging.getLogger(__name__)
 stream_handler: logging.StreamHandler = logging.StreamHandler()
 stream_handler.setLevel(logging.DEBUG)
@@ -92,21 +105,60 @@ def select_all(session: sqlalchemy.orm.session.Session) -> typing.List[typing.Tu
 
 def main(driver_name: str) -> None:
     """Run main."""
-    engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
-        sqlalchemy.engine.URL.create(
-            driver_name,
+    config: typing.Dict
+    if driver_name == 'sqlite':
+        db_uri = sqlalchemy.engine.URL.create(
+            drivername=driver_name,
+            host='',
+            port=None,
+            database=':memory:',
+            username='',
+            password=''
+        )
+        config = dict()
+    else:
+        db_uri = sqlalchemy.engine.URL.create(
+            drivername=driver_name,
             host=os.environ.get('PGHOST'),
-            port=optional_int(os.environ.get('PGPORT')),
+            port=typing.cast(int, os.environ.get('PGPORT')),
             database=os.environ.get('PGDATABASE'),
             username=os.environ.get('PGUSER'),
             password=os.environ.get('PGPASSWORD')
-        ),
-        pool_size=1,
-        max_overflow=1,
-        execution_options={"schema_translate_map": {"dummy_schema": "guest"}},
+        )
+        config = dict(
+            pool_size=1,
+            max_overflow=1
+        )
+
+    # Get metadata (version, schema)
+    logger.info(__('create_engine(...)'))
+    default_schema = 'guest'
+    engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
+        db_uri,
+        **config,
+        execution_options={"schema_translate_map": {"dummy_schema": default_schema}},
         echo=True
     )
 
+    # Create schema
+    logger.info(__('engine.connect()'))
+    with engine.connect() as conn:
+        logger.info(__('Create schema.'))
+        if driver_name == 'sqlite':
+            # SQLite has no attribute 'has_schema'
+            conn.execute(
+                sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
+                {"schema": default_schema}
+            )
+        elif engine.dialect.has_schema(conn, default_schema):
+            pass
+        else:
+            conn.execute(
+                sqlalchemy.schema.CreateSchema(default_schema)
+            )
+
+    # Create tables
+    logger.info(__('Base.metadata.create_all(bind=engine, checkfirst=True)'))
     Base.metadata.create_all(bind=engine, checkfirst=True)
 
     Session = sqlalchemy.orm.sessionmaker(engine)
@@ -121,21 +173,32 @@ def main(driver_name: str) -> None:
                     ]
                 )
                 session.commit()
-            print(select_all(session))
+            for row in select_all(session):
+                print(row)
 
+    # Drop tables
+    logger.info(__('Base.metadata.drop_all(engine)'))
     Base.metadata.drop_all(engine)
 
+    # Disconnect connections, etc.
+    logger.info(__('engine.dispose()'))
     engine.dispose()
 
 
+def usage(command_name: str):
+    """Usage."""
+    print(
+        f"usage: {command_name} "
+        '{sqlite|postgresql+pg8000|postgresql+psycopg2}',
+        file=sys.stderr
+    )
+
+
 if __name__ == '__main__':
-    if sys.argv[1] in ['postgresql+pg8000', 'postgresql+psycopg2']:
+    drivers = ['sqlite', 'postgresql+pg8000', 'postgresql+psycopg2']
+    if len(sys.argv) == 2 and sys.argv[1] in drivers:
         main(sys.argv[1])
     else:
-        print(
-            f"usage: {sys.argv[0]} "
-            '{postgresql+pg8000|postgresql+psycopg2}',
-            file=sys.stderr
-        )
+        usage(sys.argv[0])
 
 # EOF
