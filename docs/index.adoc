@@ -11,6 +11,23 @@ include::header.adoc[]
 
 == Python Examples
 
+=== Functions
+
+* `if` statement with a return
++
+[source,python]
+.src/optional_int_return_early.py
+----
+include::../src/optional_int_return_early.py[tag=content]
+----
++
+[source,python]
+.src/optional_int_return_if_else.py
+----
+include::../src/optional_int_return_if_else.py[tag=content]
+----
+
+
 === I/O
 
 ==== stderr
