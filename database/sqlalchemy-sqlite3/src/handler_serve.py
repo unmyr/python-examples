@@ -29,7 +29,7 @@ class FruitsMenu(Base):
     name = Column(String(16), unique=True)
     price = Column(Integer)
     # Default value is the creation time, not automatically updated
-    modtime = Column(DateTime, server_default=sqlalchemy.sql.func.now())
+    mod_time = Column(DateTime, server_default=sqlalchemy.sql.func.now())
     __table_args__ = (sqlalchemy.PrimaryKeyConstraint('id'), {
         'schema': 'guest'
     })
@@ -39,23 +39,23 @@ class FruitsMenu(Base):
         self.price = price
 
     def __str__(self) -> str:
-        modtime_value = None
-        if isinstance(self.modtime, datetime.datetime):
-            modtime_value = self.modtime.isoformat()
+        mod_time_value = None
+        if isinstance(self.mod_time, datetime.datetime):
+            mod_time_value = self.mod_time.isoformat()
 
-        return '{' + "id: {}, name: '{}', price: {}, modtime: '{}'".format(
-            self.id, self.name, self.price, modtime_value) + '}'
+        return '{' + "id: {}, name: '{}', price: {}, mod_time: '{}'".format(
+            self.id, self.name, self.price, mod_time_value) + '}'
 
     def to_dict(self) -> typing.Dict:
         """Generate non-primitive dict."""
-        modtime_value = None
-        if isinstance(self.modtime, datetime.datetime):
-            modtime_value = self.modtime.isoformat()
+        mod_time_value = None
+        if isinstance(self.mod_time, datetime.datetime):
+            mod_time_value = self.mod_time.isoformat()
 
         return {
             'name': self.name,
             'price': self.price,
-            'modtime': modtime_value
+            'mod_time': mod_time_value
         }
 
 

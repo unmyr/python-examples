@@ -14,7 +14,7 @@ def main(engine):
                 "  id SERIAL PRIMARY KEY,"
                 "  name VARCHAR(16) UNIQUE,"
                 "  price INTEGER,"
-                "  modtime timestamp DEFAULT current_timestamp"
+                "  mod_time timestamp DEFAULT current_timestamp"
                 ")"
             )
 

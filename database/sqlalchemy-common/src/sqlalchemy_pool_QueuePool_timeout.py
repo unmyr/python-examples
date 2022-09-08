@@ -112,7 +112,7 @@ def setup_sqlite_table(engine: sqlalchemy.engine.base.Engine):
                     "  id INTEGER PRIMARY KEY,"
                     "  name VARCHAR(16) UNIQUE,"
                     "  price INTEGER,"
-                    "  modtime timestamp DEFAULT current_timestamp"
+                    "  mod_time timestamp DEFAULT current_timestamp"
                     ")"
                 )
             )

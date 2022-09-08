@@ -37,7 +37,7 @@ class FruitsMenu(Base):
     name = sqlalchemy.Column(sqlalchemy.String(16), unique=True)
     price = sqlalchemy.Column(sqlalchemy.Integer)
     # Default value is the creation time, not automatically updated
-    modtime = sqlalchemy.Column(
+    mod_time = sqlalchemy.Column(
         sqlalchemy.DateTime,
         server_default=sqlalchemy.sql.func.now()
     )
@@ -143,20 +143,20 @@ def execute_query(
         for row in rows:
             if driver_name.startswith('postgresql+'):
                 # postgresql
-                assert isinstance(row['modtime'], datetime.datetime)
-                modtime_str = row['modtime'].isoformat(timespec='seconds')
+                assert isinstance(row['mod_time'], datetime.datetime)
+                mod_time_str = row['mod_time'].isoformat(timespec='seconds')
             else:
                 # sqlite
-                assert isinstance(row['modtime'], str)
-                modtime_str = datetime.datetime.strptime(
-                    row['modtime'], '%Y-%m-%d %H:%M:%S'
+                assert isinstance(row['mod_time'], str)
+                mod_time_str = datetime.datetime.strptime(
+                    row['mod_time'], '%Y-%m-%d %H:%M:%S'
                 ).isoformat(timespec='seconds')
             print(f"row={row}")
             query_results.append({
                 'id': row['id'],
                 'name': row['name'],
                 'price': row['price'],
-                'modtime': modtime_str
+                'mod_time': mod_time_str
             })
 
     return {'statusCode': 200, 'body': json.dumps(query_results)}

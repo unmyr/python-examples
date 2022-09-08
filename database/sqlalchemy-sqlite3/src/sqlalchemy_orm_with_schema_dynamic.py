@@ -27,7 +27,7 @@ def main(engine):
                               sqlalchemy.String(length=16),
                               unique=True),
             sqlalchemy.Column('price', sqlalchemy.Integer),
-            sqlalchemy.Column('modtime', sqlalchemy.DateTime),
+            sqlalchemy.Column('mod_time', sqlalchemy.DateTime),
         )
         fruit_item_table = sqlalchemy.Table(
             "fruits_menu",

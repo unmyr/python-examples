@@ -88,7 +88,7 @@ def execute_query(session, metadata) -> dict:
         sqlalchemy.Column('id', sqlalchemy.Integer, primary_key=True),
         sqlalchemy.Column('name', sqlalchemy.String(length=16), unique=True),
         sqlalchemy.Column('price', sqlalchemy.Integer),
-        sqlalchemy.Column('modtime', sqlalchemy.DateTime),
+        sqlalchemy.Column('mod_time', sqlalchemy.DateTime),
     )
     fruit_item_table = sqlalchemy.Table(
         "fruits_menu",
@@ -115,12 +115,12 @@ def execute_query(session, metadata) -> dict:
 
     records = []
     for item in items:
-        logger.info(f"id={item.id} name='{item.name}' price={item.price} modtime='{item.modtime}'")
+        logger.info(f"id={item.id} name='{item.name}' price={item.price} mod_time='{item.mod_time}'")
         records.append(
             {
                 'name': item.name,
                 'price': item.price,
-                'modtime': item.modtime.isoformat()
+                'mod_time': item.mod_time.isoformat()
             }
         )
 

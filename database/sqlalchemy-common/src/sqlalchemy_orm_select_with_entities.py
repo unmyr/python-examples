@@ -33,7 +33,7 @@ class FruitsMenu(Base):
     name = Column(String(16), unique=True)
     price = Column(Integer)
     # Default value is the creation time, not automatically updated
-    modtime = Column(DateTime, server_default=sqlalchemy.sql.func.now())
+    mod_time = Column(DateTime, server_default=sqlalchemy.sql.func.now())
     __table_args__ = (
         sqlalchemy.PrimaryKeyConstraint('id'),
         {'schema': 'guest'}

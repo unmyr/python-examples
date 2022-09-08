@@ -33,7 +33,7 @@ class FruitsMenu(Base):
     name = Column(String(16), unique=True)
     price = Column(Integer)
     # Default value is the creation time, not automatically updated
-    modtime = sqlalchemy.orm.deferred(
+    mod_time = sqlalchemy.orm.deferred(
         Column(DateTime, server_default=sqlalchemy.sql.func.now())
     )
     __table_args__ = (
