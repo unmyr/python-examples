@@ -185,3 +185,13 @@ False
 
 // Numpy
 include::../numpy/README.adoc[leveloffset=+1]
+
+
+=== Database
+
+==== SQLAlchemy
+
+.References
+* https://www.mayn.es/post/2021-04-03-dynamically-set-schemas-sqlalchemy/[Dynamically Set ORM Schemas via Sqlalchemy^] +
+  sqlalchemy orm schema_translate_map - Google 検索
+
