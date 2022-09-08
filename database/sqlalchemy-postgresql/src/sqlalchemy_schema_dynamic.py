@@ -107,10 +107,23 @@ def main(driver_name: str) -> None:
         echo=True
     )
 
+    Base.metadata.create_all(bind=engine, checkfirst=True)
+
     Session = sqlalchemy.orm.sessionmaker(engine)
     with engine.connect() as connection:
         with Session(bind=connection) as session:
+            if session.query(FruitsMenu).count() == 0:
+                session.bulk_save_objects(
+                    [
+                        FruitsMenu('Apple', 10),
+                        FruitsMenu('Banana', 120),
+                        FruitsMenu('Orange', 110)
+                    ]
+                )
+                session.commit()
             print(select_all(session))
+
+    Base.metadata.drop_all(engine)
 
     engine.dispose()
 
