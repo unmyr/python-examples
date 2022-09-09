@@ -58,7 +58,7 @@ def main(engine):
                 ),
                 {'name1': 'Apple', 'name2': 'Orange'}
             )
-            for row in result:
+            for row in result.mappings():
                 print(f"name={row['name']} price={row['price']}", )
 
     except sqlalchemy.exc.ProgrammingError as exc:

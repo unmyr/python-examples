@@ -68,10 +68,12 @@ def main(engine):
                     "SELECT * FROM guest.fruits_menu "
                     "WHERE guest.fruits_menu.name = :name1 OR guest.fruits_menu.name = :name2"
                 ),
-                name1='Apple',
-                name2='Orange'
+                {
+                    'name1': 'Apple',
+                    'name2': 'Orange'
+                }
             )
-            for row in result:
+            for row in result.mappings():
                 print(f"name={row['name']} price={row['price']}")
 
     except sqlalchemy.exc.ProgrammingError as exc:

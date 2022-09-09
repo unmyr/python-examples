@@ -8,14 +8,16 @@ from sqlalchemy import text
 def main(engine):
     """Run main."""
     try:
-        with engine.connect() as connection:
+        with engine.begin() as connection:
             connection.execute(
-                "CREATE TABLE fruits_menu ("
-                "  id SERIAL PRIMARY KEY,"
-                "  name VARCHAR(16) UNIQUE,"
-                "  price INTEGER,"
-                "  mod_time timestamp DEFAULT current_timestamp"
-                ")"
+                text(
+                    "CREATE TABLE fruits_menu ("
+                    "  id SERIAL PRIMARY KEY,"
+                    "  name VARCHAR(16) UNIQUE,"
+                    "  price INTEGER,"
+                    "  mod_time timestamp DEFAULT current_timestamp"
+                    ")"
+                )
             )
 
             inspector = sqlalchemy.inspect(engine)
@@ -50,10 +52,9 @@ def main(engine):
                     "SELECT * FROM fruits_menu "
                     "WHERE fruits_menu.name = :name1 OR fruits_menu.name = :name2"
                 ),
-                name1='Apple',
-                name2='Orange'
+                {'name1': 'Apple', 'name2': 'Orange'}
             )
-            for row in result:
+            for row in result.mappings():
                 print(f"name={row['name']} price={row['price']}", )
 
     except sqlalchemy.exc.ProgrammingError as exc:
