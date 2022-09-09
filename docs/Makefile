@@ -12,6 +12,7 @@ mkdir_and_copy \
 $(DEST_DIR)/install_pyenv.html \
 $(DEST_DIR)/linter.html \
 $(DEST_DIR)/matplotlib/index.html \
+$(DEST_DIR)/sqlalchemy.adoc \
 $(DEST_DIR)/string.html \
 $(DEST_DIR)/index.html
 

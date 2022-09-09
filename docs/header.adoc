@@ -3,5 +3,6 @@ ifndef::leveloffset[]
 <<install_pyenv.adoc#,Pyenv>> {vbar}
 <<linter.adoc#,Linter>> {vbar}
 <<string.adoc#,String>> {vbar}
-<<matplotlib/index.adoc#,Matplotlib>> +
+<<matplotlib/index.adoc#,Matplotlib>> {vbar}
+<<sqlalchemy.adoc#,Sqlalchemy>> +
 endif::[]

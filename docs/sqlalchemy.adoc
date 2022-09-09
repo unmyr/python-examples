@@ -1,0 +1,97 @@
+ifndef::leveloffset[]
+:toc: left
+:toclevels: 3
+endif::[]
+
+ifndef::imagesdir[]
+:imagesdir: images
+endif::[]
+
+include::header.adoc[]
+
+== SQLAlchemy
+
+=== ORM
+
+.References
+* https://www.mayn.es/post/2021-04-03-dynamically-set-schemas-sqlalchemy/[Dynamically Set ORM Schemas via Sqlalchemy^] +
+  sqlalchemy orm schema_translate_map - Google 検索
+
+=== Migrate 1.4 to 2.0
+
+* Before
++
+[source,python]
+----
+    query_obj = session.query(
+        FruitsMenu
+    ).filter(
+        sqlalchemy.or_(
+            FruitsMenu.name == 'Apple',
+            FruitsMenu.name == 'Orange'
+        )
+    ).with_entities(
+        FruitsMenu.name,
+        FruitsMenu.price
+    )
+    items = query_obj.all()
+
+    records = []
+    row: sqlalchemy.engine.row.Row
+    print(f"items={items}, type={type(items).__name__}")
+    for row in items:
+        print(f"row={row}, type={type(row).__name__}")
+        records.append([row['name'], row['price']])
+
+    stmt = query_obj.statement.compile(
+        compile_kwargs={"literal_binds": True}
+    )
+    print(str(stmt))
+----
++
+[source,plaintext]
+.Results
+----
+items=[('Apple', 10), ('Orange', 110)], type=list
+row=('Apple', 10), type=Row
+database/sqlalchemy-common/src/sqlalchemy_orm_select_with_entities.py:101: RemovedIn20Warning: Retrieving row members using strings or other non-integers is deprecated; use row._mapping for a dictionary interface to the row (Background on SQLAlchemy 2.0 at: http://sqlalche.me/e/b8d9)
+  records.append([row['name'], row['price']])
+row=('Orange', 110), type=Row
+SELECT guest.fruits_menu.name, guest.fruits_menu.price
+FROM guest.fruits_menu
+WHERE guest.fruits_menu.name = 'Apple' OR guest.fruits_menu.name = 'Orange'
+----
+
+* After
++
+[source,python]
+----
+    query_obj = sqlalchemy.sql.expression.select(
+        FruitsMenu.name,
+        FruitsMenu.price
+    ).filter(
+        sqlalchemy.or_(
+            FruitsMenu.name == 'Apple',
+            FruitsMenu.name == 'Orange'
+        )
+    ).with_only_columns(FruitsMenu.name, FruitsMenu.price)
+    items = session.execute(query_obj).mappings()
+
+    records = []
+    row: sqlalchemy.engine.row.Row
+    print(f"items={items}, type={type(items).__name__}")
+    for row in items:
+        print(f"row={row}, type={type(row).__name__}")
+        records.append([row['name'], row['price']])
+
+    print("{}".format(query_obj.compile(compile_kwargs={'literal_binds': True})))
+----
++
+----
+items=<sqlalchemy.engine.result.MappingResult object at 0x7fc400b12f40>, type=MappingResult
+row={'name': 'Apple', 'price': 10}, type=RowMapping
+row={'name': 'Orange', 'price': 110}, type=RowMapping
+SELECT guest.fruits_menu.name, guest.fruits_menu.price
+FROM guest.fruits_menu
+WHERE guest.fruits_menu.name = 'Apple' OR guest.fruits_menu.name = 'Orange'
+----
