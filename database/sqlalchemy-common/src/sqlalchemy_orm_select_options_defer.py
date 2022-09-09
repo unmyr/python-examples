@@ -112,7 +112,7 @@ def execute_query(
     ).options(
         sqlalchemy.orm.defer('mod_time')
     )
-    items = query_obj.all()
+    items = query_obj.mappings()
 
     t_3 = time.time()
     # records = []

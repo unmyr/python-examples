@@ -79,29 +79,27 @@ def execute_query(
         session.commit()
 
     t_2 = time.time()
-    query_obj = session.query(
-        FruitsMenu
+    query_obj = sqlalchemy.sql.expression.select(
+        FruitsMenu.name,
+        FruitsMenu.price
     ).filter(
         sqlalchemy.or_(
             FruitsMenu.name == 'Apple',
             FruitsMenu.name == 'Orange'
         )
-    ).with_entities(
-        FruitsMenu.name,
-        FruitsMenu.price
-    )
-    items = query_obj.all()
+    ).with_only_columns(FruitsMenu.name, FruitsMenu.price)
+    items = session.execute(query_obj).mappings()
 
     t_3 = time.time()
     records = []
     row: sqlalchemy.engine.row.Row
+    print(f"items={items}, type={type(items).__name__}")
     for row in items:
+        print(f"row={row}, type={type(row).__name__}")
         records.append([row['name'], row['price']])
 
-    # stmt = query_obj.statement.compile(
-    #     compile_kwargs={"literal_binds": True}
-    # )
-    # print("stmt:" + str(stmt))
+    print("{}".format(query_obj.compile(compile_kwargs={'literal_binds': True})))
+
     result = {
         'statusCode': 200,
         'body': json.dumps(records)
