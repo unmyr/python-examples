@@ -119,7 +119,7 @@ def insert_sqlalchemy_orm_add(
 
 def main(driver_name: str) -> None:
     """Run main."""
-    config = {}
+    config: typing.Dict[str, typing.Any] = {}
     if driver_name == 'sqlite':
         db_name = 'customers.sqlite3'
         db_uri = sqlalchemy.engine.URL.create(
@@ -148,10 +148,10 @@ def main(driver_name: str) -> None:
 
     count = 10000
     try:
+        config['echo'] = False
         engine: sqlalchemy.engine.base.Engine = sqlalchemy.create_engine(
             db_uri,
-            **config,
-            echo=False
+            **config
         )
 
         if driver_name == 'sqlite':

@@ -150,12 +150,13 @@ def main(driver_name: str) -> None:
                 sqlalchemy.text("ATTACH DATABASE ':memory:' AS :schema"),
                 {"schema": default_schema}
             )
-        elif engine.dialect.has_schema(conn, default_schema):
-            pass
-        else:
-            conn.execute(
-                sqlalchemy.schema.CreateSchema(default_schema)
-            )
+        elif hasattr(engine.dialect, 'has_schema'):
+            if typing.cast(typing.Any, engine.dialect).has_schema(conn, default_schema):
+                pass
+            else:
+                conn.execute(
+                    sqlalchemy.schema.CreateSchema(default_schema)
+                )
 
     # Create tables
     logger.info(__('Base.metadata.create_all(bind=engine, checkfirst=True)'))

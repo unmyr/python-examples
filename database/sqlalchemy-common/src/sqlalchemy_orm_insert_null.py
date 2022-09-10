@@ -29,7 +29,7 @@ class DateTable(Base):
 
 def main(driver_name: str) -> None:
     """Run main."""
-    config = {}
+    config: typing.Dict[str, typing.Any] = {}
     if driver_name == 'sqlite':
         db_name = 'date_table.sqlite3'
         db_uri = sqlalchemy.engine.URL.create(

@@ -92,10 +92,10 @@ def execute_query(
 
     t_3 = time.time()
     records = []
-    row: sqlalchemy.engine.row.Row
-    print(f"items={items}, type={type(items).__name__}")
+    row: typing.Mapping[typing.Any, typing.Any]
+    print(f"items={items}, type={type(items).__module__}.{type(items).__name__}")
     for row in items:
-        print(f"row={row}, type={type(row).__name__}")
+        print(f"row={row}, type={type(row).__module__}.{type(row).__name__}")
         records.append([row['name'], row['price']])
 
     print("{}".format(query_obj.compile(compile_kwargs={'literal_binds': True})))
