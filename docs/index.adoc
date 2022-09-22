@@ -50,6 +50,16 @@ Error!
 >>>
 ----
 
+==== stdin
+
+[source,console]
+----
+$ free | python -c "import sys; [print(line.strip()) for line in sys.stdin.readlines()]"
+total        used        free      shared  buff/cache   available
+Mem:       12319920     6136724     5953844       17720      229352     6049464
+Swap:      37748736       59208    37689528
+----
+
 === Lambda
 
 [source,python]
@@ -101,6 +111,8 @@ time.struct_time(tm_year=2021, tm_mon=7, tm_mday=14, tm_hour=16, tm_min=17, tm_s
 
 === List
 
+* Make list
++
 [source,python]
 ----
 >>> [1, 2, 3]
@@ -109,6 +121,8 @@ time.struct_time(tm_year=2021, tm_mon=7, tm_mday=14, tm_hour=16, tm_min=17, tm_s
 <class 'list'>
 ----
 
+* Reverse list
++
 [source,python]
 ----
 >>> ary = [1, 2, 3]
@@ -117,6 +131,8 @@ time.struct_time(tm_year=2021, tm_mon=7, tm_mday=14, tm_hour=16, tm_min=17, tm_s
 >>>
 ----
 
+* Check if a list contains a certain element
++
 [source,python]
 ----
 >>> 'apple' in ['apple', 'banana', 'peach']
@@ -124,6 +140,24 @@ True
 >>> 'orange' in ['apple', 'banana', 'peach']
 False
 >>>
+----
+
+* Filter List Elements
++
+[source,console]
+----
+>>> fruits = ['apple', 'banana', 'peach', 'pineapple']
+>>> list(filter(lambda item: 'apple' in item, fruits))
+['apple', 'pineapple']
+>>> [item for item in fruits if 'apple' in item]
+['apple', 'pineapple']
+----
++
+[source,console]
+----
+$ free | python -c "import sys; [print(line.strip()) for line in sys.stdin.readlines() if 'Mem
+:' in line]"
+Mem:       12319920     6460412     5630156       17720      229352     5725776
 ----
 
 ==== List comprehension

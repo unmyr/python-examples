@@ -138,6 +138,7 @@
     "rastrigin",
     "rdiv",
     "readline",
+    "readlines",
     "reenable",
     "regexes",
     "repr",
