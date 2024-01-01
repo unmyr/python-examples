@@ -1,9 +1,9 @@
 """Generate passwords."""
 import argparse
-import random
 import re
 import secrets
 import string
+import typing
 
 
 def gen_password(pass_len: int) -> str:
@@ -15,12 +15,15 @@ def gen_password(pass_len: int) -> str:
  
     alphabet: str = string.ascii_letters + string.digits + symbols
     password: str = ""
+    secrets.randbelow(pass_len)
     password += secrets.choice(string.ascii_lowercase)
     password += secrets.choice(string.ascii_uppercase)
     password += secrets.choice(string.digits)
     password += secrets.choice(symbols)
     password += "".join(secrets.choice(alphabet) for _ in range(pass_len - len(password)))
-    return ''.join(random.sample(password, len(password)))
+    password_chars: typing.List = list(password)
+    secrets.SystemRandom().shuffle(password_chars)
+    return "".join(password_chars[0:pass_len])
 
 def main():
     """main."""
