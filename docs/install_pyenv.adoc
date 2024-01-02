@@ -7,68 +7,64 @@ endif::[]
 
 == Install pyenv
 
-=== Install Python 3.8.x (Ubuntu 18.04)
-* https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/[How to Install Python 3.8 on Ubuntu 18.04 | Linuxize^] +
-  python 3.8 ubuntu apt - Google Search
-* https://github.com/pyenv/pyenv/wiki#suggested-build-environment[Home · pyenv/pyenv Wiki^]
+=== Install Python 3.10.x (Ubuntu 22.04)
 
 . Update the packages list and install the packages necessary to build Python:
 +
 [source,shell-session]
 ----
-$ sudo apt update; sudo apt install make build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 ----
 
 . List python versions
 +
-[source,shell-session]
+[source,console]
 ----
-$ pyenv install --list | grep 3.8
-  ...
-  3.8.8
-  miniconda-3.8.3
-  ...
-$
+$ pyenv latest -k 3.10
+3.10.13
 ----
-
-. Install Python 3.8
 +
-[source,shell-session]
+[source,console]
 ----
-$ pyenv install 3.8.8
-Downloading Python-3.8.8.tar.xz...
--> https://www.python.org/ftp/python/3.8.8/Python-3.8.8.tar.xz
-Installing Python-3.8.8...
-Installed Python-3.8.8 to $HOME/.pyenv/versions/3.8.8
-
-$ pyenv versions
-* system (set by $HOME/.pyenv/version)
-  3.8.8
-$ pyenv global 3.8.8
-$ pyenv version
-3.8.8 (set by $HOME/.pyenv/version)
-$
+$ pyenv latest 3.12
+3.12.1
 ----
 
-[source,shell-session]
-.uninstall version
+. Install Python 3.12.x
++
+[source,shell]
 ----
-$ pyenv install 3.8.8
--> https://www.python.org/ftp/python/3.8.8/Python-3.8.8.tar.xz
-Installing Python-3.8.8...
-WARNING: The Python bz2 extension was not compiled. Missing the bzip2 lib?
-WARNING: The Python readline extension was not compiled. Missing the GNU readline lib?
-WARNING: The Python sqlite3 extension was not compiled. Missing the SQLite3 lib?
-Installed Python-3.8.8 to $HOME/.pyenv/versions/3.8.8
-$ pyenv uninstall 3.8.8
-pyenv: remove $HOME/.pyenv/versions/3.8.8? [y|N]y
-pyenv: 3.8.8 uninstalled
-$
+PYTHON_VERSION=$(pyenv latest 3.12)
+time pyenv install ${PYTHON_VERSION}
+----
++
+[source,console]
+----
+$ PYTHON_VERSION=$(pyenv latest 3.12)
+$ time pyenv install ${PYTHON_VERSION}
+Downloading Python-3.12.1.tar.xz...
+-> https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tar.xz
+Installing Python-3.12.1...
+Installed Python-3.12.1 to /home/guest/.pyenv/versions/3.12.1
+
+real    3m27.855s
+user    10m45.641s
+sys     0m50.514s
 ----
 
-[source,shell-session]
+. Change the global Python version
++
+[source,shell]
 ----
-python -m pip install setuptools wheel
+(set -x; pyenv versions; pyenv global ${PYTHON_VERSION}; pyenv version)
+----
+
+=== Uninstall version
+
+[source,shell]
+----
+PYTHON_VERSION="3.12.1"
+pyenv uninstall ${PYTHON_VERSION}
 ----
