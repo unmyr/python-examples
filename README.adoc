@@ -48,6 +48,13 @@ PYTHONPATH="./src/dict"
   },
 ----
 
+=== Formatter
+
+[source,shell]
+----
+python -m ruff format src
+----
+
 === Linter
 * <<docs/linter.adoc#,Linter>>
 
