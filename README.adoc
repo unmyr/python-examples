@@ -21,8 +21,35 @@ See. <<docs/install_pyenv.adoc#,Install PyEnv>>
 python -m pip install -r requirements.txt
 ----
 
+=== Configure environment
+
+. Create `.env` file for editor
++
+[source,shell]
+..env
+----
+PYTHONPATH="./src/dict"
+----
+
+. Add path for terminal
++
+[source,json]
+..vscode/settings.json
+----
+  "terminal.integrated.env.linux": {
+    "PYTHONPATH": "${workspaceFolder}/src/dict"
+  },
+----
+
 === Linter
 * <<docs/linter.adoc#,Linter>>
+
+=== Run tests
+
+[source,shell]
+----
+python -m unittest discover -s tests -p 'test_*.py'
+----
 
 === Examples
 

@@ -9,12 +9,9 @@
     "editor.detectIndentation": true,
     "editor.insertSpaces": true
   },
-  "python.linting.pylintEnabled": true,
-  "python.linting.pycodestyleEnabled": true,
-  "python.linting.pycodestyleArgs": [
-    "--ignore=E501,W503",
-    "--max-line-length=120"
-  ],
+  "terminal.integrated.env.linux": {
+    "PYTHONPATH": "${workspaceFolder}/src/dict"
+  },
   "python.testing.pytestEnabled": false,
   "python.testing.unittestEnabled": true,
   "python.testing.unittestArgs": [
@@ -26,6 +23,7 @@
   ],
   "cSpell.words": [
     "abstractproperty",
+    "adoc",
     "agraph",
     "arange",
     "asdict",
@@ -68,6 +66,7 @@
     "graphviz",
     "Hoge",
     "idiv",
+    "ifndef",
     "imagesdir",
     "imshow",
     "indentpycodestyle",
@@ -162,6 +161,7 @@
     "timespec",
     "timetuple",
     "tkinter",
+    "toclevels",
     "tottime",
     "Traceback",
     "TYPECHECK",
