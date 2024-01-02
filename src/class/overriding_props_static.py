@@ -3,6 +3,7 @@
 
 class Positive(object):
     """Example."""
+
     @property
     def my_attr(self):
         """Get my_attr."""
@@ -21,7 +22,7 @@ def main() -> None:
     print(my_obj.my_attr)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

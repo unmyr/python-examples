@@ -6,6 +6,7 @@ import functools
 
 def my_decorator(f):
     """My decorator."""
+
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
         print("BEGIN")
@@ -22,7 +23,7 @@ def hello():
     print("Hello world")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     hello()
 
 # EOF

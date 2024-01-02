@@ -3,11 +3,11 @@ import typing
 
 
 # tag::content[]
-def optional_int(
-    num_str: typing.Optional[str]
-) -> typing.Optional[int]:
+def optional_int(num_str: typing.Optional[str]) -> typing.Optional[int]:
     """Optional[str] to Optional[int]."""
     return None if num_str is None else int(num_str)
+
+
 # end::content[]
 
 
@@ -17,5 +17,5 @@ def main() -> None:
     assert optional_int("123") == 123
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

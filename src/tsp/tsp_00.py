@@ -15,7 +15,7 @@ def main():
         points[i] = i
 
     plt.plot(p_x, p_y)  # "o"は小さい円(circle marker)
-    plt.savefig('tsp_before.png')
+    plt.savefig("tsp_before.png")
     plt.clf()
 
     distance_table = np.empty((p_x.size, p_x.size), np.float32)
@@ -30,7 +30,7 @@ def main():
                 d_y = p_y[j] - p_y[i]
                 distance_table[i][j] = math.sqrt(d_x * d_x + d_y * d_y)
 
-    total_before = 0.
+    total_before = 0.0
     i = 0
     while i < (p_x.size - 1):
         total_before += distance_table[i][i + 1]
@@ -60,13 +60,15 @@ def main():
                     p_y[(j + 1) % p_x.size] = tmp_iy2
                     # swap i+1, j+1
                     tmp_row_ip1 = distance_table[(i + 1) % p_x.size]
-                    distance_table[(i + 1) % p_x.size] = \
-                        distance_table[(j + 1) % p_x.size]
+                    distance_table[(i + 1) % p_x.size] = distance_table[
+                        (j + 1) % p_x.size
+                    ]
                     distance_table[(j + 1) % p_x.size] = tmp_row_ip1
 
                     tmp_col_ip1 = distance_table[:, (i + 1) % p_x.size]
-                    distance_table[:][(i + 1) % p_x.size] = \
-                        distance_table[:][(j + 1) % p_x.size]
+                    distance_table[:][(i + 1) % p_x.size] = distance_table[:][
+                        (j + 1) % p_x.size
+                    ]
                     distance_table[:][(j + 1) % p_x.size] = tmp_col_ip1
                     count += 1
                     print("compare {} {} {} {} swapped".format(i, i + 1, j, j + 1))
@@ -79,7 +81,7 @@ def main():
         if count == 0:
             break
 
-    total_after = 0.
+    total_after = 0.0
     i = 0
     while i < (p_x.size - 1):
         total_after += distance_table[i][i + 1]
@@ -88,8 +90,8 @@ def main():
     print("before={} -> after={}".format(total_before, total_after))
 
     plt.plot(p_x, p_y)  # "o"は小さい円(circle marker)
-    plt.savefig('tsp_after.png')
+    plt.savefig("tsp_after.png")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

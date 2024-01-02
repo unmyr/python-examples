@@ -15,7 +15,7 @@ def main() -> None:
     pr.disable()
 
     stats: pstats.Stats = pstats.Stats(pr)
-    stats.sort_stats('tottime')
+    stats.sort_stats("tottime")
     # stats.sort_stats('cumulative')
     # stats.sort_stats('ncalls')
     # stats.sort_stats('pcalls')
@@ -24,7 +24,7 @@ def main() -> None:
     return None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

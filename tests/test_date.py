@@ -5,6 +5,7 @@ import datetime
 
 class TestDate(unittest.TestCase):
     """Test datetime.date module."""
+
     def test_date_fix_timedelta(self) -> None:
         """Test timedelta."""
         d1 = datetime.date(2021, 12, 1)
@@ -26,4 +27,4 @@ class TestDate(unittest.TestCase):
         """Test fromisoformat()."""
         # Python 3.7 or later
         date_obj = datetime.date(2021, 11, 13)
-        assert datetime.date.fromisoformat('2021-11-13') == date_obj
+        assert datetime.date.fromisoformat("2021-11-13") == date_obj

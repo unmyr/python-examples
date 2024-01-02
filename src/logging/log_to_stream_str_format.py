@@ -6,6 +6,7 @@ import math
 
 class BraceMessage:
     """Brace message"""
+
     def __init__(self, fmt, *args, **kwargs):
         self.fmt = fmt
         self.args = args
@@ -26,8 +27,10 @@ logger.propagate = False
 
 logger.debug(
     __(
-        'number={} pi={:1.2f} dict={}',
-        1, math.pi, {'key1': True, 'key2': datetime.datetime.now()}
+        "number={} pi={:1.2f} dict={}",
+        1,
+        math.pi,
+        {"key1": True, "key2": datetime.datetime.now()},
     )
 )
 logger.removeHandler(handler)

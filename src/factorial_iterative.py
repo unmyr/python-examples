@@ -15,7 +15,7 @@ def factorial(number: int) -> typing.Optional[int]:
     return factor
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(factorial(int(argv[1])))
 
 # EOF

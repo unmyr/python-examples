@@ -10,19 +10,16 @@ class TestList(unittest.TestCase):
         list_of_dict = [
             {"name": "a", "value": 0.1},
             {"name": "b", "value": 1.1},
-            {"name": "c", "value": 0.5}
+            {"name": "c", "value": 0.5},
         ]
 
-        sorted_new_list = sorted(
-            list_of_dict,
-            key=lambda k: k['value'], reverse=True
-        )
+        sorted_new_list = sorted(list_of_dict, key=lambda k: k["value"], reverse=True)
 
         self.assertListEqual(
             sorted_new_list,
             [
                 {"name": "b", "value": 1.1},
                 {"name": "c", "value": 0.5},
-                {"name": "a", "value": 0.1}
-            ]
+                {"name": "a", "value": 0.1},
+            ],
         )

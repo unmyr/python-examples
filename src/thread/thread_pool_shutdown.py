@@ -12,6 +12,7 @@ pool: typing.Optional[ThreadPoolExecutor] = None
 
 class BraceMessage:
     """Brace message"""
+
     def __init__(self, fmt, *args, **kwargs) -> None:
         self.fmt = fmt
         self.args = args
@@ -27,32 +28,33 @@ logger = getLogger(__name__)
 
 def delay_hello(msg: str, waitSec: int) -> str:
     """Delay hello"""
-    logger.debug(__('BEGIN: {}', msg))
+    logger.debug(__("BEGIN: {}", msg))
     time.sleep(waitSec)
-    logger.debug(__('END: {}', msg))
+    logger.debug(__("END: {}", msg))
     return f"Hello {msg}"
 
 
 def my_decorator(
-    func: typing.Callable[..., typing.Any]
+    func: typing.Callable[..., typing.Any],
 ) -> typing.Callable[
-    [mypy_extensions.VarArg(typing.Any),
-     mypy_extensions.KwArg(typing.Any)], typing.Any]:
+    [mypy_extensions.VarArg(typing.Any), mypy_extensions.KwArg(typing.Any)], typing.Any
+]:
     """My decorator."""
+
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         # pylint: disable=global-statement
         global pool
         try:
-            logger.info(__('CALL: wrapper()'))
+            logger.info(__("CALL: wrapper()"))
             ret = func(*args, **kwargs)
-            logger.info(__('DONE: wrapper(): ret={}', ret))
+            logger.info(__("DONE: wrapper(): ret={}", ret))
         finally:
-            logger.info(__('CALL: pool.shutdown()'))
+            logger.info(__("CALL: pool.shutdown()"))
             # pool.shutdown()
             # pool.shutdown(wait=True)
             pool.shutdown(wait=False)
-            logger.info(__('DONE: pool.shutdown()'))
+            logger.info(__("DONE: pool.shutdown()"))
 
     return wrapper
 
@@ -64,9 +66,7 @@ def run(timeout) -> bool:
     global pool
     pool = ThreadPoolExecutor(2)
 
-    params: typing.List[typing.Tuple[str, int]] = [
-        ('foo', 2), ('bar', 6), ('baz', 10)
-    ]
+    params: typing.List[typing.Tuple[str, int]] = [("foo", 2), ("bar", 6), ("baz", 10)]
 
     futures: typing.List[concurrent.futures.Future] = []
     for param in params:
@@ -74,12 +74,12 @@ def run(timeout) -> bool:
 
     for future in futures:
         try:
-            logger.info(__('CALL: future.result(timeout={})', timeout))
+            logger.info(__("CALL: future.result(timeout={})", timeout))
             val = future.result(timeout=timeout)
-            logger.info(__('DONE: future.result(timeout={}): {}', timeout, val))
+            logger.info(__("DONE: future.result(timeout={}): {}", timeout, val))
         except concurrent.futures.TimeoutError:
             # logger.exception(exc)
-            logger.warning(__('FAIL: future.result(timeout={}): timed out', timeout))
+            logger.warning(__("FAIL: future.result(timeout={}): timed out", timeout))
     return True
 
 
@@ -88,18 +88,18 @@ def main() -> None:
     stream_handler = StreamHandler()
     stream_handler.setLevel(DEBUG)
     stream_formatter = Formatter(
-        '[%(asctime)s] %(levelname)s - %(funcName)s - %(message)s'
+        "[%(asctime)s] %(levelname)s - %(funcName)s - %(message)s"
     )
     stream_handler.setFormatter(stream_formatter)
     logger.setLevel(DEBUG)
     logger.addHandler(stream_handler)
     logger.propagate = False
-    logger.info(__('CALL: run(2)'))
+    logger.info(__("CALL: run(2)"))
     ret = run(2)
-    logger.info(__('DONE: run(2): ret={}', ret))
+    logger.info(__("DONE: run(2): ret={}", ret))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

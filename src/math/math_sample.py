@@ -15,8 +15,7 @@ if __name__ == "__main__":
     print("exponent %f, remainder: %f" % (exponent, remainder))
 
     scale = 10 ** (-exponent)
-    print("exponent %f, remainder: %f, scale: %f" % (
-        exponent, remainder, scale))
+    print("exponent %f, remainder: %f, scale: %f" % (exponent, remainder, scale))
 
     V_MIN = math.floor(scale * V_MIN) / scale
     V_MAX = math.ceil(scale * V_MAX) / scale

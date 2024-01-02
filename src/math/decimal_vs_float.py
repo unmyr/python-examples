@@ -82,8 +82,9 @@ def main() -> None:
     elapsed_time_decimal_add = calc_add_decimal(count)
     print(
         "plus: float={:.4f}, decimal={:.4f}, rate={:.3f}".format(
-            elapsed_time_float_add, elapsed_time_decimal_add,
-            elapsed_time_decimal_add / elapsed_time_float_add
+            elapsed_time_float_add,
+            elapsed_time_decimal_add,
+            elapsed_time_decimal_add / elapsed_time_float_add,
         )
     )
 
@@ -91,8 +92,9 @@ def main() -> None:
     elapsed_time_decimal_mul = calc_div_decimal(count)
     print(
         " mul: float={:.4f}, decimal={:.4f}, rate={:.3f}".format(
-            elapsed_time_float_mul, elapsed_time_decimal_mul,
-            elapsed_time_decimal_mul / elapsed_time_float_mul
+            elapsed_time_float_mul,
+            elapsed_time_decimal_mul,
+            elapsed_time_decimal_mul / elapsed_time_float_mul,
         )
     )
 
@@ -100,13 +102,14 @@ def main() -> None:
     elapsed_time_decimal_div = calc_div_decimal(count)
     print(
         " div: float={:.4f}, decimal={:.4f}, rate={:.3f}".format(
-            elapsed_time_float_div, elapsed_time_decimal_div,
-            elapsed_time_decimal_div / elapsed_time_float_div
+            elapsed_time_float_div,
+            elapsed_time_decimal_div,
+            elapsed_time_decimal_div / elapsed_time_float_div,
         )
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

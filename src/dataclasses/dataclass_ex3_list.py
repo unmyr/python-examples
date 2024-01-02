@@ -6,6 +6,7 @@ import typing
 @dataclasses.dataclass
 class ListDataClass:
     """Example of dataclass."""
+
     list_field: typing.List[int] = dataclasses.field(default_factory=list)
 
     def add(self, element: int):
@@ -13,7 +14,7 @@ class ListDataClass:
         self.list_field.append(element)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     o1 = ListDataClass()
     o2 = ListDataClass()
     o1.add(1)

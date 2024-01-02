@@ -4,6 +4,7 @@
 
 if __name__ == "__main__":
     import os
+
     script_file_name = os.path.basename(__file__)
 
     # absolute-path: no empty
@@ -20,6 +21,7 @@ if __name__ == "__main__":
     print("script extension: '{}'".format(script_extension))
 
     import mimetypes
-    print(u"MIME Type: '{}'".format(mimetypes.guess_type(__file__)[0]))
+
+    print("MIME Type: '{}'".format(mimetypes.guess_type(__file__)[0]))
 
 # EOF

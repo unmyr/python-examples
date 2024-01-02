@@ -5,9 +5,9 @@
 import re
 
 if __name__ == "__main__":
-    pat = re.compile('^([A-Z_]*) *: *(.*) *$')
-    pat_nodesect = re.compile('^(NODE_COORD_SECTION|EOF)$')
-    pat_nodedata = re.compile('^ *([0-9]+) +([0-9]+) +([0-9]+) *$')
+    pat = re.compile("^([A-Z_]*) *: *(.*) *$")
+    pat_nodesect = re.compile("^(NODE_COORD_SECTION|EOF)$")
+    pat_nodedata = re.compile("^ *([0-9]+) +([0-9]+) +([0-9]+) *$")
 
     texts = (
         "NAME : a280",
@@ -19,7 +19,7 @@ if __name__ == "__main__":
         "NODE_COORD_SECTION ",
         "  1 288 149",
         "280 280 133",
-        "EOF"
+        "EOF",
     )
 
     for line in texts:

@@ -12,7 +12,7 @@ def main():
     # del my_array
 
     snapshot2 = tracemalloc.take_snapshot()
-    top_stats = snapshot2.compare_to(snapshot1, 'lineno')
+    top_stats = snapshot2.compare_to(snapshot1, "lineno")
 
     print("[ Top 10 ]")
     for stat in top_stats[:10]:
@@ -21,7 +21,7 @@ def main():
     tracemalloc.stop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

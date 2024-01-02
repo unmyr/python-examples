@@ -4,7 +4,8 @@
 
 OPTION = '<script src="app.js"></script>'
 
-print("""
+print(
+    """
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,4 +17,5 @@ print("""
 <body>
 </body>
 </html>
-""".format(option=OPTION).strip())
+""".format(option=OPTION).strip()
+)

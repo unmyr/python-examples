@@ -3,12 +3,12 @@
 
 def main() -> None:
     """Run main."""
-    makers = ['Toyota', 'Nissan', 'Honda']
+    makers = ["Toyota", "Nissan", "Honda"]
     for maker_name in makers:
         print(maker_name)
 
     for i, maker_name in enumerate(makers):
-        print(f'{i}: {maker_name}')
+        print(f"{i}: {maker_name}")
 
     ary = []
     for i in range(5):
@@ -23,7 +23,7 @@ def main() -> None:
     assert ary == [0, 1, 2, 4]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

@@ -34,6 +34,6 @@ NODE_COORD_SECTION
     out_file_handle.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     DATA_NUM = 30
     main(DATA_NUM)

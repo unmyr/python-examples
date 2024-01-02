@@ -1,7 +1,7 @@
 """Example of a global variable."""
 import typing
 
-MY_LIST: typing.List = ['a', 'b', 'c']
+MY_LIST: typing.List = ["a", "b", "c"]
 MY_DICT: typing.Dict = {}
 MY_TUPLE: typing.Tuple
 

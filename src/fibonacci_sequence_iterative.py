@@ -29,13 +29,13 @@ def main(num: int) -> typing.Optional[int]:
     print(ret_val)
 
     stats: pstats.Stats = pstats.Stats(pr)
-    stats.sort_stats('tottime')
+    stats.sort_stats("tottime")
     stats.print_stats(100)
 
     return ret_val
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main(int(argv[1]))
 
 # EOF

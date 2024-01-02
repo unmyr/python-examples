@@ -10,12 +10,14 @@ def main():
     except FileNotFoundError as exc:
         print(f"args={exc.args}")
         print(type(exc))
-        print('')
+        print("")
         for attr_name in dir(exc):
             try:
                 if hasattr(exc, attr_name):
                     attr_obj = getattr(exc, attr_name)
-                    print(f"attr={attr_name}, type={type(attr_obj)}, callable={callable(attr_obj)}")
+                    print(
+                        f"attr={attr_name}, type={type(attr_obj)}, callable={callable(attr_obj)}"
+                    )
                 else:
                     print(f"attr={attr_name}")
 

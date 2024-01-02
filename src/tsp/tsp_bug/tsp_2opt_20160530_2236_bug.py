@@ -13,13 +13,13 @@ def load_tsp_file(inFileName):
     y = None
     labelNames = None
 
-    pat_header = re.compile('^([A-Z_]*) *: *(.*) *$')
-    pat_nodesect = re.compile('^(NODE_COORD_SECTION|EOF)$')
-    pat_nodedata = re.compile('^ *([0-9]+) +([-.0-9]+) +([-.0-9]+) *$')
+    pat_header = re.compile("^([A-Z_]*) *: *(.*) *$")
+    pat_nodesect = re.compile("^(NODE_COORD_SECTION|EOF)$")
+    pat_nodedata = re.compile("^ *([0-9]+) +([-.0-9]+) +([-.0-9]+) *$")
 
     inFile = open(inFileName, "r")
     for line_with_crlf in inFile:
-        line = line_with_crlf.rstrip('rn')
+        line = line_with_crlf.rstrip("rn")
 
         match_header = pat_header.match(line)
         match_nodesect = pat_nodesect.match(line)
@@ -81,10 +81,10 @@ if __name__ == "__main__":
     plt.plot(x, y)  # "o"は小さい円(circle marker)
     for i in range(nodeNum):
         plt.annotate(labelNames[i], xy=(x[i], y[i]))
-    plt.savefig('tsp_2opt_%03d.png' % (0))
+    plt.savefig("tsp_2opt_%03d.png" % (0))
     plt.clf()
 
-    total_before = 0.
+    total_before = 0.0
     i = 0
     while i < nodeNum:
         total_before += distance_table[i][(i + 1) % nodeNum]
@@ -114,28 +114,61 @@ if __name__ == "__main__":
                 if (w1 + w2) > (w3 + w4):
                     count += 1
                     swap_count += 1
-                    print("compare {}({} {}x{}) {}({} {}x{}) {}({} {}x{}) {}({} {}x{}) swapped: {} -> {}".format(
-                        tour_i, labelNames[tour_i], x[tour_i], y[tour_i],
-                        tour_i_next, labelNames[tour_i_next], x[tour_i_next], y[tour_i_next],
-                        tour_j, labelNames[tour_j], x[tour_j], y[tour_j],
-                        tour_j_next, labelNames[tour_j_next], x[tour_j_next], y[tour_j_next], w1 + w2, w3 + w4))
+                    print(
+                        "compare {}({} {}x{}) {}({} {}x{}) {}({} {}x{}) {}({} {}x{}) swapped: {} -> {}".format(
+                            tour_i,
+                            labelNames[tour_i],
+                            x[tour_i],
+                            y[tour_i],
+                            tour_i_next,
+                            labelNames[tour_i_next],
+                            x[tour_i_next],
+                            y[tour_i_next],
+                            tour_j,
+                            labelNames[tour_j],
+                            x[tour_j],
+                            y[tour_j],
+                            tour_j_next,
+                            labelNames[tour_j_next],
+                            x[tour_j_next],
+                            y[tour_j_next],
+                            w1 + w2,
+                            w3 + w4,
+                        )
+                    )
 
                     dx = x[tour_i_next] - x[tour_i]
                     dy = y[tour_i_next] - y[tour_i]
                     distance = math.sqrt(dx * dx + dy * dy)
-                    print("p(i)-p(i+1): {}, dtable={}".format(distance, distance_table[tour_i_next][tour_i]))
+                    print(
+                        "p(i)-p(i+1): {}, dtable={}".format(
+                            distance, distance_table[tour_i_next][tour_i]
+                        )
+                    )
                     dx = x[tour_j_next] - x[tour_j]
                     dy = y[tour_j_next] - y[tour_j]
                     distance = math.sqrt(dx * dx + dy * dy)
-                    print("p(j)-p(j+1): {}, dtable={}".format(distance, distance_table[tour_j_next][tour_j]))
+                    print(
+                        "p(j)-p(j+1): {}, dtable={}".format(
+                            distance, distance_table[tour_j_next][tour_j]
+                        )
+                    )
                     dx = x[tour_j_next] - x[tour_i]
                     dy = y[tour_j_next] - y[tour_i]
                     distance = math.sqrt(dx * dx + dy * dy)
-                    print("p(i)-p(j+1): {}, dtable={}".format(distance, distance_table[tour_j_next][tour_i]))
+                    print(
+                        "p(i)-p(j+1): {}, dtable={}".format(
+                            distance, distance_table[tour_j_next][tour_i]
+                        )
+                    )
                     dx = x[tour_i_next] - x[tour_j]
                     dy = y[tour_i_next] - y[tour_j]
                     distance = math.sqrt(dx * dx + dy * dy)
-                    print("p(j)-p(i+1): {}, dtable={}".format(distance, distance_table[tour_i_next][tour_j]))
+                    print(
+                        "p(j)-p(i+1): {}, dtable={}".format(
+                            distance, distance_table[tour_i_next][tour_j]
+                        )
+                    )
 
                     e1x[0] = x[tour_i]
                     e1y[0] = y[tour_i]
@@ -146,12 +179,16 @@ if __name__ == "__main__":
                     e2x[1] = x[tour_j_next]
                     e2y[1] = y[tour_j_next]
                     k = 0
-                    total_work = 0.
+                    total_work = 0.0
                     while k < nodeNum:
                         total_work += distance_table[tour[k]][tour[(k + 1) % nodeNum]]
                         k += 1
                     if total_before < total_work:
-                        print("PreCheck: ERROR: distance more longger...: {} -> {}".format(total_before, total_work))
+                        print(
+                            "PreCheck: ERROR: distance more longger...: {} -> {}".format(
+                                total_before, total_work
+                            )
+                        )
                         error = 1
 
                     tour[(i + 1) % nodeNum] = tour_j_next
@@ -163,26 +200,30 @@ if __name__ == "__main__":
                         x2[i] = x[tour[i]]
                         y2[i] = y[tour[i]]
                     plt.plot(x2, y2)
-                    plt.plot(e1x, e1y, ':')
-                    plt.plot(e2x, e2y, '-.')
-                    plt.plot(x[tour[i]], y[tour[i]], 'o')
-                    plt.plot(x[tour_i_next], y[tour_i_next], 'p')
-                    plt.plot(x[tour[j]], y[tour[j]], 'x')
-                    plt.plot(x[tour_j_next], y[tour_j_next], '+')
+                    plt.plot(e1x, e1y, ":")
+                    plt.plot(e2x, e2y, "-.")
+                    plt.plot(x[tour[i]], y[tour[i]], "o")
+                    plt.plot(x[tour_i_next], y[tour_i_next], "p")
+                    plt.plot(x[tour[j]], y[tour[j]], "x")
+                    plt.plot(x[tour_j_next], y[tour_j_next], "+")
 
                     for i in range(nodeNum):
                         plt.annotate(labelNames[i], xy=(x[tour[i]], y[tour[i]]))
 
-                    plt.savefig('tsp_2opt_%03d.png' % (swap_count))
+                    plt.savefig("tsp_2opt_%03d.png" % (swap_count))
                     plt.clf()
 
                     k = 0
-                    total_work = 0.
+                    total_work = 0.0
                     while k < nodeNum:
                         total_work += distance_table[tour[k]][tour[(k + 1) % nodeNum]]
                         k += 1
                     if total_before < total_work:
-                        print("PostCheck: ERROR: distance more longger...: {} -> {}".format(total_before, total_work))
+                        print(
+                            "PostCheck: ERROR: distance more longger...: {} -> {}".format(
+                                total_before, total_work
+                            )
+                        )
                         error = 1
                     break
 
@@ -191,9 +232,18 @@ if __name__ == "__main__":
                     tour_i_next = tour[(i + 1) % nodeNum]
                     tour_j = tour[i % nodeNum]
                     tour_j_next = tour[(j + 1) % nodeNum]
-                    print("compare {}({}) {}({}) {}({}) {}({})".format(
-                        tour_i, labelNames[tour_i], tour_i_next, labelNames[tour_i_next],
-                        tour_j, labelNames[tour_j], tour_j_next, labelNames[tour_j_next]))
+                    print(
+                        "compare {}({}) {}({}) {}({}) {}({})".format(
+                            tour_i,
+                            labelNames[tour_i],
+                            tour_i_next,
+                            labelNames[tour_i_next],
+                            tour_j,
+                            labelNames[tour_j],
+                            tour_j_next,
+                            labelNames[tour_j_next],
+                        )
+                    )
                 j += 1
             if error == 1:
                 break
@@ -206,7 +256,7 @@ if __name__ == "__main__":
         if count == 0:
             break
 
-    total_after = 0.
+    total_after = 0.0
     i = 0
     while i < nodeNum:
         total_after += distance_table[tour[i]][tour[(i + 1) % nodeNum]]
@@ -221,6 +271,6 @@ if __name__ == "__main__":
         y2[i] = y[tour[i]]
 
     plt.plot(x2, y2)
-    plt.plot(e1x, e1y, ':')
-    plt.plot(e2x, e2y, '-.')
-    plt.savefig('tsp_2opt_after.png')
+    plt.plot(e1x, e1y, ":")
+    plt.plot(e2x, e2y, "-.")
+    plt.savefig("tsp_2opt_after.png")

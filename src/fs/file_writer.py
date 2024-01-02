@@ -5,7 +5,7 @@ import sys
 
 def main():
     """Run main."""
-    with open(sys.argv[1], 'w') as file_handle:
+    with open(sys.argv[1], "w") as file_handle:
         file_handle.write("Pythonでファイルに書き込みました！")
 
 

@@ -11,20 +11,20 @@ def rename_dict_keys_toplevel(d: dict, convert_keys: typing.Callable):
 def main():
     """Run main."""
     my_dict1 = {
-        'A': 1, 'B': 2,
-        'C': {'D': 3, 'E': 4},
-        4098: 'F',
-        True: 'True',
-        ('T0', 'T1'): 'TV'
+        "A": 1,
+        "B": 2,
+        "C": {"D": 3, "E": 4},
+        4098: "F",
+        True: "True",
+        ("T0", "T1"): "TV",
     }
     d_1 = rename_dict_keys_toplevel(
-        my_dict1,
-        lambda k: k.lower() if isinstance(k, str) else k
+        my_dict1, lambda k: k.lower() if isinstance(k, str) else k
     )
     print(d_1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

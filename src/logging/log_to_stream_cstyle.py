@@ -13,10 +13,10 @@ logger.propagate = False
 
 # pylint: disable=logging-too-many-args
 logger.debug(
-    'number=%s pi=%s dict=%s',
+    "number=%s pi=%s dict=%s",
     1,
     "{:1.2f}".format(math.pi),
-    {'key1': True, 'key2': datetime.datetime.now()}
+    {"key1": True, "key2": datetime.datetime.now()},
 )
 
 logger.removeHandler(handler)

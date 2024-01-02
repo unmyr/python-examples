@@ -50,26 +50,26 @@ def rename_dict_keys_all(obj: typing.Any) -> typing.Any:
 def main():
     """Run main."""
     org_dict1 = {
-        'Str-Key': 'Val:Str',
-        'Baz': {'BazA': 'Val1', 'BazB': 4},
-        4098: 'Val:number',
-        3.14: 'Val:float',
-        True: 'True',
-        ('T0', 'T1'): 'TV',
-        'ArrayKey': ['a1', 'a2'],
-        'Tuple-Key': ('t1', 't2', {'FOO': 'bar'}),
-        'Num-Key': 1234,
-        'Float-Key': 3.14
+        "Str-Key": "Val:Str",
+        "Baz": {"BazA": "Val1", "BazB": 4},
+        4098: "Val:number",
+        3.14: "Val:float",
+        True: "True",
+        ("T0", "T1"): "TV",
+        "ArrayKey": ["a1", "a2"],
+        "Tuple-Key": ("t1", "t2", {"FOO": "bar"}),
+        "Num-Key": 1234,
+        "Float-Key": 3.14,
     }
     new_dict = rename_dict_keys_all(org_dict1)
     print(new_dict)
 
-    org_list1 = ['foo', True, False, None, float('inf'), ('foo', 'bar')]
+    org_list1 = ["foo", True, False, None, float("inf"), ("foo", "bar")]
     new_list1 = rename_dict_keys_all(org_list1)
     print(new_list1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

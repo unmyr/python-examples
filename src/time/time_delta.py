@@ -20,8 +20,8 @@ def sleep_with_time(sec: float) -> float:
 
 def sleep_with_datetime(sec: float) -> float:
     """Example of datetime.datetime.now()"""
-    t_0: 'datetime.datetime'
-    t_1: 'datetime.datetime'
+    t_0: "datetime.datetime"
+    t_1: "datetime.datetime"
 
     t_0 = datetime.datetime.now()
     time.sleep(sec)

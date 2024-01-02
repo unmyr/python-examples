@@ -22,13 +22,10 @@ def scope_if_statement(cond: bool) -> bool:
 
 def main() -> None:
     """Run main."""
-    print([
-        scope_try_except(),
-        scope_if_statement(True)
-    ])
+    print([scope_try_except(), scope_if_statement(True)])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

@@ -10,7 +10,7 @@ def factorial(number: int) -> int:
     return number * factorial(number - 1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(factorial(int(argv[1])))
 
 # EOF
