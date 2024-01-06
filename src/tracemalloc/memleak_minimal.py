@@ -1,4 +1,5 @@
 """Example of tracemalloc."""
+# ruff: noqa: F841
 import tracemalloc
 
 
