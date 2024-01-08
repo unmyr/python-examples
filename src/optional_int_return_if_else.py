@@ -6,8 +6,6 @@ import typing
 def optional_int(num_str: typing.Optional[str]) -> typing.Optional[int]:
     """Optional[str] to Optional[int]."""
     return None if num_str is None else int(num_str)
-
-
 # end::content[]
 
 
