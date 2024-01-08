@@ -20,12 +20,11 @@ print(seed_points)
 
 fig0, ax0 = plt.subplots()
 stream_plot = ax0.streamplot(
-    X, Y, U, V, color=U, linewidth=2,
-    cmap='autumn', start_points=seed_points.T
+    X, Y, U, V, color=U, linewidth=2, cmap="autumn", start_points=seed_points.T
 )
 fig0.colorbar(stream_plot.lines)
 
-ax0.plot(seed_points[0], seed_points[1], 'bo')
+ax0.plot(seed_points[0], seed_points[1], "bo")
 
 ax0.axis((-3, 3, -3, 3))
 

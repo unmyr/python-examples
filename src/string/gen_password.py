@@ -20,9 +20,7 @@ def gen_password(pass_len: int) -> str:
     password += secrets.choice(string.ascii_uppercase)
     password += secrets.choice(string.digits)
     password += secrets.choice(symbols)
-    password += "".join(
-        secrets.choice(alphabet) for _ in range(pass_len - len(password))
-    )
+    password += "".join(secrets.choice(alphabet) for _ in range(pass_len - len(password)))
     password_chars: typing.List = list(password)
     secrets.SystemRandom().shuffle(password_chars)
     return "".join(password_chars[0:pass_len])

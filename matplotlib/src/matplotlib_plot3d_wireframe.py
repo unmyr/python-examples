@@ -8,7 +8,7 @@ X, Y = np.meshgrid(x, y)
 Z = np.sin(X) + np.cos(Y)
 
 fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+ax = fig.add_subplot(111, projection="3d")
 ax.plot_wireframe(X, Y, Z)
 
 plt.show()

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 fig, ax = plt.subplots()
-line, = ax.plot([], [], lw=2)
+(line,) = ax.plot([], [], lw=2)
 ax.grid()
 x_data, y_data = [], []
 
@@ -16,7 +16,7 @@ def data_gen(t=0):
     while cnt < 1000:
         cnt += 1
         t += 0.1
-        yield t, np.sin(2 * np.pi * t) * np.exp(-t / 10.)
+        yield t, np.sin(2 * np.pi * t) * np.exp(-t / 10.0)
 
 
 def init():
@@ -26,7 +26,7 @@ def init():
     del x_data[:]
     del y_data[:]
     line.set_data(x_data, y_data)
-    return line,
+    return (line,)
 
 
 def update(data):
@@ -41,11 +41,11 @@ def update(data):
         ax.figure.canvas.draw()
     line.set_data(x_data, y_data)
 
-    return line,
+    return (line,)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     ani = animation.FuncAnimation(
-        fig, update, data_gen, blit=False, interval=10,
-        repeat=False, init_func=init)
+        fig, update, data_gen, blit=False, interval=10, repeat=False, init_func=init
+    )
     plt.show()

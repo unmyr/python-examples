@@ -7,7 +7,8 @@ import numpy
 
 import matplotlib.cm
 import matplotlib
-matplotlib.use('Agg')
+
+matplotlib.use("Agg")
 import matplotlib.pyplot  # noqa: E402
 
 
@@ -35,34 +36,27 @@ def main():
     y_seq = numpy.arange(-2.0, 2.0, delta)
     grid_x, grid_y = numpy.meshgrid(x_seq, y_seq)
 
-    fig = matplotlib.pyplot.figure(1, (9., 2 * 6.))
+    fig = matplotlib.pyplot.figure(1, (9.0, 2 * 6.0))
     ax1 = fig.add_subplot(2, 1, 1)
     ax2 = fig.add_subplot(2, 1, 2)
 
-    p_z = func_d1(
-        numpy.vstack([grid_x.ravel(), grid_y.ravel()])
-    ).reshape(len(x_seq), len(y_seq))
-    ax1.set_aspect('equal')
+    p_z = func_d1(numpy.vstack([grid_x.ravel(), grid_y.ravel()])).reshape(len(x_seq), len(y_seq))
+    ax1.set_aspect("equal")
     cs_plot = ax1.contour(grid_x, grid_y, p_z, levels)
-    color_bar = fig.colorbar(
-        cs_plot,
-        cax=matplotlib.pyplot.axes([0.85, 0.1, 0.075, 0.8])
-    )
-    color_bar.ax.set_ylabel('verbosity coefficient')
+    color_bar = fig.colorbar(cs_plot, cax=matplotlib.pyplot.axes([0.85, 0.1, 0.075, 0.8]))
+    color_bar.ax.set_ylabel("verbosity coefficient")
     ax1.clabel(cs_plot, inline=1, fontsize=10)
     # ax1.title('f(x,y) = |x| + |y|')
     # matplotlib.pyplot.savefig('matplotlib_plot_contour_1.png')
 
-    p_z = func_d2(
-        numpy.vstack([grid_x.ravel(), grid_y.ravel()])
-    ).reshape(len(x_seq), len(y_seq))
-    ax2.set_aspect('equal')
+    p_z = func_d2(numpy.vstack([grid_x.ravel(), grid_y.ravel()])).reshape(len(x_seq), len(y_seq))
+    ax2.set_aspect("equal")
     cs_plot = ax2.contour(grid_x, grid_y, p_z, levels)
     ax2.clabel(cs_plot, inline=1, fontsize=10)
     color_bar = matplotlib.pyplot.colorbar(cs_plot, cax=ax2)
-    color_bar.ax.set_ylabel('verbosity coefficient')
+    color_bar.ax.set_ylabel("verbosity coefficient")
     # ax2.title('f(x,y) = |x| + |y|')
-    matplotlib.pyplot.savefig('matplotlib_plot_contour_2.png')
+    matplotlib.pyplot.savefig("matplotlib_plot_contour_2.png")
 
     # pylint: disable=pointless-string-statement
     """
@@ -80,7 +74,7 @@ def main():
     """
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

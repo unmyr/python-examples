@@ -21,9 +21,9 @@ try:
     # chrome_options.add_argument("--enable-precise-memory-info")
     chrome_options.add_argument("--dump-histograms-on-exit")
     driver = selenium.webdriver.chrome.webdriver.WebDriver(
-        executable_path='chromedriver',
+        executable_path="chromedriver",
         options=chrome_options,
-        service_log_path='./selenium-server.log'
+        service_log_path="./selenium-server.log",
     )
     driver.get("http://www.python.org")
     assert "Python" in driver.title

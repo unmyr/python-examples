@@ -1,7 +1,7 @@
 """Show examples of `np.dandom`."""
 import numpy as np
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     data = np.random.randint(4, size=10)
     print(data)
 

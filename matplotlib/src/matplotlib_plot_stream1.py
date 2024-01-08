@@ -12,11 +12,7 @@ start = [[0, 0], [1, 2]]
 
 fig0, ax0 = plt.subplots()
 
-ax0.streamplot(
-    x, y, U, V, color=(.75, .90, .93)
-)
-ax0.streamplot(
-    x, y, U, V, start_points=start, color="crimson", linewidth=2
-)
+ax0.streamplot(x, y, U, V, color=(0.75, 0.90, 0.93))
+ax0.streamplot(x, y, U, V, start_points=start, color="crimson", linewidth=2)
 
 plt.show()
