@@ -1,12 +1,13 @@
 """Example of Flask."""
 from flask import Flask, jsonify, request
+
 app = Flask(__name__)
 
 
-@app.route('/hello', methods=['GET'])
+@app.route("/hello", methods=["GET"])
 def helloworld():
     """Say hello."""
-    if request.method == 'GET':
+    if request.method == "GET":
         data = {"message": "Hello, world!"}
         return jsonify(data)
 

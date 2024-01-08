@@ -3,7 +3,6 @@ import os
 
 from PIL import Image
 
-
 try:
     import win32_setctime
 except ImportError:

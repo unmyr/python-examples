@@ -1,8 +1,10 @@
 """Share global variables across modules."""
-from sub import get_my_dict
-from sub import MY_DICT  # pylint: disable=unused-import
-from sub import MY_LIST
 import sub
+from sub import (
+    MY_DICT,  # pylint: disable=unused-import
+    MY_LIST,
+    get_my_dict,
+)
 
 
 def main():

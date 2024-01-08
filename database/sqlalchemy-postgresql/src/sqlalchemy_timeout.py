@@ -12,6 +12,7 @@ import sqlalchemy
 
 class BraceMessage:
     """Brace message"""
+
     def __init__(self, fmt, *args, **kwargs) -> None:
         self.fmt = fmt
         self.args = args
@@ -25,15 +26,11 @@ __ = BraceMessage
 logger = logging.getLogger(__name__)
 
 
-def select_all(
-    engine: sqlalchemy.engine.base.Engine
-) -> typing.Optional[typing.List[typing.Tuple]]:
+def select_all(engine: sqlalchemy.engine.base.Engine) -> typing.Optional[typing.List[typing.Tuple]]:
     """Run main."""
     try:
         with engine.connect() as connection:
-            result = connection.execute(
-                sqlalchemy.text("SELECT pg_sleep(3)")
-            )
+            result = connection.execute(sqlalchemy.text("SELECT pg_sleep(3)"))
 
         values: list = []
         for row in result:
@@ -51,9 +48,7 @@ def select_all(
     return None
 
 
-def optional_int(
-    num_str: typing.Optional[str]
-) -> typing.Optional[int]:
+def optional_int(num_str: typing.Optional[str]) -> typing.Optional[int]:
     """Optional[str] to Optional[int]."""
     if num_str is None:
         return None
@@ -64,9 +59,7 @@ def main(driver_name: str) -> None:
     """Run main."""
     stream_handler: logging.StreamHandler = logging.StreamHandler()
     stream_handler.setLevel(logging.DEBUG)
-    stream_formatter = logging.Formatter(
-        '[%(asctime)s] %(funcName)s - %(levelname)s - %(message)s'
-    )
+    stream_formatter = logging.Formatter("[%(asctime)s] %(funcName)s - %(levelname)s - %(message)s")
     stream_handler.setFormatter(stream_formatter)
     logger.setLevel(logging.DEBUG)
     logger.addHandler(stream_handler)
@@ -79,37 +72,37 @@ def main(driver_name: str) -> None:
     try:
         database_url = sqlalchemy.engine.URL.create(
             driver_name,
-            host=os.environ.get('PGHOST'),
-            port=optional_int(os.environ.get('PGPORT')),
-            database=os.environ.get('PGDATABASE'),
-            username=os.environ.get('PGUSER'),
-            password=os.environ.get('PGPASSWORD')
+            host=os.environ.get("PGHOST"),
+            port=optional_int(os.environ.get("PGPORT")),
+            database=os.environ.get("PGDATABASE"),
+            username=os.environ.get("PGUSER"),
+            password=os.environ.get("PGPASSWORD"),
         )
-        if driver_name == 'postgresql+psycopg2':
+        if driver_name == "postgresql+psycopg2":
             engine = sqlalchemy.create_engine(
                 database_url,
                 connect_args={
-                    'application_name': application_name,
-                    'connect_timeout': 5,
-                    'options': f'-c statement_timeout={wait_sec * 1000}'
-                }
+                    "application_name": application_name,
+                    "connect_timeout": 5,
+                    "options": f"-c statement_timeout={wait_sec * 1000}",
+                },
             )
         else:
             engine = sqlalchemy.create_engine(
                 database_url,
-                connect_args={
-                    'application_name': application_name,
-                    'timeout': wait_sec
-                }
+                connect_args={"application_name": application_name, "timeout": wait_sec},
             )
         t_0 = time.time()
         val = select_all(engine)
-        logger.info(__(f'val={val}'))
+        logger.info(__(f"val={val}"))
         t_1 = time.time()
-        logger.info(__(f'dt={t_1 - t_0:.3}'))
+        logger.info(__(f"dt={t_1 - t_0:.3}"))
 
-    except (sqlalchemy.exc.ProgrammingError, sqlalchemy.exc.InterfaceError,
-            sqlalchemy.exc.OperationalError) as exc:
+    except (
+        sqlalchemy.exc.ProgrammingError,
+        sqlalchemy.exc.InterfaceError,
+        sqlalchemy.exc.OperationalError,
+    ) as exc:
         # pylint: disable=line-too-long
         # psycopg2
         #
@@ -129,8 +122,8 @@ def main(driver_name: str) -> None:
         #   sqlalchemy.exc.InterfaceError: (pg8000.exceptions.InterfaceError) network error on read
         #
         t_1 = time.time()
-        logger.info(__(f'dt={t_1 - t_0:.3}'))
-        logger.info(__(f'{type(exc)}'))
+        logger.info(__(f"dt={t_1 - t_0:.3}"))
+        logger.info(__(f"{type(exc)}"))
         logger.exception(exc)
 
     finally:
@@ -138,15 +131,11 @@ def main(driver_name: str) -> None:
             engine.dispose()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if len(sys.argv) == 2:
-        if sys.argv[1] in ['postgresql+pg8000', 'postgresql+psycopg2']:
+        if sys.argv[1] in ["postgresql+pg8000", "postgresql+psycopg2"]:
             main(sys.argv[1])
     else:
-        print(
-            f"usage: {sys.argv[0]} "
-            '{postgresql+pg8000|postgresql+psycopg2}',
-            file=sys.stderr
-        )
+        print(f"usage: {sys.argv[0]} " "{postgresql+pg8000|postgresql+psycopg2}", file=sys.stderr)
 
 # EOF

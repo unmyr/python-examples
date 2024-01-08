@@ -8,28 +8,22 @@ import pg8000.dbapi
 
 def main():
     """Run main."""
-    pg_host = os.environ.get('PGHOST')
-    pg_database = os.environ.get('PGDATABASE')
-    pg_user = os.environ.get('PGUSER')
-    pg_password = os.environ.get('PGPASSWORD')
+    pg_host = os.environ.get("PGHOST")
+    pg_database = os.environ.get("PGDATABASE")
+    pg_user = os.environ.get("PGUSER")
+    pg_password = os.environ.get("PGPASSWORD")
 
     conn = None
     cur = None
     try:
         conn = pg8000.dbapi.connect(
-            host=pg_host,
-            database=pg_database,
-            user=pg_user,
-            password=pg_password
+            host=pg_host, database=pg_database, user=pg_user, password=pg_password
         )
 
         cur = conn.cursor()
 
         # parameterized queries.
-        cur.execute(
-            "SELECT * FROM fruits_menu WHERE name = %s",
-            ('Apple',)
-        )
+        cur.execute("SELECT * FROM fruits_menu WHERE name = %s", ("Apple",))
         rows = cur.fetchall()
         for row in rows:
             print(row)
@@ -49,7 +43,7 @@ def main():
             conn.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

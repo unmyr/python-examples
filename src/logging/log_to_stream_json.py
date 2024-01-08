@@ -1,8 +1,8 @@
 """Example of logger."""
-from datetime import datetime
 import json
 import logging
 import math
+from datetime import datetime
 
 
 class Hello:

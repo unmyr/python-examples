@@ -1,6 +1,6 @@
 """Example of streamplot."""
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 x, y = np.linspace(-3, 3, 100), np.linspace(-3, 3, 100)
 X, Y = np.meshgrid(x, y)

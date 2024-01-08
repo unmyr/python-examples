@@ -8,10 +8,10 @@ import psycopg2
 
 def main():
     """Run main."""
-    pg_host = os.environ.get('PGHOST')
-    pg_database = os.environ.get('PGDATABASE')
-    pg_user = os.environ.get('PGUSER')
-    pg_password = os.environ.get('PGPASSWORD')
+    pg_host = os.environ.get("PGHOST")
+    pg_database = os.environ.get("PGDATABASE")
+    pg_user = os.environ.get("PGUSER")
+    pg_password = os.environ.get("PGPASSWORD")
 
     conn = None
     cur = None
@@ -37,7 +37,7 @@ def main():
             conn.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

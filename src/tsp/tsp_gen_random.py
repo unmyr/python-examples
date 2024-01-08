@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Generate TSP"""
-import os
 import datetime
+import os
+
 import numpy as np
 
 script_basename = os.path.splitext(os.path.basename(__file__))[0]

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Calculate the fibonacci sequence."""
-from sys import argv
 import cProfile
 import pstats
+from sys import argv
 
 
 def fib(number: int) -> int:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Calculate the factorial of a number."""
-from sys import argv
 import typing
+from sys import argv
 
 
 def factorial(number: int) -> typing.Optional[int]:

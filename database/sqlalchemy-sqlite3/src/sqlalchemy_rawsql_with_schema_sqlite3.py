@@ -1,18 +1,15 @@
 """Example of sqlite3 with SQLAlchemy."""
 import traceback
 
-from sqlalchemy import text
 import sqlalchemy
+from sqlalchemy import text
 
 
 def main(engine):
     """Run main."""
     try:
         with engine.begin() as connection:
-            connection.execute(
-                text("ATTACH DATABASE ':memory:' AS :schema"),
-                {'schema': 'guest'}
-            )
+            connection.execute(text("ATTACH DATABASE ':memory:' AS :schema"), {"schema": "guest"})
             connection.execute(
                 text(
                     "CREATE TABLE guest.fruits_menu ("
@@ -28,55 +25,38 @@ def main(engine):
             print(f"table_name={inspector.get_table_names()}")
 
             fruit_item_list = [
-                {
-                    'name': 'Apple',
-                    'price': 100
-                },
-                {
-                    'name': 'Banana',
-                    'price': 120
-                },
-                {
-                    'name': 'Orange',
-                    'price': -1
-                },
-                {
-                    'name': 'リンゴ',
-                    'price': 180
-                }
+                {"name": "Apple", "price": 100},
+                {"name": "Banana", "price": 120},
+                {"name": "Orange", "price": -1},
+                {"name": "リンゴ", "price": 180},
             ]
             connection.execute(
-                text(
-                    "INSERT INTO guest.fruits_menu (name, price) VALUES (:name, :price)"
-                ),
-                fruit_item_list
+                text("INSERT INTO guest.fruits_menu (name, price) VALUES (:name, :price)"),
+                fruit_item_list,
             )
             result = connection.execute(
                 text(
                     "SELECT * FROM guest.fruits_menu "
                     "WHERE guest.fruits_menu.name = :name1 OR guest.fruits_menu.name = :name2"
                 ),
-                {'name1': 'Apple', 'name2': 'Orange'}
+                {"name1": "Apple", "name2": "Orange"},
             )
             for row in result.mappings():
-                print(f"name={row['name']} price={row['price']}", )
+                print(
+                    f"name={row['name']} price={row['price']}",
+                )
 
     except sqlalchemy.exc.ProgrammingError as exc:
         print(traceback.format_exc())
         print(exc)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     engine_sqlite3 = sqlalchemy.create_engine(
         sqlalchemy.engine.URL.create(
-            drivername='sqlite',
-            host='',
-            port=None,
-            database=':memory:',
-            username='',
-            password=''
+            drivername="sqlite", host="", port=None, database=":memory:", username="", password=""
         ),
-        echo=False
+        echo=False,
     )
     main(engine_sqlite3)
 

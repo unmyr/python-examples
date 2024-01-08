@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """Show thread example."""
+import datetime
 import threading
 import time
-import datetime
 # from threading import Thread, Condition
 
 

@@ -1,10 +1,11 @@
 """Example of a ThreadPoolExecuter."""
-from concurrent.futures import ThreadPoolExecutor
-from logging import getLogger, StreamHandler, DEBUG, Formatter
 import concurrent.futures
 import functools
 import time
 import typing
+from concurrent.futures import ThreadPoolExecutor
+from logging import DEBUG, Formatter, StreamHandler, getLogger
+
 import mypy_extensions
 
 pool: typing.Optional[ThreadPoolExecutor] = None

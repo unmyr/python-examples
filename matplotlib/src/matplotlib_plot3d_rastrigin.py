@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Plot rastrigin function."""
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 x = np.linspace(-5.12, 5.12, 100)
 y = np.linspace(-5.12, 5.12, 100)

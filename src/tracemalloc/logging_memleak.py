@@ -1,9 +1,9 @@
 """Example of logger."""
-from logging import getLogger
-from logging.handlers import RotatingFileHandler
 import logging
 import time
 import tracemalloc
+from logging import getLogger
+from logging.handlers import RotatingFileHandler
 
 
 def app(logger: logging.Logger):

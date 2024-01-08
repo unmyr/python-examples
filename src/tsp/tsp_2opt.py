@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Load TSP file."""
-import sys
-import re
 import math
-import numpy as np
+import re
+import sys
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def load_tsp_file(in_filename):

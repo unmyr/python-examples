@@ -8,18 +8,15 @@ import pg8000.native
 
 def main():
     """Run main."""
-    pg_host = os.environ.get('PGHOST')
-    pg_database = os.environ.get('PGDATABASE')
-    pg_user = os.environ.get('PGUSER')
-    pg_password = os.environ.get('PGPASSWORD')
+    pg_host = os.environ.get("PGHOST")
+    pg_database = os.environ.get("PGDATABASE")
+    pg_user = os.environ.get("PGUSER")
+    pg_password = os.environ.get("PGPASSWORD")
 
     conn = None
     try:
         conn = pg8000.native.Connection(
-            pg_user,
-            host=pg_host,
-            database=pg_database,
-            password=pg_password
+            pg_user, host=pg_host, database=pg_database, password=pg_password
         )
 
         for row in conn.run("""SELECT * FROM fruits_menu"""):
@@ -41,7 +38,7 @@ def main():
             conn.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

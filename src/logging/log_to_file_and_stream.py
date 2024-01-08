@@ -1,8 +1,7 @@
 """Example of logger."""
-from logging import getLogger, StreamHandler, FileHandler, Formatter
 import logging
 import tracemalloc
-
+from logging import FileHandler, Formatter, StreamHandler, getLogger
 
 logger = getLogger(__name__)
 

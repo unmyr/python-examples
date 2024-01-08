@@ -2,11 +2,12 @@
 # pylint: disable=wrong-import-position
 """nop example."""
 from __future__ import print_function
-import math
-import numpy
 
-import matplotlib.cm
+import math
+
 import matplotlib
+import matplotlib.cm
+import numpy
 
 matplotlib.use("Agg")
 import matplotlib.pyplot  # noqa: E402

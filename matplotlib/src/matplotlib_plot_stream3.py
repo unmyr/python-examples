@@ -8,8 +8,8 @@ example shows a few features of the stream plot function:
  * Varying the density of streamlines.
  * Varying the line width along a stream line.
 """
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 X, Y = (np.linspace(-3, 3, 100), np.linspace(-3, 3, 100))
 

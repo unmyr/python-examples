@@ -4,9 +4,8 @@ import io
 import os
 import traceback
 import typing
-from logging import getLogger, StreamHandler, DEBUG, Formatter
 from contextlib import contextmanager
-
+from logging import DEBUG, Formatter, StreamHandler, getLogger
 
 logger = getLogger(__name__)
 stream_handler = StreamHandler()
@@ -18,7 +17,7 @@ logger.propagate = False
 
 
 def get_fd_num() -> int:
-    """Get file descripter."""
+    """Get file descriptor."""
     return len(os.listdir(f"/proc/{os.getpid()}/fd"))
 
 

@@ -9,15 +9,15 @@ import pg8000
 
 def main():
     """Run main."""
-    pg_host = os.environ.get('PGHOST')
-    pg_database = os.environ.get('PGDATABASE')
-    pg_user = os.environ.get('PGUSER')
-    pg_password = os.environ.get('PGPASSWORD')
+    pg_host = os.environ.get("PGHOST")
+    pg_database = os.environ.get("PGDATABASE")
+    pg_user = os.environ.get("PGUSER")
+    pg_password = os.environ.get("PGPASSWORD")
 
     conn = None
     cur = None
     try:
-        pem_path = os.environ.get('PG_SERVER_CERT_PATH')
+        pem_path = os.environ.get("PG_SERVER_CERT_PATH")
         ssl_context = ssl.SSLContext()
         ssl_context.verify_mode = ssl.CERT_REQUIRED
         ssl_context.load_verify_locations(pem_path)
@@ -27,7 +27,7 @@ def main():
             database=pg_database,
             user=pg_user,
             password=pg_password,
-            ssl_context=ssl_context
+            ssl_context=ssl_context,
         )
 
         cur = conn.cursor()
@@ -52,7 +52,7 @@ def main():
             conn.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 # EOF

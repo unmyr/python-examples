@@ -1,6 +1,7 @@
 """Example of logger."""
-from logging import getLogger, StreamHandler, DEBUG
+from logging import DEBUG, StreamHandler, getLogger
 from logging.handlers import RotatingFileHandler
+
 logger = getLogger(__name__)
 stream_handler = StreamHandler()
 stream_handler.setLevel(DEBUG)

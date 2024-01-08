@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """Plot distance function."""
 import math
-import numpy
 
+import matplotlib
 import matplotlib.cm
 import matplotlib.patches
 import matplotlib.transforms
-import matplotlib
+import numpy
 
 matplotlib.use("Agg")
 # pylint: disable=wrong-import-position

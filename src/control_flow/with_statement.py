@@ -2,8 +2,7 @@
 """With statement in Python."""
 import io
 import traceback
-from logging import getLogger, StreamHandler, DEBUG, Formatter
-
+from logging import DEBUG, Formatter, StreamHandler, getLogger
 
 logger = getLogger(__name__)
 stream_handler = StreamHandler()

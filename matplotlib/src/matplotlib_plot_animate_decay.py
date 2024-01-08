@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Plot a graph with animation."""
-import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import matplotlib.pyplot as plt
+import numpy as np
 
 fig, ax = plt.subplots()
 (line,) = ax.plot([], [], lw=2)

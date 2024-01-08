@@ -1,8 +1,7 @@
 """Example of logger."""
-from logging import getLogger, StreamHandler, DEBUG
 import datetime
 import math
-
+from logging import DEBUG, StreamHandler, getLogger
 
 logger = getLogger(__name__)
 handler = StreamHandler()

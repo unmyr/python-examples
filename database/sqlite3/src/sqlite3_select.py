@@ -17,10 +17,7 @@ lang_list = [
 cur.executemany("INSERT INTO lang VALUES (?, ?)", lang_list)
 
 # And this is the named style:
-cur.execute("SELECT * FROM lang WHERE lang_name=:name AND lang_age=:age", {
-    "name": "C",
-    "age": 49
-})
+cur.execute("SELECT * FROM lang WHERE lang_name=:name AND lang_age=:age", {"name": "C", "age": 49})
 print(cur.fetchall())
 
 con.close()
