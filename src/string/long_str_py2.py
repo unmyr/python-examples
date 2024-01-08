@@ -1,5 +1,5 @@
 """Example of long string"""
-key_name = 'Apple'
+key_name = "Apple"
 long_str = (
     "SELECT *"
     " FROM fruits_menu"
