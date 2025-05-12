@@ -166,6 +166,7 @@
     "streamplot",
     "strerror",
     "struct",
+    "sympy",
     "testmod",
     "timedelta",
     "timespec",

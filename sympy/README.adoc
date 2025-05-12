@@ -1,0 +1,13 @@
+=== Installation
+
+[source,shell]
+----
+python -m pip install -r requirements.txt
+----
+
+[source,plaintext]
+----
+$ python src/polymul_sym.py 
+Expanded polynomial: x**4 - 10*x**2 + 5
+Factored polynomial: (x**2 - 5 - 2*sqrt(5))*(x**2 - 5 + 2*sqrt(5))
+----
