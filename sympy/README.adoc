@@ -1,3 +1,5 @@
+:stem: latexmath
+
 === Installation
 
 [source,shell]
@@ -5,9 +7,80 @@
 python -m pip install -r requirements.txt
 ----
 
+=== Example1: polymul_sym.py
+
 [source,plaintext]
 ----
 $ python src/polymul_sym.py 
 Expanded polynomial: x**4 - 10*x**2 + 5
 Factored polynomial: (x**2 - 5 - 2*sqrt(5))*(x**2 - 5 + 2*sqrt(5))
 ----
+
+=== Example2: sym_seminar_2025_04.py
+[latexmath]
+.Simplified result: f^2^=e
+++++
+z = \frac{4 x \left(1 - x^{2}\right)}{x^{4} - 6 x^{2} + 1}
+++++
+
+[latexmath]
+.Factored result: f^4^=e
+++++
+0 = \frac{x \left(x^{2} - 3\right) \left(x^{2} + 1\right) \left(x^{2} - 5 - 2 \sqrt{5}\right) \left(x^{2} - 5 + 2 \sqrt{5}\right) \left(x^{4} + 2 x^{2} \left(-23 - 10 \sqrt{5}\right) + 4 \sqrt{5} + 9\right) \left(x^{4} + 2 x^{2} \left(-23 + 10 \sqrt{5}\right) - 4 \sqrt{5} + 9\right)}{\left(x^{8} - 8 x^{7} - 28 x^{6} + 56 x^{5} + 70 x^{4} - 56 x^{3} - 28 x^{2} + 8 x + 1\right) \left(x^{8} + 8 x^{7} - 28 x^{6} - 56 x^{5} + 70 x^{4} + 56 x^{3} - 28 x^{2} - 8 x + 1\right)}
+++++
+
+[latexmath]
+.Solution using solve
+++++
+\begin{align*}
+x = \left[
+  \begin{array}{c}
+0 \\
+- \sqrt{3} \\
+\sqrt{3} \\
+- i \\
+i \\
+- \sqrt{5 - 2 \sqrt{5}} \\
+\sqrt{5 - 2 \sqrt{5}} \\
+- \sqrt{2 \sqrt{5} + 5} \\
+\sqrt{2 \sqrt{5} + 5} \\
+- \sqrt{- 10 \sqrt{5} - 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23} \\
+\sqrt{- 10 \sqrt{5} - 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23} \\
+- \sqrt{- 10 \sqrt{5} + 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23} \\
+\sqrt{- 10 \sqrt{5} + 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23} \\
+- \sqrt{10 \sqrt{5} + 23 + 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85}} \\
+\sqrt{10 \sqrt{5} + 23 + 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85}} \\
+- \sqrt{- 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85} + 10 \sqrt{5} + 23} \\
+\sqrt{- 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85} + 10 \sqrt{5} + 23}
+  \end{array}
+\right]
+\end{align*}
+++++
+
+[latexmath]
+.Solution using solveset
+++++
+\begin{align*}
+x = \left[
+  \begin{array}{c}
+0 \\
+i \\
+\sqrt{3} \\
+- i \\
+- \sqrt{3} \\
+\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)} \\
+\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)} \\
+\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)} \\
+\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)} \\
+\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)} \\
+\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)} \\
+\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)} \\
+\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)} \\
+\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)} \\
+\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)} \\
+\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)} \\
+\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}
+  \end{array}
+\right]
+\end{align*}
+++++
