@@ -16,7 +16,7 @@ Expanded polynomial: x**4 - 10*x**2 + 5
 Factored polynomial: (x**2 - 5 - 2*sqrt(5))*(x**2 - 5 + 2*sqrt(5))
 ----
 
-=== Example2: sym_seminar_2025_04.py
+=== Example2: seminar_2025_04_solve.py
 [latexmath]
 .Simplified result: f^2^=e
 ++++
