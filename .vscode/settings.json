@@ -24,6 +24,7 @@
   "cSpell.words": [
     "abstractproperty",
     "adoc",
+    "adocbuild",
     "agraph",
     "arange",
     "asciidoctor",
@@ -31,6 +32,7 @@
     "astimezone",
     "astype",
     "autoflush",
+    "autowidth",
     "basestring",
     "bdist",
     "blit",
@@ -60,6 +62,7 @@
     "dtype",
     "edgecolor",
     "errno",
+    "evalf",
     "execfile",
     "facecolor",
     "figsize",
