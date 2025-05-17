@@ -5,13 +5,11 @@ def format_latex_array(solutions):
     """
     Format a list of solutions into a LaTeX array for display.
     """
-    latex_solutions = [sympy.latex(sol) for sol in solutions]
+    latex_solutions = ["    " + sympy.latex(sol) for sol in solutions]
     return (
-        "\\begin{align*}\n"
-        "x = \\left[\n"
-        "  \\begin{array}{c}\n" + " \\\\\n".join(latex_solutions) + "\n  \\end{array}\n"
-        "\\right]\n"
-        "\\end{align*}"
+        "x = \\left\\{\n"
+        "  \\begin{array}{c}\n" + ", \\\\\n".join(latex_solutions) + "\n  \\end{array}\n"
+        "\\right\\}"
     )
 
 
@@ -30,35 +28,58 @@ def print_adoc_latexmath_content(title, content):
 def main() -> None:
     """Run main."""
     # Define symbolic variables
-    x = sympy.symbols("x")
+    x, y, z, w = sympy.symbols("x y z w")
     sympy.init_printing(use_unicode=True)
 
     # Define polynomials
-    y = (2 * x) / (1 - x**2)  # Polynomial: (2x₀)/(1 - x₀²)
-    z = (2 * y) / (1 - y**2)  # Polynomial: (2y)/(1 - y²)
-    w = (2 * z) / (1 - z**2)  # Polynomial: (2z)/(1 - z²)
-    x_1 = (2 * w) / (1 - w**2)  # Polynomial: (2w)/(1 - w²)
+    y_x = (2 * x) / (1 - x**2)  # Polynomial: (2x)/(1 - x²)
+    z_y = (2 * y) / (1 - y**2)  # Polynomial: (2y)/(1 - y²)
+    w_z = (2 * z) / (1 - z**2)  # Polynomial: (2z)/(1 - z²)
+    x_w = (2 * w) / (1 - w**2)  # Polynomial: (2w)/(1 - w²)
 
     try:
-        # Simplify z
-        simplified_z = sympy.simplify(z)
+        # Factor the polynomial: z = (2y)/(1 - y²), y = (2x)/(1 - x²), z=x
+        factored_z = sympy.factor(x - z_y.subs(y, y_x))
         print_adoc_latexmath_content(
-            "Simplified result: f^2^=e", f"z = {sympy.latex(simplified_z)}"
+            "Factored result: f^2^=e",
+            "\n".join(
+                [
+                    "\\begin{align*}",
+                    "z\\left.\\right|_{z=x} &= "
+                    + f"{sympy.latex(sympy.factor(z_y.subs(y, y_x)))}"
+                    + " \\\\",
+                    f"0 &= {sympy.latex(factored_z)} \\\\",
+                    "\\end{align*}",
+                ]
+            ),
         )
 
-        # Simplify the equation
-        simplified_eq = sympy.simplify(x - x_1)
+        # Factor the polynomial: z = (2y)/(1 - y²), y = (2x)/(1 - x²), z=-x
+        factored_z_minus = sympy.factor(x + z_y.subs(y, y_x))
+        print_adoc_latexmath_content(
+            "Factored result: f^2^=f^-1^",
+            "\n".join(
+                [
+                    "\\begin{align*}",
+                    "z\\left.\\right|_{z=-x} &= "
+                    + f"{sympy.latex(sympy.factor(z_y.subs(y, y_x)))}"
+                    + " \\\\",
+                    f"0 &= {sympy.latex(factored_z_minus)} \\\\",
+                    "\\end{align*}",
+                ]
+            ),
+        )
 
-        # Factor x - x_1
-        factored_eq = sympy.factor(simplified_eq, deep=True, extension=sympy.sqrt(5))
-        print_adoc_latexmath_content("Factored result: f^4^=e", f"0 = {sympy.latex(factored_eq)}")
+        # Factor all the polynomials
+        x_out = sympy.factor(x - x_w.subs(w, w_z).subs(z, z_y).subs(y, y_x))
+        print_adoc_latexmath_content("Factored result: f^4^=e", f"0 = {sympy.latex(x_out)}")
 
         # Solve the equation using solve
-        solution_solve = sympy.solve(factored_eq, x, domain=sympy.S.Complexes)
+        solution_solve = sympy.solve(x_out, x, domain=sympy.S.Complexes)
         print_adoc_latexmath_content("Solution using solve", format_latex_array(solution_solve))
 
         # Solve the equation using solveset
-        solution_solveset = sympy.solveset(simplified_eq, x, domain=sympy.S.Complexes)
+        solution_solveset = sympy.solveset(x_out, x, domain=sympy.S.Complexes)
         print_adoc_latexmath_content(
             "Solution using solveset", format_latex_array(solution_solveset)
         )

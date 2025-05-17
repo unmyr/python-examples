@@ -26,8 +26,8 @@ def main() -> None:
     """Run main."""
     # Definition: Variables and functions
     x, y, z, w = sympy.symbols("x y z w")
-    roots_x4 = [sympy.CRootOf(x**4 - 10 * x**2 + 5, i) for i in range(4)]
-    roots_x8 = [sympy.CRootOf(x**8 - 92 * x**6 + 134 * x**4 - 28 * x**2 + 1, i) for i in range(8)]
+    roots_x4 = sympy.all_roots(x**4 - 10 * x**2 + 5)
+    roots_x8 = sympy.all_roots(x**8 - 92 * x**6 + 134 * x**4 - 28 * x**2 + 1)
     y_x = 2 * x / (1 - x**2)
     z_y = sympy.simplify(2 * y / (1 - y**2))
     w_z = sympy.simplify(2 * z / (1 - z**2))
@@ -37,11 +37,9 @@ def main() -> None:
     initial_values = (
         [
             sympy.Number(0),
-            -sympy.I,
-            sympy.I,
-            -sympy.sqrt(3),
-            sympy.sqrt(3),
         ]
+        + sympy.all_roots(x**2 + 1)
+        + sympy.real_roots((x**2 - 3), x)
         + roots_x4
         + roots_x8
     )
