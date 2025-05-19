@@ -4,5 +4,6 @@ ifndef::leveloffset[]
 <<linter.adoc#,Linter>> {vbar}
 <<string.adoc#,String>> {vbar}
 <<matplotlib/index.adoc#,Matplotlib>> {vbar}
-<<sqlalchemy.adoc#,Sqlalchemy>> +
+<<sqlalchemy.adoc#,Sqlalchemy>> {vbar}
+<<sympy/index.adoc#,Sympy>> +
 endif::[]

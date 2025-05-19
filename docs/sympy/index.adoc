@@ -1,0 +1,228 @@
+ifndef::leveloffset[]
+:toc: left
+:toclevels: 3
+endif::[]
+
+ifndef::imagesdir[]
+:imagesdir: images
+endif::[]
+
+:stem: latexmath
+
+=== Installation
+
+[source,shell]
+----
+python -m pip install -r requirements.txt
+----
+
+=== Example 1: polymul_sym.py
+
+[source,plaintext]
+----
+$ python src/polymul_sym.py 
+Expanded polynomial: x**4 - 10*x**2 + 5
+Factored polynomial: (x**2 - 5 - 2*sqrt(5))*(x**2 - 5 + 2*sqrt(5))
+----
+
+=== Example 2: seminar_2025_04_solve_f_2.py
+
+[source,shell]
+----
+python seminar_2025_04_solve_f_2.py
+----
+
+[latexmath]
+.Factored result: _f_{nbsp}^2^=e
+++++
+\begin{align*}
+z\left.\right|_{z=x} &= - \frac{4 x \left(x - 1\right) \left(x + 1\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
+0 &= \frac{x \left(x^{2} - 3\right) \left(x^{2} + 1\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
+x &= \left\{0, - \sqrt{3}, \sqrt{3}, - i, i\right\} \\
+\end{align*}
+++++
+
+[latexmath]
+.Factored result: _f_{nbsp}^2^=_f_{nbsp}^-1^
+++++
+\begin{align*}
+z\left.\right|_{z=-x} &= - \frac{4 x \left(x - 1\right) \left(x + 1\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
+0 &= \frac{x \left(x^{4} - 10 x^{2} + 5\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
+x &= \left\{0, - \sqrt{5 - 2 \sqrt{5}}, \sqrt{5 - 2 \sqrt{5}}, - \sqrt{2 \sqrt{5} + 5}, \sqrt{2 \sqrt{5} + 5}\right\} \\
+\end{align*}
+++++
+
+=== Example 3: seminar_2025_04_solve_f_4_eq_id.py
+[latexmath]
+.Factored result: _f_{nbsp}^4^=e
+++++
+0 = \frac{x \left(x^{2} - 3\right) \left(x^{2} + 1\right) \left(x^{4} - 10 x^{2} + 5\right) \left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1\right)}{\left(x^{8} - 8 x^{7} - 28 x^{6} + 56 x^{5} + 70 x^{4} - 56 x^{3} - 28 x^{2} + 8 x + 1\right) \left(x^{8} + 8 x^{7} - 28 x^{6} - 56 x^{5} + 70 x^{4} + 56 x^{3} - 28 x^{2} - 8 x + 1\right)}
+++++
+
+[latexmath]
+.Solution using solve
+++++
+\begin{array}{ll}
+x = \{ & \\
+  \begin{array}{ll}
+    & 0, \\
+    & - \sqrt{3}, \\
+    & \sqrt{3}, \\
+    & - i, \\
+    & i, \\
+    & - \sqrt{5 - 2 \sqrt{5}}, \\
+    & \sqrt{5 - 2 \sqrt{5}}, \\
+    & - \sqrt{2 \sqrt{5} + 5}, \\
+    & \sqrt{2 \sqrt{5} + 5}, \\
+    & - \sqrt{- 10 \sqrt{5} - 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
+    & \sqrt{- 10 \sqrt{5} - 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
+    & - \sqrt{- 10 \sqrt{5} + 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
+    & \sqrt{- 10 \sqrt{5} + 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
+    & - \sqrt{10 \sqrt{5} + 23 + 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85}}, \\
+    & \sqrt{10 \sqrt{5} + 23 + 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85}}, \\
+    & - \sqrt{- 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85} + 10 \sqrt{5} + 23}, \\
+    & \sqrt{- 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85} + 10 \sqrt{5} + 23}\\ 
+  \end{array} \\ 
+\} & \\
+\end{array}
+++++
+
+[latexmath]
+.Solution using solveset
+++++
+\begin{array}{ll}
+x = \{ & \\
+  \begin{array}{ll}
+    & 0, \\
+    & i, \\
+    & \sqrt{3}, \\
+    & - i, \\
+    & - \sqrt{3}, \\
+    & \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}\\ 
+  \end{array} \\ 
+\} & \\
+\end{array}
+++++
+
+=== Example 4: seminar_2025_04_solve_f_4_x_y_z_w.py
+
+[latexmath]
+.Solution using solve
+++++
+\begin{array}{ll}
+(x, y, z, w) = \{ & \\
+  \begin{array}{l}
+    & \left( 0, \  0, \  0, \  0\right), \\
+    & \left( \sqrt{3}, \  - \sqrt{3}, \  \sqrt{3}, \  - \sqrt{3}\right), \\
+    & \left( - \sqrt{3}, \  \sqrt{3}, \  - \sqrt{3}, \  \sqrt{3}\right), \\
+    & \left( - i, \  - i, \  - i, \  - i\right), \\
+    & \left( i, \  i, \  i, \  i\right), \\
+    & \left( \sqrt{5 - 2 \sqrt{5}} \left(- \sqrt{5} - 2\right), \  \sqrt{5 - 2 \sqrt{5}}, \  \left(2 + \sqrt{5}\right) \sqrt{5 - 2 \sqrt{5}}, \  - \sqrt{5 - 2 \sqrt{5}}\right), \\
+    & \left( \left(2 + \sqrt{5}\right) \sqrt{5 - 2 \sqrt{5}}, \  - \sqrt{5 - 2 \sqrt{5}}, \  \sqrt{5 - 2 \sqrt{5}} \left(- \sqrt{5} - 2\right), \  \sqrt{5 - 2 \sqrt{5}}\right), \\
+    & \left( \left(-2 + \sqrt{5}\right) \sqrt{2 \sqrt{5} + 5}, \  \sqrt{2 \sqrt{5} + 5}, \  \left(2 - \sqrt{5}\right) \sqrt{2 \sqrt{5} + 5}, \  - \sqrt{2 \sqrt{5} + 5}\right), \\
+    & \left( \left(2 - \sqrt{5}\right) \sqrt{2 \sqrt{5} + 5}, \  - \sqrt{2 \sqrt{5} + 5}, \  \left(-2 + \sqrt{5}\right) \sqrt{2 \sqrt{5} + 5}, \  \sqrt{2 \sqrt{5} + 5}\right)\\ 
+  \end{array} \\ 
+\} & \\
+\end{array}
+++++
+
+[latexmath]
+.Solution using solveset
+++++
+\begin{array}{ll}
+(x, y, z, w) = \{ & \\
+  \begin{array}{l}
+    & \left( 0, \  0, \  0, \  0\right), \\
+    & \left( i, \  i, \  i, \  i\right), \\
+    & \left( \sqrt{3}, \  - \sqrt{3}, \  \sqrt{3}, \  - \sqrt{3}\right), \\
+    & \left( - i, \  - i, \  - i, \  - i\right), \\
+    & \left( - \sqrt{3}, \  \sqrt{3}, \  - \sqrt{3}, \  \sqrt{3}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}, \  \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}\right), \\
+    & \left( \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}, \  \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}\right)\\ 
+  \end{array} \\ 
+\} & \\
+\end{array}
+++++
+
+=== Example 5: seminar_2025_04_verify_with_num.py
+
+[source,shell]
+----
+python seminar_2025_04_verify_with_num.py
+----
+
+
+[source,plaintext]
+----
+$ python seminar_2025_04_verify_with_num.py
+x=+0.000+0.000j: f^1=+0.000+0.000j,f^2=+0.000+0.000j,f^3=+0.000+0.000j,f^4=+0.000+0.000j,error=0.000: x=0
+x=+0.000-1.000j: f^1=+0.000-1.000j,f^2=+0.000-1.000j,f^3=+0.000-1.000j,f^4=+0.000-1.000j,error=0.000: x=-I
+x=+0.000+1.000j: f^1=+0.000+1.000j,f^2=+0.000+1.000j,f^3=+0.000+1.000j,f^4=+0.000+1.000j,error=0.000: x=I
+x=-1.732+0.000j: f^1=+1.732+0.000j,f^2=-1.732+0.000j,f^3=+1.732+0.000j,f^4=-1.732+0.000j,error=0.000: x=-sqrt(3)
+x=+1.732+0.000j: f^1=-1.732+0.000j,f^2=+1.732+0.000j,f^3=-1.732+0.000j,f^4=+1.732+0.000j,error=0.000: x=sqrt(3)
+x=-0.727+0.000j: f^1=-3.078+0.000j,f^2=+0.727+0.000j,f^3=+3.078+0.000j,f^4=-0.727+0.000j,error=0.000: x=-sqrt(5 - 2*sqrt(5))
+x=+0.727+0.000j: f^1=+3.078+0.000j,f^2=-0.727+0.000j,f^3=-3.078+0.000j,f^4=+0.727+0.000j,error=0.000: x=sqrt(5 - 2*sqrt(5))
+x=-3.078+0.000j: f^1=+0.727+0.000j,f^2=+3.078+0.000j,f^3=-0.727+0.000j,f^4=-3.078+0.000j,error=0.000: x=-sqrt(2*sqrt(5) + 5)
+x=+3.078+0.000j: f^1=-0.727+0.000j,f^2=-3.078+0.000j,f^3=+0.727+0.000j,f^4=+3.078+0.000j,error=0.000: x=sqrt(2*sqrt(5) + 5)
+x=-9.514+0.000j: f^1=+0.213+0.000j,f^2=+0.445+0.000j,f^3=+1.111+0.000j,f^4=-9.514+0.000j,error=0.000: x=-sqrt(10*sqrt(5) + 23 + 2*sqrt(114*sqrt(5) + 255))
+x=+9.514+0.000j: f^1=-0.213+0.000j,f^2=-0.445+0.000j,f^3=-1.111+0.000j,f^4=+9.514+0.000j,error=0.000: x=sqrt(10*sqrt(5) + 23 + 2*sqrt(114*sqrt(5) + 255))
+x=-1.111+0.000j: f^1=+9.514+0.000j,f^2=-0.213+0.000j,f^3=-0.445+0.000j,f^4=-1.111+0.000j,error=0.000: x=-sqrt(-10*sqrt(5) + 2*sqrt(255 - 114*sqrt(5)) + 23)
+x=+1.111+0.000j: f^1=-9.514+0.000j,f^2=+0.213+0.000j,f^3=+0.445+0.000j,f^4=+1.111+0.000j,error=0.000: x=sqrt(-10*sqrt(5) + 2*sqrt(255 - 114*sqrt(5)) + 23)
+x=-0.445+0.000j: f^1=-1.111+0.000j,f^2=+9.514+0.000j,f^3=-0.213+0.000j,f^4=-0.445+0.000j,error=0.000: x=-sqrt(-2*sqrt(114*sqrt(5) + 255) + 10*sqrt(5) + 23)
+x=+0.445+0.000j: f^1=+1.111+0.000j,f^2=-9.514+0.000j,f^3=+0.213+0.000j,f^4=+0.445+0.000j,error=0.000: x=sqrt(-2*sqrt(114*sqrt(5) + 255) + 10*sqrt(5) + 23)
+x=-0.213+0.000j: f^1=-0.445+0.000j,f^2=-1.111+0.000j,f^3=+9.514+0.000j,f^4=-0.213+0.000j,error=0.000: x=-sqrt(-10*sqrt(5) - 2*sqrt(255 - 114*sqrt(5)) + 23)
+x=+0.213+0.000j: f^1=+0.445+0.000j,f^2=+1.111+0.000j,f^3=-9.514+0.000j,f^4=+0.213+0.000j,error=0.000: x=sqrt(-10*sqrt(5) - 2*sqrt(255 - 114*sqrt(5)) + 23)
+x=-1.111+0.000j: f^1=+9.483+0.000j,f^2=-0.213+0.000j,f^3=-0.447+0.000j,f^4=-1.117+0.000j,error=0.006: x=-1.11100000000000
+x=-0.445+0.000j: f^1=-1.110+0.000j,f^2=+9.585+0.000j,f^3=-0.211+0.000j,f^4=-0.442+0.000j,error=0.003: x=-0.445000000000000
+x=-0.213+0.000j: f^1=-0.446+0.000j,f^2=-1.114+0.000j,f^3=+9.213+0.000j,f^4=-0.220+0.000j,error=0.007: x=-0.213000000000000
+----
+
+=== Example 6: seminar_2025_04_verify_with_sym.py
+
+[source,shell]
+----
+python seminar_2025_04_verify_with_sym.py 
+----
+
+[options="header, autowidth"]
+|===
+|x:in |y |z |w |x:out |error
+|  latexmath:[0] |  latexmath:[0] |  latexmath:[0] |  latexmath:[0] |  latexmath:[0] |0
+|  latexmath:[- i] |  latexmath:[- i] |  latexmath:[- i] |  latexmath:[- i] |  latexmath:[- i] |0
+|  latexmath:[i] |  latexmath:[i] |  latexmath:[i] |  latexmath:[i] |  latexmath:[i] |0
+|  latexmath:[- \sqrt{3}] |  latexmath:[\sqrt{3}] |  latexmath:[- \sqrt{3}] |  latexmath:[\sqrt{3}] |  latexmath:[- \sqrt{3}] |0
+|  latexmath:[\sqrt{3}] |  latexmath:[- \sqrt{3}] |  latexmath:[\sqrt{3}] |  latexmath:[- \sqrt{3}] |  latexmath:[\sqrt{3}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}] |0
+|  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}] |  latexmath:[\operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}] |0
+|===
