@@ -24,7 +24,7 @@ python seminar_2025_04_solve_f_2.py
 ----
 
 [latexmath]
-.Factored result: f{nbsp}^2^=e
+.Factored result: _f_{nbsp}^2^=e
 ++++
 \begin{align*}
 z\left.\right|_{z=x} &= - \frac{4 x \left(x - 1\right) \left(x + 1\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
@@ -33,9 +33,8 @@ x &= \left\{0, - \sqrt{3}, \sqrt{3}, - i, i\right\} \\
 \end{align*}
 ++++
 
-
 [latexmath]
-.Factored result: f{nbsp}^2^=f{nbsp}^-1^
+.Factored result: _f_{nbsp}^2^=_f_{nbsp}^-1^
 ++++
 \begin{align*}
 z\left.\right|_{z=-x} &= - \frac{4 x \left(x - 1\right) \left(x + 1\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
@@ -46,7 +45,7 @@ x &= \left\{0, - \sqrt{5 - 2 \sqrt{5}}, \sqrt{5 - 2 \sqrt{5}}, - \sqrt{2 \sqrt{5
 
 === Example 3: seminar_2025_04_solve_f_4_eq_id.py
 [latexmath]
-.Factored result: f^4^=e
+.Factored result: _f_{nbsp}^4^=e
 ++++
 0 = \frac{x \left(x^{2} - 3\right) \left(x^{2} + 1\right) \left(x^{4} - 10 x^{2} + 5\right) \left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1\right)}{\left(x^{8} - 8 x^{7} - 28 x^{6} + 56 x^{5} + 70 x^{4} - 56 x^{3} - 28 x^{2} + 8 x + 1\right) \left(x^{8} + 8 x^{7} - 28 x^{6} - 56 x^{5} + 70 x^{4} + 56 x^{3} - 28 x^{2} - 8 x + 1\right)}
 ++++
@@ -54,53 +53,57 @@ x &= \left\{0, - \sqrt{5 - 2 \sqrt{5}}, \sqrt{5 - 2 \sqrt{5}}, - \sqrt{2 \sqrt{5
 [latexmath]
 .Solution using solve
 ++++
-x = \left\{
-  \begin{array}{c}
-    0, \\
-    - \sqrt{3}, \\
-    \sqrt{3}, \\
-    - i, \\
-    i, \\
-    - \sqrt{5 - 2 \sqrt{5}}, \\
-    \sqrt{5 - 2 \sqrt{5}}, \\
-    - \sqrt{2 \sqrt{5} + 5}, \\
-    \sqrt{2 \sqrt{5} + 5}, \\
-    - \sqrt{- 10 \sqrt{5} - 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
-    \sqrt{- 10 \sqrt{5} - 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
-    - \sqrt{- 10 \sqrt{5} + 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
-    \sqrt{- 10 \sqrt{5} + 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
-    - \sqrt{10 \sqrt{5} + 23 + 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85}}, \\
-    \sqrt{10 \sqrt{5} + 23 + 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85}}, \\
-    - \sqrt{- 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85} + 10 \sqrt{5} + 23}, \\
-    \sqrt{- 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85} + 10 \sqrt{5} + 23}
-  \end{array}
-\right\}
+\begin{array}{ll}
+x = \{ & \\
+  \begin{array}{ll}
+    & 0, \\
+    & - \sqrt{3}, \\
+    & \sqrt{3}, \\
+    & - i, \\
+    & i, \\
+    & - \sqrt{5 - 2 \sqrt{5}}, \\
+    & \sqrt{5 - 2 \sqrt{5}}, \\
+    & - \sqrt{2 \sqrt{5} + 5}, \\
+    & \sqrt{2 \sqrt{5} + 5}, \\
+    & - \sqrt{- 10 \sqrt{5} - 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
+    & \sqrt{- 10 \sqrt{5} - 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
+    & - \sqrt{- 10 \sqrt{5} + 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
+    & \sqrt{- 10 \sqrt{5} + 2 \sqrt{3} \sqrt{85 - 38 \sqrt{5}} + 23}, \\
+    & - \sqrt{10 \sqrt{5} + 23 + 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85}}, \\
+    & \sqrt{10 \sqrt{5} + 23 + 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85}}, \\
+    & - \sqrt{- 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85} + 10 \sqrt{5} + 23}, \\
+    & \sqrt{- 2 \sqrt{3} \sqrt{38 \sqrt{5} + 85} + 10 \sqrt{5} + 23}\\ 
+  \end{array} \\ 
+\} & \\
+\end{array}
 ++++
 
 [latexmath]
 .Solution using solveset
 ++++
-x = \left\{
-  \begin{array}{c}
-    0, \\
-    i, \\
-    \sqrt{3}, \\
-    - i, \\
-    - \sqrt{3}, \\
-    \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}, \\
-    \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}, \\
-    \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}, \\
-    \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}, \\
-    \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}, \\
-    \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}, \\
-    \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}, \\
-    \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}, \\
-    \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}, \\
-    \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}, \\
-    \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}, \\
-    \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}
-  \end{array}
-\right\}
+\begin{array}{ll}
+x = \{ & \\
+  \begin{array}{ll}
+    & 0, \\
+    & i, \\
+    & \sqrt{3}, \\
+    & - i, \\
+    & - \sqrt{3}, \\
+    & \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 0\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 1\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 2\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{4} - 10 x^{2} + 5, 3\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 0\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 1\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 2\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 3\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 4\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 5\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 6\right)}, \\
+    & \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}\\ 
+  \end{array} \\ 
+\} & \\
+\end{array}
 ++++
 
 === Example 4: seminar_2025_04_solve_f_4_x_y_z_w.py

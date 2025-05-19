@@ -44,7 +44,7 @@ def main() -> None:
         z_eq_plus_x_eq = sympy.factor(x - z_of_x)
         z_eq_plus_x_solved = sympy.solveset(z_eq_plus_x_eq, x, domain=sympy.S.Complexes)
         print_adoc_latexmath_content(
-            "Factored result: f{nbsp}^2^=e",
+            "Factored result: _f_{nbsp}^2^=e",
             "\n".join(
                 [
                     "\\begin{align*}",
@@ -60,7 +60,7 @@ def main() -> None:
         z_eq_minus_x_eq = sympy.factor(x + z_of_x)
         z_eq_minus_x_solved = sympy.solveset(z_eq_minus_x_eq, x, domain=sympy.S.Complexes)
         print_adoc_latexmath_content(
-            "Factored result: f{nbsp}^2^=f{nbsp}^-1^",
+            "Factored result: _f_{nbsp}^2^=_f_{nbsp}^-1^",
             "\n".join(
                 [
                     "\\begin{align*}",

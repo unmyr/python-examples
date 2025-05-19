@@ -1,15 +1,19 @@
 import sympy
 
 
-def format_latex_array(solutions):
+def format_latex_array(left_hand, solutions):
     """
     Format a list of solutions into a LaTeX array for display.
     """
-    latex_solutions = ["    " + sympy.latex(sol) for sol in solutions]
+    latex_solutions = ["    & " + sympy.latex(sol) for sol in solutions]
     return (
-        "x = \\left\\{\n"
-        "  \\begin{array}{c}\n" + ", \\\\\n".join(latex_solutions) + "\n  \\end{array}\n"
-        "\\right\\}"
+        "\\begin{array}{ll}\n"
+        f"{left_hand}" + " = \\{ & \\\\\n"
+        "  \\begin{array}{ll}\n"
+        + ", \\\\\n".join(latex_solutions)
+        + "\\\\ \n  \\end{array} \\\\ \n"
+        "\\} & \\\\\n"
+        "\\end{array}"
     )
 
 
@@ -40,16 +44,18 @@ def main() -> None:
     try:
         # Factor all the polynomials
         x_out = sympy.factor(x - x_w.subs(w, w_z).subs(z, z_y).subs(y, y_x))
-        print_adoc_latexmath_content("Factored result: f^4^=e", f"0 = {sympy.latex(x_out)}")
+        print_adoc_latexmath_content("Factored result: _f_{nbsp}^4^=e", f"0 = {sympy.latex(x_out)}")
 
         # Solve the equation using solve
         solution_solve = sympy.solve(x_out, x, domain=sympy.S.Complexes)
-        print_adoc_latexmath_content("Solution using solve", format_latex_array(solution_solve))
+        print_adoc_latexmath_content(
+            "Solution using solve", format_latex_array("x", solution_solve)
+        )
 
         # Solve the equation using solveset
         solution_solveset = sympy.solveset(x_out, x, domain=sympy.S.Complexes)
         print_adoc_latexmath_content(
-            "Solution using solveset", format_latex_array(solution_solveset)
+            "Solution using solveset", format_latex_array("x", solution_solveset)
         )
 
     except Exception as e:
