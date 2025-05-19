@@ -93,11 +93,11 @@ x = \left\{
 \right\}
 ++++
 
-=== Example 3: seminar_2025_04_solve_f_2_eq_f_inv.py
+=== Example 3: seminar_2025_04_solve_f_2.py
 
 [source,shell]
 ----
-python seminar_2025_04_solve_f_2_eq_f_inv.py
+python seminar_2025_04_solve_f_2.py
 ----
 
 [latexmath]
