@@ -16,25 +16,35 @@ Expanded polynomial: x**4 - 10*x**2 + 5
 Factored polynomial: (x**2 - 5 - 2*sqrt(5))*(x**2 - 5 + 2*sqrt(5))
 ----
 
-=== Example 2: seminar_2025_04_solve_f_4_eq_id.py
+=== Example 2: seminar_2025_04_solve_f_2.py
+
+[source,shell]
+----
+python seminar_2025_04_solve_f_2.py
+----
+
 [latexmath]
-.Factored result: f^2^=e
+.Factored result: f{nbsp}^2^=e
 ++++
 \begin{align*}
 z\left.\right|_{z=x} &= - \frac{4 x \left(x - 1\right) \left(x + 1\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
 0 &= \frac{x \left(x^{2} - 3\right) \left(x^{2} + 1\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
+x &= \left\{0, - \sqrt{3}, \sqrt{3}, - i, i\right\} \\
 \end{align*}
 ++++
 
+
 [latexmath]
-.Factored result: f^2^=f^-1^
+.Factored result: f{nbsp}^2^=f{nbsp}^-1^
 ++++
 \begin{align*}
 z\left.\right|_{z=-x} &= - \frac{4 x \left(x - 1\right) \left(x + 1\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
 0 &= \frac{x \left(x^{4} - 10 x^{2} + 5\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)} \\
+x &= \left\{0, - \sqrt{5 - 2 \sqrt{5}}, \sqrt{5 - 2 \sqrt{5}}, - \sqrt{2 \sqrt{5} + 5}, \sqrt{2 \sqrt{5} + 5}\right\} \\
 \end{align*}
 ++++
 
+=== Example 3: seminar_2025_04_solve_f_4_eq_id.py
 [latexmath]
 .Factored result: f^4^=e
 ++++
@@ -91,25 +101,6 @@ x = \left\{
     \operatorname{CRootOf} {\left(x^{8} - 92 x^{6} + 134 x^{4} - 28 x^{2} + 1, 7\right)}
   \end{array}
 \right\}
-++++
-
-=== Example 3: seminar_2025_04_solve_f_2.py
-
-[source,shell]
-----
-python seminar_2025_04_solve_f_2.py
-----
-
-[latexmath]
-.Simplified result: f^2^
-++++
-0 = z(x) = \frac{4 x \left(1 - x^{2}\right)}{x^{4} - 6 x^{2} + 1}
-++++
-
-[latexmath]
-.Simplified result: f^2^=f^-1^
-++++
-0 = x + z(x) = \frac{x \left(x^{2} - 5 - 2 \sqrt{5}\right) \left(x^{2} - 5 + 2 \sqrt{5}\right)}{\left(x^{2} - 2 x - 1\right) \left(x^{2} + 2 x - 1\right)}
 ++++
 
 === Example 4: seminar_2025_04_solve_f_4_x_y_z_w.py

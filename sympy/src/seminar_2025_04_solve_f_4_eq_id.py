@@ -38,38 +38,6 @@ def main() -> None:
     x_w = (2 * w) / (1 - w**2)  # Polynomial: (2w)/(1 - w²)
 
     try:
-        # Factor the polynomial: z = (2y)/(1 - y²), y = (2x)/(1 - x²), z=x
-        factored_z = sympy.factor(x - z_y.subs(y, y_x))
-        print_adoc_latexmath_content(
-            "Factored result: f^2^=e",
-            "\n".join(
-                [
-                    "\\begin{align*}",
-                    "z\\left.\\right|_{z=x} &= "
-                    + f"{sympy.latex(sympy.factor(z_y.subs(y, y_x)))}"
-                    + " \\\\",
-                    f"0 &= {sympy.latex(factored_z)} \\\\",
-                    "\\end{align*}",
-                ]
-            ),
-        )
-
-        # Factor the polynomial: z = (2y)/(1 - y²), y = (2x)/(1 - x²), z=-x
-        factored_z_minus = sympy.factor(x + z_y.subs(y, y_x))
-        print_adoc_latexmath_content(
-            "Factored result: f^2^=f^-1^",
-            "\n".join(
-                [
-                    "\\begin{align*}",
-                    "z\\left.\\right|_{z=-x} &= "
-                    + f"{sympy.latex(sympy.factor(z_y.subs(y, y_x)))}"
-                    + " \\\\",
-                    f"0 &= {sympy.latex(factored_z_minus)} \\\\",
-                    "\\end{align*}",
-                ]
-            ),
-        )
-
         # Factor all the polynomials
         x_out = sympy.factor(x - x_w.subs(w, w_z).subs(z, z_y).subs(y, y_x))
         print_adoc_latexmath_content("Factored result: f^4^=e", f"0 = {sympy.latex(x_out)}")
