@@ -26,14 +26,13 @@ plt.show()
 [source,python]
 .matplotlib_plot_sin_save_png.py
 ----
-import numpy as np
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 x = np.arange(-10.0, 10.0, 0.1)
 y = np.sin(x)
 plt.plot(x, y)
-plt.savefig('matplotlib_plot_sin.png')
+plt.savefig("matplotlib_plot_sin.png")
 ----
 
 image::matplotlib_plot_sin.png[]
@@ -155,7 +154,7 @@ def main():
     ax2.clabel(cs_plot, inline=1, fontsize=10)
     cbar = matplotlib.pyplot.colorbar(cs_plot, cax=ax2)
     cbar.ax.set_ylabel('verbosity coefficient')
-    matplotlib.pyplot.savefig('matplotlib_plot_contour_2.png'
+    matplotlib.pyplot.savefig('matplotlib_plot_contour_2.png')
 ----
 
 image::matplotlib_plot_contour.png[]
