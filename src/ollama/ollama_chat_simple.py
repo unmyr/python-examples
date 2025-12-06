@@ -21,6 +21,14 @@ def main(host: str, port: int = OLLAMA_PORT, model: str = MODEL_NAME):
             {"role": "user", "content": "What is the tallest mountain in the world?"},
         ],
     }
+    print(f"Model: {model}")
+    print("Messages:")
+    for message in payload["messages"]:
+        print(f"role: {message.get('role')}")
+        print(message.get("content"))
+        print()
+
+    print("Response:")
     t_0 = time.time()
     response = requests.post(
         f"http://{host}:{port}/api/chat",
