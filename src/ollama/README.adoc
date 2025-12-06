@@ -1,0 +1,26 @@
+== Ollama examples
+
+Example of ollama.
+
+=== `/api/chat` examples
+
+[source,shell]
+----
+python ./ollama_chat_simple.py -H "xxx.xxx.xxx.xxx"
+----
+
+[source,console]
+----
+$ python ./ollama_chat_simple.py -H "xxx.xxx.xxx.xxx"
+Model: mistral
+Messages:
+role: system
+You are an assistant who prefers concise answers, typically one sentence.
+
+role: user
+What is the tallest mountain in the world?
+
+Response:
+ Mount Everest is the tallest mountain in the world.
+dt = 12.7[s]
+----
