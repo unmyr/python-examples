@@ -15,7 +15,8 @@ def main(host: str, port: int = OLLAMA_PORT, model: str = MODEL_NAME):
         "messages": [
             {
                 "role": "system",
-                "content": "You are an assistant who prefers concise answers, typically one sentence.",
+                "content": "You are an assistant who prefers concise answers,"
+                " typically one sentence.",
             },
             {"role": "user", "content": "What is the tallest mountain in the world?"},
         ],
