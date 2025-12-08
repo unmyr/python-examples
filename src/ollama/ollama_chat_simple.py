@@ -39,7 +39,7 @@ def main(host: str, port: int = OLLAMA_PORT, model: str = MODEL_NAME):
     for line in response.iter_lines():
         if line:
             data = json.loads(line)
-            print(data.get("message", {}).get("content", ""), end="")
+            print(data.get("message", {}).get("content", ""), end="", flush=True)
     t_1 = time.time()
     time_delta = t_1 - t_0
     print("")
