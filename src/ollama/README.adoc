@@ -24,3 +24,175 @@ Response:
  Mount Everest is the tallest mountain in the world.
 dt = 12.7[s]
 ----
+
+=== Function Calling example
+
+[source,shell]
+----
+python ./ollama_chat_fc.py -H $OLLAMA_HOST
+----
+
+[source,console]
+----
+$ python ./ollama_chat_fc.py -H $OLLAMA_HOST
+Model: llama3.2
+Messages:
+role: system
+You are an assistant who prefers concise answers, typically one sentence.
+
+role: user
+Please tell me the product name that corresponds to product ID 33333.
+
+Request: {
+  "model": "llama3.2",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an assistant who prefers concise answers, typically one sentence."
+    },
+    {
+      "role": "user",
+      "content": "Please tell me the product name that corresponds to product ID 33333."
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "get_product_name_by_id",
+        "description": "Returns the product name by product id",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "product_id": {
+              "type": "integer",
+              "description": "product id"
+            }
+          },
+          "required": [
+            "product_id"
+          ]
+        }
+      }
+    }
+  ],
+  "stream": false,
+  "temperature": 0.1
+}
+Response(14.3[s]):
+{
+  "id": "chatcmpl-449",
+  "object": "chat.completion",
+  "created": 1765297610,
+  "model": "llama3.2",
+  "system_fingerprint": "fp_ollama",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_w2ut0z6y",
+            "index": 0,
+            "type": "function",
+            "function": {
+              "name": "get_product_name_by_id",
+              "arguments": "{\"product_id\":\"33333\"}"
+            }
+          }
+        ]
+      },
+      "finish_reason": "tool_calls"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 187,
+    "completion_tokens": 22,
+    "total_tokens": 209
+  }
+}
+
+
+Request: {
+  "model": "llama3.2",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an assistant who prefers concise answers, typically one sentence."
+    },
+    {
+      "role": "user",
+      "content": "Please tell me the product name that corresponds to product ID 33333."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_w2ut0z6y",
+          "index": 0,
+          "type": "function",
+          "function": {
+            "name": "get_product_name_by_id",
+            "arguments": "{\"product_id\":\"33333\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "name": "get_product_name_by_id",
+      "content": "kiwi",
+      "tool_call_id": "call_w2ut0z6y"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "get_product_name_by_id",
+        "description": "Returns the product name by product id",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "product_id": {
+              "type": "integer",
+              "description": "product id"
+            }
+          },
+          "required": [
+            "product_id"
+          ]
+        }
+      }
+    }
+  ],
+  "stream": false,
+  "temperature": 0.1
+}
+Response(8.0[s]):
+{
+  "id": "chatcmpl-345",
+  "object": "chat.completion",
+  "created": 1765297618,
+  "model": "llama3.2",
+  "system_fingerprint": "fp_ollama",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The product with ID 33333 is a kiwi."
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 117,
+    "completion_tokens": 13,
+    "total_tokens": 130
+  }
+}
+----
