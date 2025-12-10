@@ -1,0 +1,57 @@
+
+
+=== Setup
+
+1. Create a virtual environment (optional)
++
+[source,shell]
+----
+python -m venv .venv
+source .venv/bin/activate
+----
+
+2. Upgrade pip and install the package
++
+[source,shell]
+----
+pip install --upgrade pip
+pip install .
+----
+
+=== Running
+
+. Set environment variables
++
+[source,shell]
+.Ollama example
+----
+OPENAI_BASE_URL="http://xxx.xxx.xxx.xxx:11434/v1/"
+MODEL="llama3.2"
+OPENAI_API_KEY="ollama"
+export OPENAI_BASE_URL MODEL OPENAI_API_KEY
+----
++
+See: https://docs.ollama.com/api/openai-compatibility[API Reference > OpenAI compatibility | ollama.com]
+
+. Load local environment variables (if you use a `.env` file)
++
+[source,shell]
+----
+. .env
+----
+
+. Run the script
+
+** openai_chat_starter_sync.py
++
+[source,shell]
+----
+python ./src/openai_chat_starter_sync.py
+----
+
+** openai_chat_starter_async.py
++
+[source,shell]
+----
+python ./src/openai_chat_starter_async.py
+----
