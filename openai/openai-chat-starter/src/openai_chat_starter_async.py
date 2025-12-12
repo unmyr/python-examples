@@ -16,8 +16,7 @@ async def main(model: str, base_url: str, api_key: str) -> None:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an assistant who prefers concise answers,"
-                    " typically one sentence.",
+                    "content": "Limit your answer to one short sentence.",
                 },
                 {"role": "user", "content": "What is the tallest mountain in the world?"},
             ],
