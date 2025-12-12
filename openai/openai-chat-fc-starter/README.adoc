@@ -1,0 +1,77 @@
+
+
+=== Setup
+
+1. Create a virtual environment (optional)
++
+[source,shell]
+----
+python -m venv .venv
+source .venv/bin/activate
+----
+
+2. Upgrade pip and install the package
++
+[source,shell]
+----
+pip install --upgrade pip
+pip install .
+----
+
+=== Running
+
+. Set environment variables
++
+[source,shell]
+.Ollama example
+----
+OPENAI_BASE_URL="http://xxx.xxx.xxx.xxx:11434/v1/"
+MODEL="llama3.2"
+OPENAI_API_KEY="ollama"
+export OPENAI_BASE_URL MODEL OPENAI_API_KEY
+----
++
+See: https://docs.ollama.com/api/openai-compatibility[API Reference > OpenAI compatibility | ollama.com]
+
+. Load local environment variables (if you use a `.env` file)
++
+[source,shell]
+----
+. .env
+----
+
+. Run the script
+
+** openai_chat_starter_sync.py
++
+[source,shell]
+----
+python ./src/openai_chat_fc_sync.py 
+----
++
+[source,console]
+.Results
+----
+$ python src/openai_chat_fc_sync.py 
+Model: llama3.2
+
+Request[1]:
+message: {'role': 'system', 'content': 'You are an assistant who prefers concise answers, typically one sentence.'}
+message: {'role': 'user', 'content': 'Please tell me the product name that corresponds to product ID 0.'}
+
+Response(10.6[s]): id=chatcmpl-709
+choice[0]: finish_reason=tool_calls, role=assistant, function_call=None, refusal=None, tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_xxxxxxxx', function=Function(arguments='{"product_id":0}', name='get_product_name_by_id'), type='function', index=0)]:
+tool_caller=[{'index': 0, 'type': 'function', 'id': 'call_xxxxxxxx', 'function': {'name': 'get_product_name_by_id', 'arguments': '{"product_id":0}'}}]
+
+Request[2]:
+message: {'role': 'system', 'content': 'You are an assistant who prefers concise answers, typically one sentence.'}
+message: {'role': 'user', 'content': 'Please tell me the product name that corresponds to product ID 0.'}
+message: {'role': 'assistant', 'content': '', 'tool_calls': [{'index': 0, 'type': 'function', 'id': 'call_xxxxxxxx', 'function': {'name': 'get_product_name_by_id', 'arguments': '{"product_id":0}'}}]}
+message: {'role': 'tool', 'tool_call_id': 'call_xxxxxxxx', 'name': 'get_product_name_by_id', 'content': '{"product_name": "apple"}'}
+
+Response(6.8[s]): id=chatcmpl-11
+choice[0]: finish_reason=stop, role=assistant, function_call=None, refusal=None, tool_calls=None:
+The product name that corresponds to product ID 0 is "apple".
+
+INFO: A stop notification has been detected. Chat will end.
+----
