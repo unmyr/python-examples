@@ -57,9 +57,17 @@ Please briefly explain the possible states of the robot after it leaves the room
     time_delta = t_1 - t_0
     print(f"Response({time_delta:.1f}[s]):")
     cnt = 0
+    print(chat_completion)
     for choice in chat_completion.choices:
+        print(choice)
         # finish_reason: stop or length
-        print(f"choice[{cnt}]:finish_reason={choice.finish_reason}: ", end="")
+        print(
+            (
+                f"choice[{cnt}]:finish_reason={choice.finish_reason},"
+                f" tool_calls={choice.message.tool_calls}: "
+            ),
+            end="",
+        )
         print(choice.message.content)
         cnt += 1
 
