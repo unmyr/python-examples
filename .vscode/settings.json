@@ -45,6 +45,7 @@
     "clabel",
     "classmethod",
     "cmap",
+    "collatz",
     "colorbar",
     "concat",
     "cond",
