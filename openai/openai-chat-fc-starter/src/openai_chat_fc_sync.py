@@ -76,8 +76,9 @@ def main(model: str, base_url: str, api_key: str):
             stream=False,
         )
         t_1 = time.time()
-        time_delta = t_1 - t_0
-        print(f"Response({time_delta:.1f}[s]): id={chat_completion.id}")
+        elapsed_time = t_1 - t_0
+        tps = chat_completion.usage.completion_tokens / elapsed_time
+        print(f"Response({elapsed_time:.1f}[s], {tps:.2f} [token/s]): id={chat_completion.id}")
         # print(f"chat_completion={chat_completion}")
 
         for choice in chat_completion.choices:
