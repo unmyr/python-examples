@@ -1,13 +1,29 @@
 import argparse
 import json
 import os
-# import random
+import random
 import time
 
 from openai import OpenAI
 
 
+def int_greater_than(min_value, numeric_type=int):
+    def validate(value):
+        number = numeric_type(value)
+        if number > min_value:
+            return number
+        raise argparse.ArgumentTypeError(
+            f"Invalid value: {value}. Must be an integer greater than {min_value}."
+        )
+
+    return validate
+
+
 def collatz(n: int) -> int:
+    """Compute the next number in the Collatz sequence."""
+    # Example:
+    # 53 → 160 → 80 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
+
     # If the number is even, divide it by 2
     if n % 2 == 0:
         return n // 2
@@ -16,10 +32,7 @@ def collatz(n: int) -> int:
         return 3 * n + 1
 
 
-def main(model: str, base_url: str, api_key: str):
-    # 53 → 160 → 80 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
-    n = 53  # random.randint(2, 99)
-
+def main(model: str, base_url: str, api_key: str, n: int):
     available_functions = {"collatz": collatz}
     param_types = {"collatz": {"n": int}}
 
@@ -71,7 +84,7 @@ def main(model: str, base_url: str, api_key: str):
             print("INFO: A stop notification has been detected. Chat will end.")
             break
 
-        print(f"Request[{r_i}]:")
+        print(f"Request[{r_i}]: series={series_n}")
         for message in input_list:
             print(f"message: {message}")
         print()
@@ -243,5 +256,12 @@ if __name__ == "__main__":
         default=os.environ.get("OPENAI_API_KEY", ""),
         help="API Key for the OpenAI server. ",
     )
+    parser.add_argument(
+        "-n",
+        default=random.randint(2, 99),
+        help="Starting integer (>1) for the Collatz sequence.",
+        type=int_greater_than(1)
+    )
+
     args = parser.parse_args()
-    main(args.model, args.base_url, args.api_key)
+    main(args.model, args.base_url, args.api_key, args.n)
