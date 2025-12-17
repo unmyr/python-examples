@@ -23,6 +23,8 @@ def collatz(n: int) -> int:
     """Compute the next number in the Collatz sequence."""
     # Example:
     # 53 → 160 → 80 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
+    if n < 2:
+        raise ValueError(f"Input must be an integer greater than 1, but got {n}.")
 
     # If the number is even, divide it by 2
     if n % 2 == 0:
@@ -42,14 +44,20 @@ def main(model: str, base_url: str, api_key: str, n: int):
         "function": {
             "name": "collatz",
             "description": (
-                "Given a positive integer n>1, return the next number in the Collatz sequence."
+                "If a positive integer n>1 is specified, an integer is returned. "
+                "The returned integer value is expected to be used as input to this function again."
             ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "n": {
                         "type": "integer",
-                        "description": "A positive integer input for the Collatz function.",
+                        "description": (
+                            "A positive integer(>1) input for the Collatz function."
+                            " Since the Collatz function is a recursive function,"
+                            " an error will occur if the result of the previous execution"
+                            " is not used as input from the second time onwards."
+                        ),
                     }
                 },
                 "required": ["n"],
@@ -59,9 +67,9 @@ def main(model: str, base_url: str, api_key: str, n: int):
     series_n = [n]
     system_prompt = (
         "You are an assistant who can call functions repeatedly to complete a task."
-        " Be concise, but complete the full process when asked."
-        " Be concise, complete the entire process when prompted,"
-        " but exit when the collatz function responds with a 1."
+        " No guesses are made about the next value in the sequence."
+        " However, if the collatz function returns 1, it will exit,"
+        f" display the sequence from the first value {n} to the last, and then exit."
     )
     input_list = [
         {
@@ -78,13 +86,18 @@ def main(model: str, base_url: str, api_key: str, n: int):
     ]
     print(f"Model: {model}")
     stop = False
+    tool_choice = "required"
     for r_i in range(1, 99):
         print()
         if stop:
             print("INFO: A stop notification has been detected. Chat will end.")
             break
 
-        print(f"Request[{r_i}]: series={series_n}")
+        if series_n[-1] == 1:
+            stop = True
+            tool_choice = "none"
+
+        print(f"Request[{r_i}]: tool_choice={tool_choice} series={series_n}")
         for message in input_list:
             print(f"message: {message}")
         print()
@@ -93,6 +106,7 @@ def main(model: str, base_url: str, api_key: str, n: int):
         chat_completion = client.chat.completions.create(
             model=model,
             messages=input_list,
+            tool_choice=tool_choice,
             tools=[tool_collatz],
             stream=False,
         )
@@ -102,7 +116,7 @@ def main(model: str, base_url: str, api_key: str, n: int):
         print(
             (
                 f"Response({elapsed_time:.1f}[s], {tps:.2f} [token/s]): id={chat_completion.id}"
-                " series={series_n}"
+                f" series={series_n}"
             )
         )
         # print(f"chat_completion={chat_completion}")
@@ -122,18 +136,17 @@ def main(model: str, base_url: str, api_key: str, n: int):
             if choice.finish_reason == "stop":
                 content = choice.message.content
                 print(content)
-                if series_n[-1] == 1:
-                    # We reach the stopping condition for the Collatz function
-                    stop = True
-                    continue
-
+                first_value = series_n[0]
                 last_value = series_n[-1]
+
                 last_seq = " → ".join(map(str, series_n))
                 resume_message = (
                     "Resume the Collatz sequence using the last result."
                     f" The Collatz sequence so far is: {last_seq}."
-                    f" Please continue calling the collatz function starting from {last_value}"
-                    " until the result is 1."
+                    f" Please continue calling the collatz function without reporting anything"
+                    f" starting from {last_value} until the result is 1."
+                    " When the return value of the Collatz function is 1,"
+                    f" print the sequence starting from {first_value} and stop."
                 )
                 input_list = [
                     {
@@ -147,12 +160,38 @@ def main(model: str, base_url: str, api_key: str, n: int):
                 ]
 
             elif choice.finish_reason == "tool_calls":
-                tool_caller = []
-
                 # Append tool_call requests to input_list
-                for _, tool_call in enumerate(choice.message.tool_calls):
+                tool_callers = []
+                for i, tool_call in enumerate(choice.message.tool_calls):
                     # print(f"tool_call={tool_call}")
-                    tool_caller.append(
+                    f_name = tool_call.function.name
+                    if f_name not in available_functions:
+                        input_list.append(
+                            {
+                                "role": "tool",
+                                "tool_call_id": tool_call.id,
+                                "name": f_name,
+                                "content": json.dumps(
+                                    {"error": "An undefined function call was detected."}
+                                ),
+                            }
+                        )
+                        continue
+
+                    f_arguments = json.loads(tool_call.function.arguments)
+                    expected_type = param_types[f_name]
+                    f_arguments_converted = {
+                        k: expected_type[k](v) if k in expected_type else v
+                        for k, v in f_arguments.items()
+                    }
+                    n = f_arguments_converted.get("n")
+                    if i > 0 and n != series_n[-1]:
+                        # In the lightweight model, there is a tendency to ignore explicit rules and
+                        # prioritize look-ahead, which can lead to frequent errors,
+                        # so we filter out invalid calls from the second record onwards.
+                        continue
+
+                    tool_callers.append(
                         {
                             "index": tool_call.index,
                             "type": tool_call.type,
@@ -164,76 +203,74 @@ def main(model: str, base_url: str, api_key: str, n: int):
                         }
                     )
 
-                print(f"tool_caller={tool_caller}")
                 input_list.append(
                     {
                         "role": choice.message.role,
                         "content": choice.message.content,
-                        "tool_calls": tool_caller,
+                        "tool_calls": tool_callers,
                     }
                 )
 
-                for tool_call in choice.message.tool_calls:
-                    f_name = tool_call.function.name
-                    f_arguments = json.loads(tool_call.function.arguments)
-                    if f_name in available_functions:
-                        expected_type = param_types[f_name]
-                        f_arguments_converted = {
-                            k: expected_type[k](v) if k in expected_type else v
-                            for k, v in f_arguments.items()
-                        }
+                for tool_caller in tool_callers:
+                    f_name = tool_caller.get("function").get("name")
+                    f_arguments = json.loads(tool_caller.get("function").get("arguments"))
+                    expected_type = param_types[f_name]
+                    f_arguments_converted = {
+                        k: expected_type[k](v) if k in expected_type else v
+                        for k, v in f_arguments.items()
+                    }
+                    if f_name == "collatz":
                         try:
-                            print(f"f_arguments={f_arguments}, series={series_n[-2:]}")
-                            output = available_functions[f_name](**f_arguments_converted)
-                            if f_arguments_converted.get("n") == 1:
-                                input_list.append(
-                                    {
-                                        "role": "tool",
-                                        "tool_call_id": tool_call.id,
-                                        "name": f_name,
-                                        "content": json.dumps(
-                                            {
-                                                "error": (
-                                                    "The function call condition is an integer"
-                                                    " greater than 1."
-                                                )
-                                            }
+                            n = f_arguments_converted.get("n")
+                            if n == series_n[-1]:
+                                next_value = available_functions[f_name](**f_arguments_converted)
+                                series_n.append(next_value)
+                                if next_value == 1:
+                                    tool_response = {
+                                        "next_value": next_value,
+                                        "sequence_so_far": series_n,
+                                        "message": (
+                                            "The termination conditions have been met."
+                                            " Please end the chat."
                                         ),
+                                        "done": True,
                                     }
-                                )
-                            elif series_n[-1] != f_arguments_converted.get("n"):
-                                error_message = (
-                                    "This is a calculated input value."
-                                    f" Please calculate against the last value {series_n[-1]}."
-                                )
-                                input_list.append(
-                                    {
-                                        "role": "tool",
-                                        "tool_call_id": tool_call.id,
-                                        "name": f_name,
-                                        "content": json.dumps({"error": error_message}),
+                                else:
+                                    tool_response = {
+                                        "next_value": next_value,
+                                        "sequence_so_far": series_n,
+                                        "message": (
+                                            "Call the collatz function again using a next value"
+                                        ),
+                                        "done": False,
                                     }
-                                )
+
                             else:
-                                series_n.append(output)
-                                input_list.append(
-                                    {
-                                        "role": "tool",
-                                        "tool_call_id": tool_call.id,
-                                        "name": f_name,
-                                        "content": json.dumps({"n": output}),
-                                    }
+                                error_message = (
+                                    f"Calling any value other than the last value {series_n[-1]}"
+                                    " in the Collatz sequence is invalid."
                                 )
-                        except TypeError as exc:
-                            print(str(exc))
-                            input_list.append(
-                                {
-                                    "role": "tool",
-                                    "tool_call_id": tool_call.id,
-                                    "name": f_name,
-                                    "content": json.dumps({"error": str(exc)}),
+                                tool_response = {
+                                    "next_value": None,
+                                    "sequence_so_far": series_n,
+                                    "error": error_message,
                                 }
-                            )
+
+                        except ValueError as exc:
+                            tool_response = {
+                                "next_value": None,
+                                "sequence_so_far": series_n,
+                                "error": str(exc),
+                            }
+
+                        input_list.append(
+                            {
+                                "role": "tool",
+                                "tool_call_id": tool_caller.get("id"),
+                                "name": f_name,
+                                "content": json.dumps(tool_response),
+                            }
+                        )
 
     print()
     print("Recording results of executions outside of LLM:")
@@ -260,7 +297,7 @@ if __name__ == "__main__":
         "-n",
         default=random.randint(2, 99),
         help="Starting integer (>1) for the Collatz sequence.",
-        type=int_greater_than(1)
+        type=int_greater_than(1),
     )
 
     args = parser.parse_args()
