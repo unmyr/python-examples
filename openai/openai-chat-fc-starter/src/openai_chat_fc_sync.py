@@ -3,6 +3,7 @@ import json
 import os
 import random
 import time
+import types
 
 from openai import OpenAI
 
@@ -25,11 +26,38 @@ def get_product_name_by_id(product_id: int):
     return product_names[i]
 
 
-def main(model: str, base_url: str, api_key: str):
-    available_functions = {"get_product_name_by_id": get_product_name_by_id}
-    param_types = {"get_product_name_by_id": {"product_id": int}}
+def get_product_price_by_id(product_id: int):
+    """
+    Get price by product id
 
-    client = OpenAI(base_url=base_url, api_key=api_key)
+    :param product_id: Description
+    :type product_id: int
+    """
+    prices: types.Dict[int:str] = {
+        0: "70 yen",
+        1: "30 yen",
+        2: "60 yen",
+        3: "140 yen",
+        4: "250 yen",
+        5: "60 yen",
+        6: "50 yen",
+        7: "80 yen",
+        8: "150 yen",
+        9: "90 yen",
+    }
+    return prices.get(product_id, None)
+
+
+def main(model: str, base_url: str, api_key: str):
+    available_functions = {
+        "get_product_name_by_id": get_product_name_by_id,
+        "get_product_price_by_id": get_product_price_by_id,
+    }
+    param_types = {
+        "get_product_name_by_id": {"product_id": int},
+        "get_product_price_by_id": {"product_id": int},
+    }
+
     tool_get_product_name_by_id = {
         "type": "function",
         "function": {
@@ -42,6 +70,20 @@ def main(model: str, base_url: str, api_key: str):
             },
         },
     }
+
+    tool_get_product_price_by_id = {
+        "type": "function",
+        "function": {
+            "name": "get_product_price_by_id",
+            "description": "Returns the price in yen of a product by product ID",
+            "parameters": {
+                "type": "object",
+                "properties": {"product_id": {"type": "integer", "description": "product id"}},
+                "required": ["product_id"],
+            },
+        },
+    }
+
     input_list = [
         {
             "role": "system",
@@ -50,12 +92,14 @@ def main(model: str, base_url: str, api_key: str):
         {
             "role": "user",
             "content": (
-                "Please tell me the product name that corresponds to product ID"
+                "Please tell me the product name and price that corresponds to product ID"
                 f" {random.randint(0, 9)}."
             ),
         },
     ]
     print(f"Model: {model}")
+    client = OpenAI(base_url=base_url, api_key=api_key)
+
     stop = False
     for r_i in [1, 2, 3]:
         print()
@@ -72,7 +116,7 @@ def main(model: str, base_url: str, api_key: str):
         chat_completion = client.chat.completions.create(
             model=model,
             messages=input_list,
-            tools=[tool_get_product_name_by_id],
+            tools=[tool_get_product_name_by_id, tool_get_product_price_by_id],
             stream=False,
         )
         t_1 = time.time()
@@ -98,61 +142,71 @@ def main(model: str, base_url: str, api_key: str):
                 print(choice.message.content)
 
             elif choice.finish_reason == "tool_calls":
-                tool_caller = []
+                tool_callers = []
 
                 # Append tool_call requests to input_list
                 for _, tool_call in enumerate(choice.message.tool_calls):
                     # print(f"tool_call={tool_call}")
-                    tool_caller.append(
+
+                    # Fix LLM response type mismatch
+                    # Lightweight LLM tends to ignore parameter types and pass them as strings,
+                    # and doesn't understand type errors, so we have no choice but to convert
+                    # the type in the Python application to match LLM.
+                    f_name = tool_call.function.name
+                    f_arguments = json.loads(tool_call.function.arguments)
+                    expected_type = param_types[f_name]
+                    f_arguments_converted = {
+                        k: expected_type[k](v) if k in expected_type else v
+                        for k, v in f_arguments.items()
+                    }
+                    print(
+                        f"arguments={f_arguments}"
+                        f" → arguments_converted={f_arguments_converted}"
+                    )
+                    tool_callers.append(
                         {
                             "index": tool_call.index,
                             "type": tool_call.type,
                             "id": tool_call.id,
                             "function": {
-                                "name": tool_call.function.name,
-                                "arguments": tool_call.function.arguments,
+                                "name": f_name,
+                                "arguments": json.dumps(f_arguments_converted),
                             },
                         }
                     )
 
-                print(f"tool_caller={tool_caller}")
+                print(f"tool_caller={json.dumps(tool_callers, indent=2)}")
                 input_list.append(
                     {
                         "role": choice.message.role,
                         "content": choice.message.content,
-                        "tool_calls": tool_caller,
+                        "tool_calls": tool_callers,
                     }
                 )
 
-                for tool_call in choice.message.tool_calls:
-                    f_name = tool_call.function.name
-                    f_arguments = json.loads(tool_call.function.arguments)
-                    if f_name in available_functions:
-                        expected_type = param_types[f_name]
-                        f_arguments_converted = {
-                            k: expected_type[k](v) if k in expected_type else v
-                            for k, v in f_arguments.items()
+                for tool_caller in tool_callers:
+                    f_name = tool_caller.get('function').get('name')
+                    if f_name not in available_functions:
+                        print(f"ERROR: Function not found. : NAME={f_name}")
+                        continue
+
+                    try:
+                        f_arguments = json.loads(tool_caller.get('function').get('arguments'))
+                        output = available_functions[f_name](**f_arguments)
+                        tool_response = {"product_name": output}
+
+                    except TypeError as exc:
+                        print(str(exc))
+                        tool_response = {"error": str(exc)}
+
+                    input_list.append(
+                        {
+                            "role": "tool",
+                            "tool_call_id": tool_caller.get("id"),
+                            "name": f_name,
+                            "content": json.dumps(tool_response),
                         }
-                        try:
-                            output = available_functions[f_name](**f_arguments_converted)
-                            input_list.append(
-                                {
-                                    "role": "tool",
-                                    "tool_call_id": tool_call.id,
-                                    "name": f_name,
-                                    "content": json.dumps({"product_name": output}),
-                                }
-                            )
-                        except TypeError as exc:
-                            print(str(exc))
-                            input_list.append(
-                                {
-                                    "role": "tool",
-                                    "tool_call_id": tool_call.id,
-                                    "name": f_name,
-                                    "content": json.dumps({"error": str(exc)}),
-                                }
-                            )
+                    )
 
 
 if __name__ == "__main__":

@@ -57,21 +57,43 @@ Model: llama3.2
 
 Request[1]:
 message: {'role': 'system', 'content': 'You are an assistant who prefers concise answers, typically one sentence.'}
-message: {'role': 'user', 'content': 'Please tell me the product name that corresponds to product ID 0.'}
+message: {'role': 'user', 'content': 'Please tell me the product name and price that corresponds to product ID 7.'}
 
-Response(10.6[s]): id=chatcmpl-709
-choice[0]: finish_reason=tool_calls, role=assistant, function_call=None, refusal=None, tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_xxxxxxxx', function=Function(arguments='{"product_id":0}', name='get_product_name_by_id'), type='function', index=0)]:
-tool_caller=[{'index': 0, 'type': 'function', 'id': 'call_xxxxxxxx', 'function': {'name': 'get_product_name_by_id', 'arguments': '{"product_id":0}'}}]
+Response(16.5[s], 2.54 [token/s]): id=chatcmpl-771
+choice[0]: finish_reason=tool_calls, role=assistant, function_call=None, refusal=None, tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_xxxxxxxx', function=Function(arguments='{"product_id":"7"}', name='get_product_name_by_id'), type='function', index=0), ChatCompletionMessageFunctionToolCall(id='call_yyyyyyyy', function=Function(arguments='{"product_id":"7"}', name='get_product_price_by_id'), type='function', index=1)]:
+arguments={'product_id': '7'} → arguments_converted={'product_id': 7}
+arguments={'product_id': '7'} → arguments_converted={'product_id': 7}
+tool_caller=[
+  {
+    "index": 0,
+    "type": "function",
+    "id": "call_xxxxxxxx",
+    "function": {
+      "name": "get_product_name_by_id",
+      "arguments": "{\"product_id\": 7}"
+    }
+  },
+  {
+    "index": 1,
+    "type": "function",
+    "id": "call_yyyyyyyy",
+    "function": {
+      "name": "get_product_price_by_id",
+      "arguments": "{\"product_id\": 7}"
+    }
+  }
+]
 
 Request[2]:
 message: {'role': 'system', 'content': 'You are an assistant who prefers concise answers, typically one sentence.'}
-message: {'role': 'user', 'content': 'Please tell me the product name that corresponds to product ID 0.'}
-message: {'role': 'assistant', 'content': '', 'tool_calls': [{'index': 0, 'type': 'function', 'id': 'call_xxxxxxxx', 'function': {'name': 'get_product_name_by_id', 'arguments': '{"product_id":0}'}}]}
-message: {'role': 'tool', 'tool_call_id': 'call_xxxxxxxx', 'name': 'get_product_name_by_id', 'content': '{"product_name": "apple"}'}
+message: {'role': 'user', 'content': 'Please tell me the product name and price that corresponds to product ID 7.'}
+message: {'role': 'assistant', 'content': '', 'tool_calls': [{'index': 0, 'type': 'function', 'id': 'call_xxxxxxxx', 'function': {'name': 'get_product_name_by_id', 'arguments': '{"product_id": 7}'}}, {'index': 1, 'type': 'function', 'id': 'call_yyyyyyyy', 'function': {'name': 'get_product_price_by_id', 'arguments': '{"product_id": 7}'}}]}
+message: {'role': 'tool', 'tool_call_id': 'call_xxxxxxxx', 'name': 'get_product_name_by_id', 'content': '{"product_name": "pineapple"}'}
+message: {'role': 'tool', 'tool_call_id': 'call_yyyyyyyy', 'name': 'get_product_price_by_id', 'content': '{"product_name": "80 yen"}'}
 
-Response(6.8[s]): id=chatcmpl-11
+Response(10.4[s], 1.82 [token/s]): id=chatcmpl-184
 choice[0]: finish_reason=stop, role=assistant, function_call=None, refusal=None, tool_calls=None:
-The product name that corresponds to product ID 0 is "apple".
+The product name corresponding to ID 7 is "pineapple" or "80 yen".
 
 INFO: A stop notification has been detected. Chat will end.
 ----
