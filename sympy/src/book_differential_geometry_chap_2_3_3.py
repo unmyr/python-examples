@@ -1,54 +1,50 @@
 import sympy
-from sympy import symbols, expand
+from sympy import symbols
+import sympy.diffgeom
 
-# Calculate the differential form ω in polar coordinates (r, θ) from the given Cartesian coordinates (x, y)
-# \omega = -(-2x + 3y) dx + (x - 3y)dy
+# Calculate the differential form ω in polar coordinates
+# (r, θ) from the given Cartesian coordinates (x, y)
+# \omega = -(-2x + 3y) dx + (x - 3y) dy
+
+# Define a 2D manifold and coordinate system
+m = sympy.diffgeom.Manifold("M", 2)
+patch = sympy.diffgeom.Patch("P", m)
+xy_coords = sympy.diffgeom.CoordSystem("xy", patch, symbols("x y", real=True))
+xy_oneforms = xy_coords.base_oneforms()
+dx: sympy.Expr = xy_oneforms[0]
+dy: sympy.Expr = xy_oneforms[1]
+polar_coords = sympy.diffgeom.CoordSystem("polar", patch, symbols("r θ", real=True))
+polar_oneforms = polar_coords.base_oneforms()
+dr: sympy.Expr = polar_oneforms[0]
+dtheta: sympy.Expr = polar_oneforms[1]
 
 # Define symbols
-x, y, r, theta = symbols('x y r theta')
+x, y, r, theta = symbols("x y r theta")
+
+# 1-form in (x, y)
+omega_xy = (-(-2 * x + 3 * y)) * dx + (x - 3 * y) * dy
 
 # Coordinate transformation: Cartesian -> Polar
-x_expr = r * sympy.cos(theta)
-y_expr = r * sympy.sin(theta)
+x_r_theta = r * sympy.cos(theta)
+y_r_theta = r * sympy.sin(theta)
 
-# Example 1-form in (x, y)
-# You can replace P and Q with any expressions in x, y
-omega_r2_x = -(-2*x + 3*y)
-omega_r2_y = x - 3*y
+# Transform the 1-form ω from Cartesian coordinates (x, y) to polar coordinates (r, θ)
+omega_rt = sympy.simplify(
+    sympy.expand(
+        omega_xy.subs(
+            {
+                x: x_r_theta,
+                y: y_r_theta,
+                dx: sympy.diff(x_r_theta, r) * dr + sympy.diff(x_r_theta, theta) * dtheta,  # type: ignore
+                dy: sympy.diff(y_r_theta, r) * dr + sympy.diff(y_r_theta, theta) * dtheta,  # type: ignore
+            }
+        )
+    ),
+    deep=False,
+)  # type: ignore
 
-# Differentiate x and y with respect to r and theta
-dx_dr = sympy.diff(x_expr, r)
-dx_dtheta = sympy.diff(x_expr, theta)
-dy_dr = sympy.diff(y_expr, r)
-dy_dtheta = sympy.diff(y_expr, theta)
-
-# Apply chain rule: dx = (∂x/∂r) dr + (∂x/∂θ) dθ
-# Similarly for dy
-# In SymPy, we just keep them symbolic as dr, dtheta
-dr, dtheta = sympy.symbols('dr dtheta')
-
-dx = dx_dr * dr + dx_dtheta * dtheta
-dy = dy_dr * dr + dy_dtheta * dtheta
-
-# Substitute x(r,θ), y(r,θ) into omega_x and omega_y
-omega_x_rt = omega_r2_x.subs({x: x_expr, y: y_expr})
-omega_y_rt = omega_r2_y.subs({x: x_expr, y: y_expr})
-
-# Transform the 1-form: ω = omega_x dx + omega_y dy
-omega_rt = sympy.expand(omega_x_rt * dx + omega_y_rt * dy)
-
-# Display result
-print("Original 1-form in (x, y):")
-print(f"ω = ({omega_r2_x}) dx + ({omega_r2_y}) dy\n")
-
-print("Transformed 1-form in (r, θ):")
-print(sympy.factor(omega_rt))
-omega_rt_coeff_dr = sympy.factor(omega_rt.coeff(dr))
-# Print the expanded result
-print("ωr:", omega_rt_coeff_dr)
-omega_rt_coeff_dtheta = sympy.factor(omega_rt.coeff(dtheta))
-# Print the expanded result
-print("ωθ:", omega_rt_coeff_dtheta)
-
-# Factor the result
-print(f"Factored ω(r,θ): ({omega_rt_coeff_dr}) dr + ({omega_rt_coeff_dtheta}) dθ")
+# Print the results
+print(f"Original 1-form ω in (x, y): ω = ({omega_xy.coeff(dx)}) dx + ({omega_xy.coeff(dy)}) dy")
+print(
+    f"Transformed 1-form ω in (r, θ): ω=({omega_rt.coeff(dr)}) dr + ({omega_rt.coeff(dtheta)}) dθ"
+)
