@@ -18,18 +18,18 @@ def main() -> None:
         sympy.I,
         -sqrt(3),
         sqrt(3),
-        -sqrt(5 - 2 * sqrt(5)),
-        sqrt(5 - 2 * sqrt(5)),
-        -sqrt(5 + 2 * sqrt(5)),
-        sqrt(5 + 2 * sqrt(5)),
-        -sqrt(23 + 2 * 5 * sqrt(5) + 2 * sqrt(3 * 5 * 17 + 2 * 3 * 19 * sqrt(5))),
-        sqrt(23 + 2 * 5 * sqrt(5) + 2 * sqrt(3 * 5 * 17 + 2 * 3 * 19 * sqrt(5))),
-        -sqrt(23 - 2 * 5 * sqrt(5) + 2 * sqrt(3 * 5 * 17 - 2 * 3 * 19 * sqrt(5))),
-        sqrt(23 - 2 * 5 * sqrt(5) + 2 * sqrt(3 * 5 * 17 - 2 * 3 * 19 * sqrt(5))),
-        -sqrt(23 + 2 * 5 * sqrt(5) - 2 * sqrt(3 * 5 * 17 + 2 * 3 * 19 * sqrt(5))),
-        sqrt(23 + 2 * 5 * sqrt(5) - 2 * sqrt(3 * 5 * 17 + 2 * 3 * 19 * sqrt(5))),
-        -sqrt(23 - 2 * 5 * sqrt(5) - 2 * sqrt(3 * 5 * 17 - 2 * 3 * 19 * sqrt(5))),
-        sqrt(23 - 2 * 5 * sqrt(5) - 2 * sqrt(3 * 5 * 17 - 2 * 3 * 19 * sqrt(5))),
+        -sqrt(5 - 2 * sqrt(5)),  # type: ignore
+        sqrt(5 - 2 * sqrt(5)),  # type: ignore
+        -sqrt(5 + 2 * sqrt(5)),  # type: ignore
+        sqrt(5 + 2 * sqrt(5)),  # type: ignore
+        -sqrt(23 + 2 * 5 * sqrt(5) + 2 * sqrt(3 * 5 * 17 + 2 * 3 * 19 * sqrt(5))),  # type: ignore
+        sqrt(23 + 2 * 5 * sqrt(5) + 2 * sqrt(3 * 5 * 17 + 2 * 3 * 19 * sqrt(5))),  # type: ignore
+        -sqrt(23 - 2 * 5 * sqrt(5) + 2 * sqrt(3 * 5 * 17 - 2 * 3 * 19 * sqrt(5))),  # type: ignore
+        sqrt(23 - 2 * 5 * sqrt(5) + 2 * sqrt(3 * 5 * 17 - 2 * 3 * 19 * sqrt(5))),  # type: ignore
+        -sqrt(23 + 2 * 5 * sqrt(5) - 2 * sqrt(3 * 5 * 17 + 2 * 3 * 19 * sqrt(5))),  # type: ignore
+        sqrt(23 + 2 * 5 * sqrt(5) - 2 * sqrt(3 * 5 * 17 + 2 * 3 * 19 * sqrt(5))),  # type: ignore
+        -sqrt(23 - 2 * 5 * sqrt(5) - 2 * sqrt(3 * 5 * 17 - 2 * 3 * 19 * sqrt(5))),  # type: ignore
+        sqrt(23 - 2 * 5 * sqrt(5) - 2 * sqrt(3 * 5 * 17 - 2 * 3 * 19 * sqrt(5))),  # type: ignore
         sympy.Number(-1.111),
         sympy.Number(-0.445),
         sympy.Number(-0.213),

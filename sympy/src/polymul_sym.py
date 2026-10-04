@@ -5,8 +5,8 @@ from sympy import symbols, expand
 x = symbols("x")
 
 # Define polynomials
-poly1 = x**2 - 5 - 2 * sympy.sqrt(5)  # Polynomial: x² - 5 - 2√5
-poly2 = x**2 - 5 + 2 * sympy.sqrt(5)  # Polynomial: x² - 5 + 2√5
+poly1 = x**2 - 5 - sympy.Mul(2, sympy.sqrt(5))  # Polynomial: x² - 5 - 2√5
+poly2 = x**2 - 5 + sympy.Mul(2, sympy.sqrt(5))  # Polynomial: x² - 5 + 2√5
 
 # Compute the product and expand
 result = expand(poly1 * poly2)  # Result: (x² - 5 - 2√5)(x² - 5 + 2√5) = x⁴ - 10x² + 5

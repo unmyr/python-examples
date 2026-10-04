@@ -31,7 +31,7 @@ def main() -> None:
     """Run main."""
     # Define symbolic variables
     x, y = sympy.symbols("x y")
-    sympy.init_printing(use_unicode=True)
+    sympy.init_printing(use_unicode=True) # type: ignore
 
     # Define polynomials
     y_of_x = (2 * x) / (1 - x**2)  # Polynomial: (2x)/(1 - x²)

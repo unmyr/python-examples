@@ -48,8 +48,8 @@ def main() -> None:
     x, y, z, w = sympy.symbols("x y z w")
 
     # Defile roots
-    roots_x4 = sympy.all_roots(x**4 - 10 * x**2 + 5)
-    roots_x8 = sympy.all_roots(x**8 - 92 * x**6 + 134 * x**4 - 28 * x**2 + 1)
+    roots_x4 = sympy.all_roots(x**4 - 10 * x**2 + 5) # type: ignore
+    roots_x8 = sympy.all_roots(x**8 - 92 * x**6 + 134 * x**4 - 28 * x**2 + 1) # type: ignore
     roots = roots_x4 + roots_x8
 
     try:
@@ -67,7 +67,7 @@ def main() -> None:
         print_adoc_latexmath_content("Solution using solve", format_latex_array(solution_solve))
 
         # Solve the equation using solveset
-        solution_solveset_of_x = sympy.solveset(
+        solution_set = sympy.solveset(
             sympy.simplify(
                 (x - (2 * w) / (1 - w**2))
                 .subs(w, (2 * z) / (1 - z**2))
@@ -77,9 +77,15 @@ def main() -> None:
             x,
             domain=sympy.S.Complexes,
         )
+        if solution_set is sympy.S.EmptySet:
+            solutions = ()
+        elif isinstance(solution_set, sympy.FiniteSet):
+            solutions = solution_set
+        else:
+            raise ValueError(f"Expected a finite solution set, got: {solution_set}")
 
         results = []
-        for x_in in solution_solveset_of_x:
+        for x_in in solutions:
             y_out = replace_with_CRootOf_if_close(((2 * x) / (1 - x**2)).subs(x, x_in), roots)
             z_out = replace_with_CRootOf_if_close(((2 * y) / (1 - y**2)).subs(y, y_out), roots)
             w_out = replace_with_CRootOf_if_close(((2 * z) / (1 - z**2)).subs(z, z_out), roots)

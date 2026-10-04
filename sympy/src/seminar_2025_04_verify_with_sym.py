@@ -1,4 +1,5 @@
 import sympy
+from sympy.polys.polytools import all_roots  # pyright: ignore[reportAttributeAccessIssue]
 
 
 def replace_with_CRootOf_if_close(val, roots, tol=1e-8):
@@ -26,8 +27,8 @@ def main() -> None:
     """Run main."""
     # Definition: Variables and functions
     x, y, z, w = sympy.symbols("x y z w")
-    roots_x4 = sympy.all_roots(x**4 - 10 * x**2 + 5)
-    roots_x8 = sympy.all_roots(x**8 - 92 * x**6 + 134 * x**4 - 28 * x**2 + 1)
+    roots_x4 = all_roots(x**4 - 10 * x**2 + 5)
+    roots_x8 = all_roots(x**8 - 92 * x**6 + 134 * x**4 - 28 * x**2 + 1)
     y_x = 2 * x / (1 - x**2)
     z_y = sympy.simplify(2 * y / (1 - y**2))
     w_z = sympy.simplify(2 * z / (1 - z**2))
@@ -38,7 +39,7 @@ def main() -> None:
         [
             sympy.Number(0),
         ]
-        + sympy.all_roots(x**2 + 1)
+        + all_roots(x**2 + 1)
         + sympy.real_roots((x**2 - 3), x)
         + roots_x4
         + roots_x8
