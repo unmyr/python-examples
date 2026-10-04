@@ -2,6 +2,39 @@
 
 === Installation
 
+When using a version of Python installed independently via tools like pyenv (instead of the Python 3 pre-installed on the OS), you can install the required packages using pip. First, ensure that you have pip installed. Then, run the following command to install the required packages from `requirements.txt`:
+
+[source,shell]
+----
+python -m pip install -r requirements.txt
+----
+
+If you use the Python included with Ubuntu 26.04 LTS, install the required packages and configure the virtual environment.
+
+1. Install the required packages:
+** Ubuntu 26.04 LTS includes Python 3.14, so you need to install the `python3.14-venv` package to create a virtual environment.
++
+[source,shell]
+----
+sudo apt install python3.14-venv
+----
+
+2. Create a virtual environment in the current directory:
++
+[source,shell]
+----
+python3 -m venv .venv
+----
+
+3. Activate the virtual environment:
++
+[source,shell]
+----
+source .venv/bin/activate
+----
+
+4. Install the required packages from `requirements.txt`:
++
 [source,shell]
 ----
 python -m pip install -r requirements.txt
